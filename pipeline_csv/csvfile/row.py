@@ -1,6 +1,6 @@
 """InspectionViewer export csv file data row."""
 from .. import (
-  Error, ObjectClass, TypeMarker, TypeHorWeld, COMMON, LINEOBJ, SEAM, DEFEKTS,
+  Error, ObjectClass, TypeMarker, TypeHorWeld, COMMON, LINEOBJ, DEFEKTS, SEAMS
 )
 
 REVERSE_MARKER = {
@@ -144,13 +144,13 @@ class Row:  # pylint: disable=too-many-instance-attributes
     @classmethod
     def as_seam(cls, distanse, typ, orient1, orient2):
         """Construct row as seam object with given typ."""
-        if typ not in SEAM:
+        if typ not in SEAMS:
             raise Error("Wrong seam type: {}".format(typ))
 
         obj = cls.with_dist(distanse, '', '', '')
         obj.type_object = ObjectClass.HOR_WELD
         obj.object_code = typ
-        obj.object_code_t = SEAM[obj.object_code]
+        obj.object_code_t = ''
 
         if obj.object_code in [TypeHorWeld.HORIZONTAL, TypeHorWeld.SPIRAL, TypeHorWeld.SECOND]:
             obj.orient_td = str(orient1)

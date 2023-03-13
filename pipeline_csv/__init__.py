@@ -1,6 +1,11 @@
 """Interfaces for InspectionViewer stuff."""
 
 
+def attr_list(cls):
+    """Return list of attributes values for class."""
+    return [val for key, val in vars(cls).items() if not key.startswith('_')]
+
+
 class Error(Exception):
     """IV exception."""
 
@@ -80,18 +85,12 @@ class DefektSide:
     IN_WALL = 3
 
 
+SEAMS = attr_list(TypeHorWeld)
+
 COMMON = {
   ObjectClass.WELD: "Шов",
   ObjectClass.THICK: "Изменение толщины стенки трубы",
   ObjectClass.PIPELINE_CATEGORY: "Категория трубопровода",
-}
-
-SEAM = {
-  TypeHorWeld.HORIZONTAL: "Продольный шов",
-  TypeHorWeld.SECOND: "Двойной прод. шов",
-  TypeHorWeld.NO_WELD: "Цельнотянутая труба",
-  TypeHorWeld.SPIRAL: "Спиральный шов",
-  TypeHorWeld.UNKNOWN: "Не определено",
 }
 
 LINEOBJ = {

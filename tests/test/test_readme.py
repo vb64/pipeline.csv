@@ -154,3 +154,10 @@ class TestReadme(TestIV):
           'geo.csv',
         ]:
             os.remove(name)
+
+    @staticmethod
+    def test_seams():
+        """Check SEAMS list."""
+        from pipeline_csv import SEAMS
+
+        assert len(SEAMS) == 5

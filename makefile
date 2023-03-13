@@ -20,8 +20,7 @@ PYLINT = $(PYTHON) -m pylint
 all: tests
 
 test:
-	$(PYTEST) -s --cov-append $(TESTS)/test/$(T)
-	$(COVERAGE) html --skip-covered
+	$(PTEST) -s $(TESTS)/test/$(T)
 
 tests: flake8 pep257 lint
 	$(PYTEST) --durations=5 $(TESTS)
