@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 """Interfaces for InspectionViewer stuff."""
-from py23 import win1251
 
 
 class Error(Exception):
@@ -83,56 +81,56 @@ class DefektSide:
 
 
 COMMON = {
-  ObjectClass.WELD: win1251("Шов"),
-  ObjectClass.THICK: win1251("Изменение толщины стенки трубы"),
-  ObjectClass.PIPELINE_CATEGORY: win1251("Категория трубопровода"),
+  ObjectClass.WELD: "Шов",
+  ObjectClass.THICK: "Изменение толщины стенки трубы",
+  ObjectClass.PIPELINE_CATEGORY: "Категория трубопровода",
 }
 
 SEAM = {
-  TypeHorWeld.HORIZONTAL: win1251("Продольный шов"),
-  TypeHorWeld.SECOND: win1251("Двойной прод. шов"),
-  TypeHorWeld.NO_WELD: win1251("Цельнотянутая труба"),
-  TypeHorWeld.SPIRAL: win1251("Спиральный шов"),
-  TypeHorWeld.UNKNOWN: win1251("Не определено"),
+  TypeHorWeld.HORIZONTAL: "Продольный шов",
+  TypeHorWeld.SECOND: "Двойной прод. шов",
+  TypeHorWeld.NO_WELD: "Цельнотянутая труба",
+  TypeHorWeld.SPIRAL: "Спиральный шов",
+  TypeHorWeld.UNKNOWN: "Не определено",
 }
 
 LINEOBJ = {
-  TypeMarker.VALVE: win1251("Кран"),
-  TypeMarker.MARKER: win1251("Маркер"),
-  TypeMarker.MAGNET: win1251("Маркер магнитный"),
-  TypeMarker.OTVOD: win1251("Отвод-врезка"),
-  TypeMarker.TROYNIK: win1251("Тройник"),
-  TypeMarker.CASE_START: win1251("Патрон начало"),
-  TypeMarker.CASE_END: win1251("Патрон конец"),
-  TypeMarker.REPAIR: win1251("Место ремонта"),
-  TypeMarker.LOAD: win1251("Пригруз"),
-  TypeMarker.TURN_START: win1251("Отвод (поворот) начало"),
-  TypeMarker.TURN_END: win1251("Отвод (поворот) конец"),
-  TypeMarker.FEATURE: win1251("Особенность"),
-  TypeMarker.CURVE_SECTION: win1251("Гнутая секция"),
-  TypeMarker.TURN_SEGMENT: win1251("Сегмент поворота"),
+  TypeMarker.VALVE: "Кран",
+  TypeMarker.MARKER: "Маркер",
+  TypeMarker.MAGNET: "Маркер магнитный",
+  TypeMarker.OTVOD: "Отвод-врезка",
+  TypeMarker.TROYNIK: "Тройник",
+  TypeMarker.CASE_START: "Патрон начало",
+  TypeMarker.CASE_END: "Патрон конец",
+  TypeMarker.REPAIR: "Место ремонта",
+  TypeMarker.LOAD: "Пригруз",
+  TypeMarker.TURN_START: "Отвод (поворот) начало",
+  TypeMarker.TURN_END: "Отвод (поворот) конец",
+  TypeMarker.FEATURE: "Особенность",
+  TypeMarker.CURVE_SECTION: "Гнутая секция",
+  TypeMarker.TURN_SEGMENT: "Сегмент поворота",
 }
 
 DEFEKTS = {
-  TypeDefekt.CORROZ: win1251("Коррозия"),
-  TypeDefekt.MECHANIC: win1251("Мех. повреждение"),
-  TypeDefekt.DENT: win1251("Вмятина"),
-  TypeDefekt.DENT_METAL_LOSS: win1251("Вмятина с дефектами потери металла"),
-  TypeDefekt.GOFRA: win1251("Гофра"),
-  TypeDefekt.GWAN: win1251("Аномалия кольцевого шва"),
-  TypeDefekt.TECHNOLOGY: win1251("Технологический дефект"),
-  TypeDefekt.FACTORY: win1251("Заводской дефект"),
-  TypeDefekt.ADDITIONAL_METAL: win1251("Дополнительный металл/материал"),
-  TypeDefekt.OTHER: win1251("Другое"),
-  TypeDefekt.CRACKS_HOR: win1251("Зона продольных трещин"),
-  TypeDefekt.CRACK_LIKE: win1251("Трещиноподобный дефект"),
-  TypeDefekt.CRACK_WELD: win1251("Трещина на кольцевом шве"),
-  TypeDefekt.LAMINATION: win1251("Расслоение"),
-  TypeDefekt.ANOMALY_HOR_WELD: win1251("Аномалия продольного шва"),
-  TypeDefekt.ANOMALY_SPIRAL_WELD: win1251("Аномалия спирального шва"),
-  TypeDefekt.ELLIPSE: win1251("Эллипсность"),
-  TypeDefekt.PODZHIG: win1251("Поджиг"),
-  TypeDefekt.GRINDING: win1251("Зашлифовка"),
+  TypeDefekt.CORROZ: "Коррозия",
+  TypeDefekt.MECHANIC: "Мех. повреждение",
+  TypeDefekt.DENT: "Вмятина",
+  TypeDefekt.DENT_METAL_LOSS: "Вмятина с дефектами потери металла",
+  TypeDefekt.GOFRA: "Гофра",
+  TypeDefekt.GWAN: "Аномалия кольцевого шва",
+  TypeDefekt.TECHNOLOGY: "Технологический дефект",
+  TypeDefekt.FACTORY: "Заводской дефект",
+  TypeDefekt.ADDITIONAL_METAL: "Дополнительный металл/материал",
+  TypeDefekt.OTHER: "Другое",
+  TypeDefekt.CRACKS_HOR: "Зона продольных трещин",
+  TypeDefekt.CRACK_LIKE: "Трещиноподобный дефект",
+  TypeDefekt.CRACK_WELD: "Трещина на кольцевом шве",
+  TypeDefekt.LAMINATION: "Расслоение",
+  TypeDefekt.ANOMALY_HOR_WELD: "Аномалия продольного шва",
+  TypeDefekt.ANOMALY_SPIRAL_WELD: "Аномалия спирального шва",
+  TypeDefekt.ELLIPSE: "Эллипсность",
+  TypeDefekt.PODZHIG: "Поджиг",
+  TypeDefekt.GRINDING: "Зашлифовка",
 }
 
 DEFAULT_MARKERS = [
