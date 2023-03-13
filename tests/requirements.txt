@@ -1,0 +1,7 @@
+flake8
+pylint
+pep257
+pytest
+pytest-cov
+codacy-coverage
+radon

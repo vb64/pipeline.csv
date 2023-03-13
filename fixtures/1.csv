@@ -1,0 +1,8 @@
+DistOd;TypeObject;Object_Code;ObjectName;Object_Code_T;Marker;Length;Width;Depth_min;Depth_max;OrientTD;OrientBD;MPoint_Orient;MPoint_Dist;Type_Def;DistML;DistMR;DistStL;DistStR;LinkStL;LinkStR;LinkML;LinkMR;Comments;Latitude;Longtitude;Altitude;
+0;0;0;W-1;Шов;ЛОЖЬ;;;;;;;;;;;;;;;;;;;;;
+10;1;1;M6;Маркер;ИСТИНА;;;;;;;;;;;;;;;;;;Лоток запуска;;;
+1000;5;0;KT100;Категория трубопровода;ЛОЖЬ;;;;1;;;;;;;;;;;;;;;;;
+1300;3;0;T130;Изменение толщины стенки трубы;ЛОЖЬ;;;;90;;;;;;;;;;;;;;;;;
+3872;4;0;PW387;Продольный шов;ЛОЖЬ;;;;;12,15;;;;;;;;;;;;;;;;
+6924;0;0;W692;Шов;ЛОЖЬ;;;;;;;;;;;;;;;;;;;;;
+8800;4;0;PW880;Продольный шов;ЛОЖЬ;;;;;3,15;;;;;;;;;;;;;;;;
