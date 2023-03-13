@@ -21,7 +21,7 @@ class TestInit(TestCsv):
     def test_get_tubes(self):
         """Check get_tubes."""
         from pipeline_csv import TypeHorWeld
-        from pipeline_csv.csvfile import File, gen_next
+        from pipeline_csv.csvfile import File
         from pipeline_csv.csvfile.row import Row
 
         csv_file = File.from_file(self.fixture('DefTable.csv'))
@@ -35,10 +35,10 @@ class TestInit(TestCsv):
         assert tubes
         assert len(warns) == 1
 
-        tube = gen_next(tubes)
+        tube = next(tubes)
         assert tube.dist == 0
 
-        tube = gen_next(tubes)
+        tube = next(tubes)
         assert tube.dist == 6924
 
         for tube in tubes:

@@ -1,6 +1,5 @@
 """Interfaces for InspectionViewer export csv file."""
 import csv
-from py23 import gen_next, open_text_file
 from .. import Error
 
 
@@ -142,7 +141,7 @@ class File:
     @classmethod
     def open_file(cls, file_path, mode):
         """Python 2/3 open file."""
-        return open_text_file(file_path, mode, cls.ENCODING)
+        return open(file_path, mode + 't', encoding=cls.ENCODING)
 
     @classmethod
     def from_file(cls, file_path, float_delimiter=FloatDelimiter.Point):
@@ -311,7 +310,7 @@ class File:
         """Return ready iterator for tubes in csv data."""
         tubes = self._create_tubes_iterator(warns)
         try:
-            gen_next(tubes)
+            next(tubes)
         except StopIteration:
             return []
 
