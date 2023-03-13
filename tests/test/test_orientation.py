@@ -10,7 +10,7 @@ class TestOrientation(TestIV):
 
     def test_init(self):
         """Check init and errors."""
-        from oeg_iv.orientation import Orientation, Error
+        from pipeline_csv.orientation import Orientation, Error
 
         with self.assertRaises(Error) as context:
             Orientation(99, 0)
@@ -30,7 +30,7 @@ class TestOrientation(TestIV):
     @staticmethod
     def test_from_infotech_html():
         """Check from_infotech_html."""
-        from oeg_iv.orientation import from_infotech_html
+        from pipeline_csv.orientation import from_infotech_html
 
         orient = from_infotech_html("5,5")
         assert orient.hours == 5

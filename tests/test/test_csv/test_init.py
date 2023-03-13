@@ -12,7 +12,7 @@ class TestInit(TestCsv):
     @staticmethod
     def test_format_floats():
         """Check format_floats function."""
-        from oeg_iv.csvfile import format_floats, FloatDelimiter
+        from pipeline_csv.csvfile import format_floats, FloatDelimiter
 
         data = [1, '2', 3.0]
         assert format_floats(data, FloatDelimiter.Point) == data
@@ -20,9 +20,9 @@ class TestInit(TestCsv):
 
     def test_get_tubes(self):
         """Check get_tubes."""
-        from oeg_iv import TypeHorWeld
-        from oeg_iv.csvfile import File, gen_next
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv import TypeHorWeld
+        from pipeline_csv.csvfile import File, gen_next
+        from pipeline_csv.csvfile.row import Row
 
         csv_file = File.from_file(self.fixture('DefTable.csv'))
         assert len(csv_file.data) == 178
@@ -57,7 +57,7 @@ class TestInit(TestCsv):
 
     def test_no_thick_category(self):
         """Check reverse data file without thick and category objects."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         csv_file = File.from_file(self.fixture('no_thicks.csv'))
         assert len(csv_file.data) == 8
@@ -67,7 +67,7 @@ class TestInit(TestCsv):
 
     def test_no_welds(self):
         """Check reverse data file without welds."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         csv_file = File.from_file(self.fixture('no_welds.csv'))
         assert len(csv_file.data) == 1
@@ -77,7 +77,7 @@ class TestInit(TestCsv):
 
     def test_reverse(self):
         """Check reverse."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         csv_file = File.from_file(self.fixture('DefTable.csv'))
         assert len(csv_file.data) == 178
@@ -141,7 +141,7 @@ class TestInit(TestCsv):
 
     def test_join(self):
         """Check join."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         fname = self.fixture('DefTable.csv')
         csv_file = File.from_file(fname)
@@ -156,7 +156,7 @@ class TestInit(TestCsv):
 
     def test_join_short(self):
         """Check join short file."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         fname = self.fixture('1.csv')
         csv_file = File.from_file(fname)
@@ -179,7 +179,7 @@ class TestInit(TestCsv):
     @staticmethod
     def test_transform_length_wrong():
         """Check transform_length with wrong data."""
-        from oeg_iv.csvfile import transform_length
+        from pipeline_csv.csvfile import transform_length
 
         table = [[0, 0], [10, 5]]
         assert transform_length(0, '-', table, 0) == '-'
@@ -187,7 +187,7 @@ class TestInit(TestCsv):
     @staticmethod
     def test_transform_length():
         """Check transform_length."""
-        from oeg_iv.csvfile import transform_length
+        from pipeline_csv.csvfile import transform_length
 
         table = [[0, 0], [100, 50]]
         assert transform_length(10, '40', table, 0) == 20
@@ -195,7 +195,7 @@ class TestInit(TestCsv):
     @staticmethod
     def test_transform_dist():
         """Check transform_dist."""
-        from oeg_iv.csvfile import transform_dist
+        from pipeline_csv.csvfile import transform_dist
 
         table = [[0, 0], [10, 5]]
         indx = 0
@@ -229,7 +229,7 @@ class TestInit(TestCsv):
 
     def test_load_dist_modify(self):
         """Check load_dist_modify."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         table = File.load_dist_modify(self.fixture('unsorted_modifi.csv'))
         assert table[0] == [0, 0]
@@ -237,8 +237,8 @@ class TestInit(TestCsv):
 
     def test_dist_modify(self):
         """Check dist_modify."""
-        from oeg_iv.csvfile import File
-        from oeg_iv import Error
+        from pipeline_csv.csvfile import File
+        from pipeline_csv import Error
 
         fname = self.fixture('infotech.csv')
         csv_file = File.from_file(fname)
@@ -258,7 +258,7 @@ class TestInit(TestCsv):
         assert int(csv_file.data[0].dist_od) == 0
         assert int(csv_file.data[-1].dist_od) == 130889155
 
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv.csvfile.row import Row
 
         csv_file.data = [
           Row.as_thick(0, 105),
@@ -284,8 +284,8 @@ class TestInit(TestCsv):
     @staticmethod
     def test_make_distances_unique():
         """Check make_distances_unique function."""
-        from oeg_iv.csvfile import File
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv.csvfile import File
+        from pipeline_csv.csvfile.row import Row
 
         csv_file = File()
         dist = 10

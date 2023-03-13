@@ -12,16 +12,16 @@ class TestTubes(TestCsv):
     def setUp(self):
         """Init tube tests."""
         TestCsv.setUp(self)
-        from oeg_iv.csvfile import Stream
-        from oeg_iv.csvfile.tubes import Tube
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv.csvfile import Stream
+        from pipeline_csv.csvfile.tubes import Tube
+        from pipeline_csv.csvfile.row import Row
 
         self.tube = Tube(Row.as_weld(10), Stream(), '1')
 
     @staticmethod
     def test_no_welds():
         """No welds in csv file."""
-        from oeg_iv.csvfile import File
+        from pipeline_csv.csvfile import File
 
         ivc = File()
         warns = []
@@ -29,8 +29,8 @@ class TestTubes(TestCsv):
 
     def test_add_object(self):
         """Add object."""
-        from oeg_iv import Error
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv import Error
+        from pipeline_csv.csvfile.row import Row
 
         with pytest.raises(Error) as err:
             self.tube.add_object(Row.as_weld(11))
@@ -57,8 +57,8 @@ class TestTubes(TestCsv):
 
     def test_summary(self):
         """Tube summary."""
-        from oeg_iv import TypeMarker, TypeDefekt, DefektSide
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv import TypeMarker, TypeDefekt, DefektSide
+        from pipeline_csv.csvfile.row import Row
 
         assert self.tube.summary == ''
 
@@ -90,8 +90,8 @@ class TestTubes(TestCsv):
 
     def test_typ(self):
         """Pipe type."""
-        from oeg_iv import TypeHorWeld
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv import TypeHorWeld
+        from pipeline_csv.csvfile.row import Row
 
         assert self.tube.typ == TypeHorWeld.UNKNOWN
 
@@ -137,7 +137,7 @@ class TestTubes(TestCsv):
 
     def test_category(self):
         """Pipe category."""
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv.csvfile.row import Row
 
         assert self.tube.category is None
         assert self.tube.stream.category is None

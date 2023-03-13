@@ -8,10 +8,10 @@ from . import TestIV
 
 def check_new():
     """Construct new csv file from scratch."""
-    from oeg_iv import TypeHorWeld, TypeDefekt, DefektSide
-    from oeg_iv.orientation import Orientation
-    from oeg_iv.csvfile import File
-    from oeg_iv.csvfile.row import Row
+    from pipeline_csv import TypeHorWeld, TypeDefekt, DefektSide
+    from pipeline_csv.orientation import Orientation
+    from pipeline_csv.csvfile import File
+    from pipeline_csv.csvfile.row import Row
 
     csv_file = File()
 
@@ -49,7 +49,7 @@ def check_new():
 
 def check_reversing(csv_file):
     """Reversing the data."""
-    from oeg_iv.csvfile import File
+    from pipeline_csv.csvfile import File
 
     # create copy from saved file
     csv_copy = File.from_file('example.csv')
@@ -91,7 +91,7 @@ def check_join(csv_file):
 
 def check_transform(csv_file):
     """Compress distances and length of all objects in half."""
-    from oeg_iv.csvfile import File
+    from pipeline_csv.csvfile import File
 
     csv_file.dist_modify([[0, 0], [28000, 14000]])
     assert csv_file.total_length == 14000

@@ -11,8 +11,8 @@ class TestRow(TestCsv):
     @staticmethod
     def test_set_geo():
         """Check set_geo."""
-        from oeg_iv import TypeDefekt, DefektSide
-        from oeg_iv.csvfile.row import Row
+        from pipeline_csv import TypeDefekt, DefektSide
+        from pipeline_csv.csvfile.row import Row
 
         row = Row.as_defekt(
           10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15', '', '', '', '', 'comment',
@@ -24,9 +24,9 @@ class TestRow(TestCsv):
 
     def test_as_defekt(self):
         """Check as_defekt helpers."""
-        from oeg_iv.csvfile.row import Row
-        from oeg_iv import ObjectClass, TypeDefekt, DefektSide, Error
-        from oeg_iv.orientation import Orientation
+        from pipeline_csv.csvfile.row import Row
+        from pipeline_csv import ObjectClass, TypeDefekt, DefektSide, Error
+        from pipeline_csv.orientation import Orientation
 
         orient1 = Orientation(9, 15)
         orient2 = Orientation(5, 15)
@@ -46,9 +46,9 @@ class TestRow(TestCsv):
 
     def test_as_seam(self):
         """Check as_seam helpers."""
-        from oeg_iv.csvfile.row import Row
-        from oeg_iv import TypeHorWeld, Error
-        from oeg_iv.orientation import Orientation
+        from pipeline_csv.csvfile.row import Row
+        from pipeline_csv import TypeHorWeld, Error
+        from pipeline_csv.orientation import Orientation
 
         orient1 = Orientation(10, 15)
         orient2 = Orientation(4, 15)
@@ -84,8 +84,8 @@ class TestRow(TestCsv):
     @staticmethod
     def test_as():
         """Check  as_* helpers."""
-        from oeg_iv.csvfile.row import Row, iv_bool
-        from oeg_iv import TypeMarker, LINEOBJ
+        from pipeline_csv.csvfile.row import Row, iv_bool
+        from pipeline_csv import TypeMarker, LINEOBJ
 
         row = Row.as_weld(10)
         assert row.is_weld
@@ -115,7 +115,7 @@ class TestRow(TestCsv):
     @staticmethod
     def test_reverse_orient():
         """Check reverse_orient."""
-        from oeg_iv.csvfile.row import reverse_orient
+        from pipeline_csv.csvfile.row import reverse_orient
 
         assert reverse_orient("0") == '12,00'
         assert reverse_orient("12") == '12,00'
@@ -130,8 +130,8 @@ class TestRow(TestCsv):
     @staticmethod
     def test_reverse():
         """Check row.reverse."""
-        from oeg_iv.csvfile.row import Row
-        from oeg_iv import ObjectClass, TypeMarker
+        from pipeline_csv.csvfile.row import Row
+        from pipeline_csv import ObjectClass, TypeMarker
 
         row = Row()
         row.dist_od = '2'
