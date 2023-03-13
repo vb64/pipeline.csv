@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 """InspectionViewer export csv file data row."""
-from py23 import win1251, is_contains, replace1251
 from .. import (
   Error, ObjectClass, TypeMarker, TypeHorWeld, COMMON, LINEOBJ, SEAM, DEFEKTS,
 )
@@ -21,7 +19,7 @@ REVERSE_COMMENTS = {
 
 def iv_bool(val):
     """Bool value for IV csv."""
-    return win1251('ИСТИНА' if val else 'ЛОЖЬ')
+    return 'ИСТИНА' if val else 'ЛОЖЬ'
 
 
 def to_int(text):
@@ -387,6 +385,6 @@ class Row:  # pylint: disable=too-many-instance-attributes
 
         # comments
         for key, val in REVERSE_COMMENTS.items():
-            if is_contains(self.comments, key):
-                replace1251(self.comments, key, val)
+            if key in self.comments:
+                self.comments.replace(key, val)
                 break
