@@ -11,8 +11,8 @@ class TestRow(TestCsv):
     @staticmethod
     def test_set_geo():
         """Check set_geo."""
-        from pipeline_csv import TypeDefekt, DefektSide
-        from pipeline_csv.csvfile.row import Row
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
 
         row = Row.as_defekt(
           10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15', '', '', '', '', 'comment',
@@ -24,9 +24,9 @@ class TestRow(TestCsv):
 
     def test_as_defekt(self):
         """Check as_defekt helpers."""
-        from pipeline_csv.csvfile.row import Row
-        from pipeline_csv import ObjectClass, TypeDefekt, DefektSide, Error
+        from pipeline_csv import ObjectClass, DefektSide, Error
         from pipeline_csv.orientation import Orientation
+        from pipeline_csv.oegiv import TypeDefekt, Row
 
         orient1 = Orientation(9, 15)
         orient2 = Orientation(5, 15)
@@ -155,3 +155,10 @@ class TestRow(TestCsv):
         row.reverse(10)
         assert row.dist_od == '2'
         assert row.object_code == str(TypeMarker.TURN_END)
+
+    @staticmethod
+    def test_dict_default():
+        """Check row defekts_dict and lineobj_dict default methods."""
+        from pipeline_csv.csvfile.row import Row
+
+        assert not Row.defekts_dict()

@@ -1,5 +1,5 @@
 """Tubes iterator interface for InspectionViewer export csv file."""
-from .. import Error, TypeHorWeld, LINEOBJ, DEFEKTS
+from .. import Error, TypeHorWeld, LINEOBJ
 
 
 def summary_text(objects, names):
@@ -111,8 +111,12 @@ class Tube:
     @property
     def summary(self):
         """Return string with summary for given tube."""
+        defect_names = {}
+        if self.defects:
+            defect_names = self.defects[0].__class__.defekts_dict()
+
         return ', '.join([i for i in [
-          summary_text(self.defects, DEFEKTS),
+          summary_text(self.defects, defect_names),
           summary_text(self.lineobjects, LINEOBJ)
         ] if i])
 

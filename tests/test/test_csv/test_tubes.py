@@ -57,8 +57,8 @@ class TestTubes(TestCsv):
 
     def test_summary(self):
         """Tube summary."""
-        from pipeline_csv import TypeMarker, TypeDefekt, DefektSide
-        from pipeline_csv.csvfile.row import Row
+        from pipeline_csv import TypeMarker, DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
 
         assert self.tube.summary == ''
 

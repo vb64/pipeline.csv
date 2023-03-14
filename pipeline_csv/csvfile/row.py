@@ -1,6 +1,6 @@
 """InspectionViewer export csv file data row."""
 from .. import (
-  Error, ObjectClass, TypeMarker, TypeHorWeld, LINEOBJ, DEFEKTS, SEAMS
+  Error, ObjectClass, TypeMarker, TypeHorWeld, LINEOBJ, SEAMS
 )
 
 REVERSE_MARKER = {
@@ -68,6 +68,11 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     def name_object(_code):
         """Return text for object_code_t field."""
         return ''
+
+    @staticmethod
+    def defekts_dict():
+        """Return dict of available defekts types."""
+        return {}
 
     def __init__(self):
         """Create empty csv row object."""
@@ -190,7 +195,8 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
       latitude='', longtitude='', altitude=''
     ):
         """Construct row as defekt object."""
-        if typ not in DEFEKTS:
+        defekts = cls.defekts_dict()
+        if typ not in defekts:
             raise Error("Wrong defekt type: {}".format(typ))
 
         depth_int = to_int(depth)
@@ -198,7 +204,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         obj = cls.with_dist(distanse, latitude, longtitude, altitude)
         obj.type_object = ObjectClass.DEFEKT
         obj.object_code = typ
-        obj.object_code_t = DEFEKTS[typ]
+        obj.object_code_t = defekts[obj.object_code]
 
         if orient1:
             obj.orient_td = str(orient1)

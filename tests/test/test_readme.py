@@ -8,10 +8,10 @@ from . import TestIV
 
 def check_new():
     """Construct new csv file from scratch."""
-    from pipeline_csv import TypeHorWeld, TypeDefekt, DefektSide
+    from pipeline_csv import TypeHorWeld, DefektSide
     from pipeline_csv.orientation import Orientation
     from pipeline_csv.csvfile import File
-    from pipeline_csv.csvfile.row import Row
+    from pipeline_csv.oegiv import TypeDefekt, Row
 
     csv_file = File()
 
