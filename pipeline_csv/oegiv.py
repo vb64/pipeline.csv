@@ -123,6 +123,11 @@ class Row(row.Row):
     """Row of Deftable.csv file."""
 
     @staticmethod
+    def get_bool(val):
+        """Bool value for IV csv."""
+        return 'ИСТИНА' if val else 'ЛОЖЬ'
+
+    @staticmethod
     def name_seam(code):
         """Return text for seam object_code_t field."""
         return SEAM[code]
