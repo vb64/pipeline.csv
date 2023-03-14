@@ -98,7 +98,7 @@ def format_floats(val_list, float_delimiter):
 class File:
     """Export/import csv file."""
 
-    ENCODING = 'windows-1251'
+    ENCODING = 'utf-8'
     DELIMETER = ';'
     COLUMN_HEADS = [
       'DistOd',

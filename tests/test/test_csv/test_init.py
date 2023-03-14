@@ -21,8 +21,8 @@ class TestInit(TestCsv):
     def test_get_tubes(self):
         """Check get_tubes."""
         from pipeline_csv import TypeHorWeld
-        from pipeline_csv.csvfile import File
         from pipeline_csv.csvfile.row import Row
+        from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('DefTable.csv'))
         assert len(csv_file.data) == 178
@@ -57,7 +57,7 @@ class TestInit(TestCsv):
 
     def test_no_thick_category(self):
         """Check reverse data file without thick and category objects."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('no_thicks.csv'))
         assert len(csv_file.data) == 8
@@ -67,7 +67,7 @@ class TestInit(TestCsv):
 
     def test_no_welds(self):
         """Check reverse data file without welds."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('no_welds.csv'))
         assert len(csv_file.data) == 1
@@ -77,7 +77,7 @@ class TestInit(TestCsv):
 
     def test_reverse(self):
         """Check reverse."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('DefTable.csv'))
         assert len(csv_file.data) == 178
@@ -141,7 +141,7 @@ class TestInit(TestCsv):
 
     def test_join(self):
         """Check join."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
 
         fname = self.fixture('DefTable.csv')
         csv_file = File.from_file(fname)
@@ -156,7 +156,7 @@ class TestInit(TestCsv):
 
     def test_join_short(self):
         """Check join short file."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
 
         fname = self.fixture('1.csv')
         csv_file = File.from_file(fname)
@@ -229,7 +229,7 @@ class TestInit(TestCsv):
 
     def test_load_dist_modify(self):
         """Check load_dist_modify."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
 
         table = File.load_dist_modify(self.fixture('unsorted_modifi.csv'))
         assert table[0] == [0, 0]
@@ -237,7 +237,7 @@ class TestInit(TestCsv):
 
     def test_dist_modify(self):
         """Check dist_modify."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.oegiv import File
         from pipeline_csv import Error
 
         fname = self.fixture('infotech.csv')
