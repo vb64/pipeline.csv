@@ -59,6 +59,11 @@ def reverse_orient(orient_str):
 class Row:  # pylint: disable=too-many-instance-attributes
     """Row of export csv file."""
 
+    @staticmethod
+    def name_seam(_code):
+        """Return text for seam object_code_t field."""
+        return ''
+
     def __init__(self):
         """Create empty csv row object."""
         self.dist_od = None
@@ -150,7 +155,7 @@ class Row:  # pylint: disable=too-many-instance-attributes
         obj = cls.with_dist(distanse, '', '', '')
         obj.type_object = ObjectClass.HOR_WELD
         obj.object_code = typ
-        obj.object_code_t = ''
+        obj.object_code_t = cls.name_seam(obj.object_code)
 
         if obj.object_code in [TypeHorWeld.HORIZONTAL, TypeHorWeld.SPIRAL, TypeHorWeld.SECOND]:
             obj.orient_td = str(orient1)
