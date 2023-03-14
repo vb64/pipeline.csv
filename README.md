@@ -34,9 +34,9 @@ class TypeMarker:
     CASE_END = 2
 
 LINEOBJ = {
-  TypeMarker.VALVE: "Кран",
-  TypeMarker.CASE_START: "Патрон начало",
-  TypeMarker.CASE_END: "Патрон конец",
+  TypeMarker.VALVE: "Valve",
+  TypeMarker.CASE_START: "Casing start",
+  TypeMarker.CASE_END: "Casing end",
 }
 
 class TypeDefekt:
@@ -44,8 +44,8 @@ class TypeDefekt:
     DENT = 1
 
 DEFEKTS = {
-  TypeDefekt.CORROZ: "Коррозия",
-  TypeDefekt.DENT: "Вмятина",
+  TypeDefekt.CORROZ: "Corrosion",
+  TypeDefekt.DENT: "Dent",
 }
 
 class MyRow(Row):
