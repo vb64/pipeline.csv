@@ -8,7 +8,8 @@ from . import TestIV
 class TestOeg(TestIV):
     """Check orientation.py file."""
 
-    def test_name(self):
+    @staticmethod
+    def test_name():
         """Check name_* methods."""
         from pipeline_csv import ObjectClass, TypeHorWeld
         from pipeline_csv.oegiv import Row
