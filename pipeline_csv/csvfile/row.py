@@ -1,6 +1,6 @@
 """InspectionViewer export csv file data row."""
 from .. import (
-  Error, ObjectClass, TypeMarker, TypeHorWeld, COMMON, LINEOBJ, DEFEKTS, SEAMS
+  Error, ObjectClass, TypeMarker, TypeHorWeld, LINEOBJ, DEFEKTS, SEAMS
 )
 
 REVERSE_MARKER = {
@@ -56,12 +56,17 @@ def reverse_orient(orient_str):
     return "{},{}".format(hours, minutes)
 
 
-class Row:  # pylint: disable=too-many-instance-attributes
+class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-methods
     """Row of export csv file."""
 
     @staticmethod
     def name_seam(_code):
         """Return text for seam object_code_t field."""
+        return ''
+
+    @staticmethod
+    def name_object(_code):
+        """Return text for object_code_t field."""
         return ''
 
     def __init__(self):
@@ -120,7 +125,8 @@ class Row:  # pylint: disable=too-many-instance-attributes
         """Construct row as common object."""
         obj = cls.with_dist(distanse, latitude, longtitude, altitude)
         obj.type_object = typ
-        obj.object_code_t = COMMON[obj.type_object]
+        obj.object_code_t = cls.name_object(obj.type_object)
+
         return obj
 
     @classmethod

@@ -87,12 +87,6 @@ class DefektSide:
 
 SEAMS = attr_list(TypeHorWeld)
 
-COMMON = {
-  ObjectClass.WELD: "Шов",
-  ObjectClass.THICK: "Изменение толщины стенки трубы",
-  ObjectClass.PIPELINE_CATEGORY: "Категория трубопровода",
-}
-
 LINEOBJ = {
   TypeMarker.VALVE: "Кран",
   TypeMarker.MARKER: "Маркер",
