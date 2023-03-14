@@ -1,14 +1,6 @@
 """InspectionViewer export csv file data row."""
-from .. import (
-  Error, ObjectClass, TypeMarker, TypeHorWeld, LINEOBJ, SEAMS
-)
+from .. import Error, ObjectClass, TypeHorWeld, SEAMS
 
-REVERSE_MARKER = {
-  TypeMarker.CASE_START: TypeMarker.CASE_END,
-  TypeMarker.CASE_END: TypeMarker.CASE_START,
-  TypeMarker.TURN_START: TypeMarker.TURN_END,
-  TypeMarker.TURN_END: TypeMarker.TURN_START,
-}
 REVERSE_COMMENTS = {
   'лево': 'право',
   'право': 'лево',
@@ -72,6 +64,21 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @staticmethod
     def defekts_dict():
         """Return dict of available defekts types."""
+        return {}
+
+    @staticmethod
+    def lineobj_dict():
+        """Return dict of available lineobject types."""
+        return {}
+
+    @staticmethod
+    def markers_default():
+        """Return list of lineobject types that use as markers by default."""
+        return []
+
+    @staticmethod
+    def markers_reverse():
+        """Return dict of markers for reverse."""
         return {}
 
     def __init__(self):
@@ -179,10 +186,14 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @classmethod
     def as_lineobj(cls, distanse, typ, name, is_marker, comment, latitude='', longtitude='', altitude=''):
         """Construct row as line object."""
+        lineobj = cls.lineobj_dict()
+        if typ not in lineobj:
+            raise Error("Wrong lineobj type: {}".format(typ))
+
         obj = cls.with_dist(distanse, latitude, longtitude, altitude)
         obj.type_object = ObjectClass.MARKER
         obj.object_code = typ
-        obj.object_code_t = LINEOBJ[typ]
+        obj.object_code_t = lineobj[obj.object_code]
         obj.object_name = name
         obj.marker = iv_bool(is_marker)
         obj.comments = comment
@@ -398,7 +409,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         # object type
         if int(self.type_object) == ObjectClass.MARKER:
             object_code = int(self.object_code)
-            self.object_code = str(REVERSE_MARKER.get(object_code, object_code))
+            self.object_code = str(self.markers_reverse().get(object_code, object_code))
 
         # comments
         for key, val in REVERSE_COMMENTS.items():

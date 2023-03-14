@@ -1,5 +1,5 @@
 """Tubes iterator interface for InspectionViewer export csv file."""
-from .. import Error, TypeHorWeld, LINEOBJ
+from .. import Error, TypeHorWeld
 
 
 def summary_text(objects, names):
@@ -115,9 +115,13 @@ class Tube:
         if self.defects:
             defect_names = self.defects[0].__class__.defekts_dict()
 
+        line_names = {}
+        if self.lineobjects:
+            line_names = self.lineobjects[0].__class__.lineobj_dict()
+
         return ', '.join([i for i in [
           summary_text(self.defects, defect_names),
-          summary_text(self.lineobjects, LINEOBJ)
+          summary_text(self.lineobjects, line_names)
         ] if i])
 
     @property

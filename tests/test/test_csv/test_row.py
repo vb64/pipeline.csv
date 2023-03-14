@@ -84,8 +84,8 @@ class TestRow(TestCsv):
     @staticmethod
     def test_as():
         """Check  as_* helpers."""
-        from pipeline_csv.csvfile.row import Row, iv_bool
-        from pipeline_csv import TypeMarker, LINEOBJ
+        from pipeline_csv.oegiv import Row, TypeMarker, LINEOBJ
+        from pipeline_csv.csvfile.row import iv_bool
 
         row = Row.as_weld(10)
         assert row.is_weld
@@ -130,8 +130,8 @@ class TestRow(TestCsv):
     @staticmethod
     def test_reverse():
         """Check row.reverse."""
-        from pipeline_csv.csvfile.row import Row
-        from pipeline_csv import ObjectClass, TypeMarker
+        from pipeline_csv.oegiv import Row, TypeMarker
+        from pipeline_csv import ObjectClass
 
         row = Row()
         row.dist_od = '2'
@@ -158,7 +158,10 @@ class TestRow(TestCsv):
 
     @staticmethod
     def test_dict_default():
-        """Check row defekts_dict and lineobj_dict default methods."""
+        """Check row default methods."""
         from pipeline_csv.csvfile.row import Row
 
         assert not Row.defekts_dict()
+        assert not Row.lineobj_dict()
+        assert not Row.markers_default()
+        assert not Row.markers_reverse()
