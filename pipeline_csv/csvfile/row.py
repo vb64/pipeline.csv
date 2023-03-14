@@ -146,7 +146,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """Construct row as weld object."""
         obj = cls.as_common(distanse, ObjectClass.WELD, latitude, longtitude, altitude)
         if custom_number:
-            obj.object_name = custom_number.encode('windows-1251')
+            obj.object_name = custom_number
 
         return obj
 
