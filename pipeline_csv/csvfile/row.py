@@ -9,11 +9,6 @@ REVERSE_COMMENTS = {
 }
 
 
-def iv_bool(val):
-    """Bool value for IV csv."""
-    return 'ИСТИНА' if val else 'ЛОЖЬ'
-
-
 def to_int(text):
     """Convert text to int."""
     return int(round(float(text.strip().replace(',', '.')), 0))
@@ -52,6 +47,11 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     """Row of export csv file."""
 
     @staticmethod
+    def get_bool(val):
+        """Bool value for csv."""
+        return 'True' if val else 'False'
+
+    @staticmethod
     def name_seam(_code):
         """Return text for seam object_code_t field."""
         return ''
@@ -88,7 +88,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         self.object_code = 0
         self.object_name = ''
         self.object_code_t = ''
-        self.marker = iv_bool(False)
+        self.marker = self.get_bool(False)
         self.length = ''
         self.width = ''
         self.depth_min = ''
@@ -195,7 +195,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         obj.object_code = typ
         obj.object_code_t = lineobj[obj.object_code]
         obj.object_name = name
-        obj.marker = iv_bool(is_marker)
+        obj.marker = cls.get_bool(is_marker)
         obj.comments = comment
 
         return obj

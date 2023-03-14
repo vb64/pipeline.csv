@@ -84,7 +84,6 @@ class TestRow(TestCsv):
     def test_as(self):
         """Check  as_* helpers."""
         from pipeline_csv.oegiv import Row, TypeMarker, LINEOBJ
-        from pipeline_csv.csvfile.row import iv_bool
         from pipeline_csv import Error
 
         row = Row.as_weld(10)
@@ -110,7 +109,7 @@ class TestRow(TestCsv):
         assert row.object_code_t == LINEOBJ[TypeMarker.VALVE]
         assert row.object_name == 'xxx'
         assert row.comments == 'yyy'
-        assert row.marker == iv_bool(True)
+        assert row.marker == Row.get_bool(True)
 
         with self.assertRaises(Error) as context:
             Row.as_lineobj(10, 666, 'xxx', True, 'yyy')
