@@ -81,11 +81,11 @@ class TestRow(TestCsv):
             Row.as_seam(10, 99, orient1, orient2)
         assert 'Wrong seam type: 99' in str(context.exception)
 
-    @staticmethod
-    def test_as():
+    def test_as(self):
         """Check  as_* helpers."""
         from pipeline_csv.oegiv import Row, TypeMarker, LINEOBJ
         from pipeline_csv.csvfile.row import iv_bool
+        from pipeline_csv import Error
 
         row = Row.as_weld(10)
         assert row.is_weld
@@ -111,6 +111,10 @@ class TestRow(TestCsv):
         assert row.object_name == 'xxx'
         assert row.comments == 'yyy'
         assert row.marker == iv_bool(True)
+
+        with self.assertRaises(Error) as context:
+            Row.as_lineobj(10, 666, 'xxx', True, 'yyy')
+        assert 'Wrong lineobj type: 666' in str(context.exception)
 
     @staticmethod
     def test_reverse_orient():
