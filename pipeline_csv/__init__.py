@@ -1,4 +1,4 @@
-"""Interfaces for InspectionViewer stuff."""
+"""Interfaces for CSV data stuff."""
 
 
 def attr_list(cls):

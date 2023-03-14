@@ -1,4 +1,4 @@
-"""InspectionViewer export csv file data row."""
+"""Csv file data row."""
 from .. import Error, ObjectClass, TypeHorWeld, SEAMS
 
 REVERSE_COMMENTS = {
@@ -44,7 +44,7 @@ def reverse_orient(orient_str):
 
 
 class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-methods
-    """Row of export csv file."""
+    """Row of csv file."""
 
     @staticmethod
     def get_bool(val):

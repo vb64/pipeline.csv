@@ -1,4 +1,4 @@
-"""Tubes iterator interface for InspectionViewer export csv file."""
+"""Tubes iterator interface for csv file."""
 from .. import Error, TypeHorWeld
 
 
@@ -19,7 +19,7 @@ class Tube:
     """Represent one pipe."""
 
     def __init__(self, row, stream, auto_number):
-        """Construct new tube object from IV csv row with given data stream state."""
+        """Construct new tube object from csv row with given data stream state."""
         self.row = row
         self.dist = int(row.dist_od)
         self.auto_number = auto_number
@@ -45,7 +45,7 @@ class Tube:
         self.category = self.stream.category
 
     def add_object(self, row):
-        """Add data to tube from IV csv row."""
+        """Add data to tube from csv row."""
         if row.is_defect:
             self.defects.append(row)
 

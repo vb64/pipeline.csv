@@ -5,8 +5,6 @@ import math
 class Error(Exception):
     """Orientation exception."""
 
-    pass
-
 
 class Orientation:
     """Orientation units conversions."""
@@ -22,8 +20,8 @@ class Orientation:
         self.hours = hours
         self.minutes = minutes
 
-    def __unicode__(self):
-        """Return orientation string in IV csv format."""
+    def __str__(self):
+        """Return orientation string in csv format."""
         hours = int(self.hours)
         if hours == 0:
             hours = '12'
@@ -33,10 +31,6 @@ class Orientation:
             minutes = '0{}'.format(minutes)
 
         return "{},{}".format(hours, minutes)
-
-    def __str__(self):
-        """Same as __unicode__."""
-        return self.__unicode__()
 
     @classmethod
     def from_hour_float(cls, hour_float):

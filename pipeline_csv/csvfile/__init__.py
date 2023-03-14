@@ -1,11 +1,10 @@
-"""Interfaces for InspectionViewer export csv file."""
+"""Interfaces for csv file."""
 import csv
 from .. import Error
 
 
 def transform_length(dist_od, length_od, table, table_index):
-    """
-    transform_length modify length at given dist according table.
+    """Modify length at given dist according table.
 
     Get vector (distance, length), table of dist modifications,
     position in this table and return transformed length.
@@ -26,10 +25,9 @@ def transform_length(dist_od, length_od, table, table_index):
 
 
 def transform_dist(dist_od, table, table_index):
-    """
-    transform_dist get distance, table of dist modifications and current position in this table.
+    """Return new position in table of dist modifications and transformed distance for dist_od.
 
-    Return new position in table of dist modifications and transformed distance for dist_od.
+    Use distance, table of dist modifications and current position in this table.
     """
     try:
         pos = int(dist_od)
@@ -131,7 +129,7 @@ class File:
     ]
 
     def __init__(self, float_delimiter=FloatDelimiter.Point):
-        """Create empti csv file object."""
+        """Create empty csv file object."""
         self.data = []
         self.thicks = []
         self.categories = []
@@ -140,7 +138,7 @@ class File:
 
     @classmethod
     def open_file(cls, file_path, mode):
-        """Python 2/3 open file."""
+        """Open file wrapper."""
         return open(file_path, mode + 't', encoding=cls.ENCODING)
 
     @classmethod
