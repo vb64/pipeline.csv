@@ -426,5 +426,5 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         # comments
         for key, val in self.comment_reverse().items():
             if key in self.comments:
-                self.comments.replace(key, val)
+                self.comments = self.comments.replace(key, val)
                 break

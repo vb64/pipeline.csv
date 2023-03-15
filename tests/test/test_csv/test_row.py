@@ -160,6 +160,20 @@ class TestRow(TestCsv):
         assert row.object_code == str(TypeMarker.TURN_END)
 
     @staticmethod
+    def test_reverse_comment():
+        """Comment change on row reverse."""
+        from pipeline_csv import ObjectClass
+        from pipeline_csv.oegiv import Row
+
+        row = Row()
+        row.dist_od = '2'
+        row.type_object = str(ObjectClass.MARKER)
+        row.comments = 'влево'
+
+        row.reverse(10)
+        assert row.comments == 'вправо'
+
+    @staticmethod
     def test_dict_default():
         """Check row default methods."""
         from pipeline_csv.csvfile.row import Row
@@ -168,3 +182,4 @@ class TestRow(TestCsv):
         assert not Row.lineobj_dict()
         assert not Row.markers_default()
         assert not Row.markers_reverse()
+        assert not Row.comment_reverse()
