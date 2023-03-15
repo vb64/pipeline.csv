@@ -10,7 +10,7 @@ def check_new():
     """Construct new csv file from scratch."""
     from pipeline_csv import TypeHorWeld, DefektSide
     from pipeline_csv.orientation import Orientation
-    from pipeline_csv.csvfile import File
+    from pipeline_csv.oegiv import File
     from pipeline_csv.oegiv import TypeDefekt, Row
 
     csv_file = File()
@@ -49,7 +49,7 @@ def check_new():
 
 def check_reversing(csv_file):
     """Reversing the data."""
-    from pipeline_csv.csvfile import File
+    from pipeline_csv.oegiv import File
 
     # create copy from saved file
     csv_copy = File.from_file('example.csv')
@@ -91,7 +91,7 @@ def check_join(csv_file):
 
 def check_transform(csv_file):
     """Compress distances and length of all objects in half."""
-    from pipeline_csv.csvfile import File
+    from pipeline_csv.oegiv import File
 
     csv_file.dist_modify([[0, 0], [28000, 14000]])
     assert csv_file.total_length == 14000

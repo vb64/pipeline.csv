@@ -15,13 +15,6 @@ SEAM = {
   TypeHorWeld.UNKNOWN: "Unknown",
 }
 
-REVERSE_COMMENTS = {
-  'лево': 'право',
-  'право': 'лево',
-  'начало': 'конец',
-  'конец': 'начало',
-}
-
 
 def to_int(text):
     """Convert text to int."""
@@ -93,6 +86,11 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @staticmethod
     def markers_reverse():
         """Return dict of markers for reverse."""
+        return {}
+
+    @staticmethod
+    def comment_reverse():
+        """Return dict of comment substrings for reverse."""
         return {}
 
     def __init__(self):
@@ -426,7 +424,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
             self.object_code = str(self.markers_reverse().get(object_code, object_code))
 
         # comments
-        for key, val in REVERSE_COMMENTS.items():
+        for key, val in self.comment_reverse().items():
             if key in self.comments:
                 self.comments.replace(key, val)
                 break

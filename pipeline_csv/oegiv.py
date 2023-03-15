@@ -98,6 +98,13 @@ REVERSE_MARKER = {
   TypeMarker.TURN_END: TypeMarker.TURN_START,
 }
 
+REVERSE_COMMENTS = {
+  'лево': 'право',
+  'право': 'лево',
+  'начало': 'конец',
+  'конец': 'начало',
+}
+
 COMMON = {
   ObjectClass.WELD: "Шов",
   ObjectClass.THICK: "Изменение толщины стенки трубы",
@@ -156,3 +163,8 @@ class Row(row.Row):
     def markers_reverse():
         """Return dict of markers for reverse."""
         return REVERSE_MARKER
+
+    @staticmethod
+    def comment_reverse():
+        """Return dict of comment substrings for reverse."""
+        return REVERSE_COMMENTS
