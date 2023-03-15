@@ -1,5 +1,19 @@
 """Csv file data row."""
-from .. import Error, ObjectClass, TypeHorWeld, SEAMS
+from .. import Error, ObjectClass, TypeHorWeld
+
+COMMON = {
+  ObjectClass.WELD: "Weld",
+  ObjectClass.THICK: "Wall thickness change",
+  ObjectClass.PIPELINE_CATEGORY: "Category",
+}
+
+SEAM = {
+  TypeHorWeld.HORIZONTAL: "Single",
+  TypeHorWeld.SECOND: "Double",
+  TypeHorWeld.NO_WELD: "Seamless ",
+  TypeHorWeld.SPIRAL: "Spiral",
+  TypeHorWeld.UNKNOWN: "Unknown",
+}
 
 REVERSE_COMMENTS = {
   'лево': 'право',
@@ -52,14 +66,14 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return 'True' if val else 'False'
 
     @staticmethod
-    def name_seam(_code):
+    def name_seam(code):
         """Return text for seam object_code_t field."""
-        return ''
+        return SEAM[code]
 
     @staticmethod
-    def name_object(_code):
+    def name_object(code):
         """Return text for object_code_t field."""
-        return ''
+        return COMMON[code]
 
     @staticmethod
     def defekts_dict():
@@ -167,7 +181,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @classmethod
     def as_seam(cls, distanse, typ, orient1, orient2):
         """Construct row as seam object with given typ."""
-        if typ not in SEAMS:
+        if typ not in SEAM:
             raise Error("Wrong seam type: {}".format(typ))
 
         obj = cls.with_dist(distanse, '', '', '')

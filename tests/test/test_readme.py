@@ -156,8 +156,8 @@ class TestReadme(TestIV):
             os.remove(name)
 
     @staticmethod
-    def test_seams():
-        """Check SEAMS list."""
-        from pipeline_csv import SEAMS
+    def test_attr_list():
+        """Function attr_list."""
+        from pipeline_csv import attr_list, ObjectClass
 
-        assert len(SEAMS) == 5
+        assert len(attr_list(ObjectClass)) == 6
