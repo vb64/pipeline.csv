@@ -1,0 +1,4 @@
+15.03.2023 ver.1.0
+------------------
+
++ Library work with the results of analysis of in-line flaw detection data in the form of a CSV file.
