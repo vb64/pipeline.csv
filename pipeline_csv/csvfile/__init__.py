@@ -1,6 +1,7 @@
 """Interfaces for csv file."""
 import csv
 from .. import Error
+from .row import Row as BaseRow
 
 
 def transform_length(dist_od, length_od, table, table_index):
@@ -96,6 +97,7 @@ def format_floats(val_list, float_delimiter):
 class File:
     """Export/import csv file."""
 
+    RowCls = BaseRow
     ENCODING = 'utf-8'
     DELIMETER = ';'
     COLUMN_HEADS = [
@@ -144,8 +146,6 @@ class File:
     @classmethod
     def from_file(cls, file_path, float_delimiter=FloatDelimiter.Point):
         """Construct from export csv file."""
-        from .row import Row
-
         obj = cls(float_delimiter=float_delimiter)
         reader = csv.reader(cls.open_file(file_path, 'r'), delimiter=cls.DELIMETER)
         next(reader)  # skip column titles row
@@ -154,7 +154,7 @@ class File:
             if not row:
                 continue
 
-            item = Row.from_csv_row(row)
+            item = cls.RowCls.from_csv_row(row)
             obj.data.append(item)
             if item.is_category:
                 obj.categories.append(item)
@@ -201,8 +201,6 @@ class File:
 
     def join(self, files):
         """Join several csv files."""
-        from .row import Row
-
         for item in files:
             try:
                 tube_length = int(item)
@@ -210,7 +208,7 @@ class File:
                 self.append(self.from_file(item))
                 continue
 
-            point = Row()
+            point = self.RowCls()
             point.dist_od = str(self.total_length + tube_length)
             point.type_object = -1  # set as ObjectClass.JOIN
             self.data.append(point)

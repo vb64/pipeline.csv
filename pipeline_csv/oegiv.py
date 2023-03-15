@@ -120,12 +120,6 @@ SEAM = {
 }
 
 
-class File(FileBase):
-    """Export/import Deftable.csv file."""
-
-    ENCODING = 'windows-1251'
-
-
 class Row(row.Row):
     """Row of Deftable.csv file."""
 
@@ -168,3 +162,10 @@ class Row(row.Row):
     def comment_reverse():
         """Return dict of comment substrings for reverse."""
         return REVERSE_COMMENTS
+
+
+class File(FileBase):
+    """Export/import Deftable.csv file."""
+
+    RowCls = Row
+    ENCODING = 'windows-1251'
