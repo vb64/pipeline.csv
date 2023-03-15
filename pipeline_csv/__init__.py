@@ -38,6 +38,3 @@ class DefektSide:
     OUTSIDE = 1
     INSIDE = 2
     IN_WALL = 3
-
-
-SEAMS = attr_list(TypeHorWeld)
