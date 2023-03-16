@@ -183,7 +183,7 @@ class File:
     def to_file(self, file_path):
         """Save csv to file."""
         output = self.open_file(file_path, 'w')
-        writer = csv.writer(output, delimiter=self.DELIMETER)
+        writer = csv.writer(output, delimiter=self.DELIMETER, lineterminator='\n')
 
         writer.writerow(self.COLUMN_HEADS)
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):
