@@ -1,3 +1,7 @@
++ Add Orientation.from_degree helper
+
+* Fix new lines in saved csv file
+
 15.03.2023 ver.1.0
 ------------------
 

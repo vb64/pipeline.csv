@@ -27,6 +27,9 @@ class TestOrientation(TestIV):
         assert str(Orientation.from_minutes(60)) == "1,00"
         assert str(Orientation.from_minutes(90)) == "1,30"
 
+        assert str(Orientation.from_degree(30)) == "1,00"
+        assert str(Orientation.from_degree(45)) == "1,30"
+
     @staticmethod
     def test_from_infotech_html():
         """Check from_infotech_html."""

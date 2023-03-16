@@ -44,6 +44,11 @@ class Orientation:
         """Construct object from integer minutes."""
         return cls(minutes / 60, minutes % 60)
 
+    @classmethod
+    def from_degree(cls, degree):
+        """Construct object from float degree."""
+        return cls.from_minutes(int(degree * 2))
+
 
 def from_infotech_html(text):
     """Return orientation from infotech string."""
