@@ -38,3 +38,11 @@ class TestOrientation(TestIV):
         orient = from_infotech_html("5,5")
         assert orient.hours == 5
         assert orient.minutes == 30
+
+    def test_add180(self):
+        """Function add180."""
+        from pipeline_csv.orientation import Orientation, add180
+
+        assert str(add180(Orientation(3, 0))) == '9,00'
+        assert str(add180(Orientation(9, 0))) == '3,00'
+        assert str(add180(Orientation(9, 30))) == '3,30'

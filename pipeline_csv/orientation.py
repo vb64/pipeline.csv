@@ -53,3 +53,12 @@ class Orientation:
 def from_infotech_html(text):
     """Return orientation from infotech string."""
     return Orientation.from_hour_float(float(text.replace(',', '.')))
+
+
+def add180(ornt):
+    """Return the orientation 180 degrees away from the given one."""
+    full_minutes = ornt.hours * 60 + ornt.minutes + 180 * 2
+    return Orientation(
+      int(full_minutes / 60) % 12,
+      full_minutes % 60
+    )
