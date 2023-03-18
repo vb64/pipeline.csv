@@ -39,7 +39,8 @@ class TestOrientation(TestIV):
         assert orient.hours == 5
         assert orient.minutes == 30
 
-    def test_add180(self):
+    @staticmethod
+    def test_add180():
         """Function add180."""
         from pipeline_csv.orientation import Orientation, add180
 
