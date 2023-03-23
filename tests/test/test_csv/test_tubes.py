@@ -18,6 +18,10 @@ class TestTubes(TestCsv):
 
         self.tube = Tube(Row.as_weld(10), Stream(), '1')
 
+    def test_str(self):
+        """Method str."""
+        assert 'Tube len ' in str(self.tube)
+
     @staticmethod
     def test_no_welds():
         """No welds in csv file."""

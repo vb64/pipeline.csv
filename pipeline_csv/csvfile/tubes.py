@@ -38,6 +38,13 @@ class Tube:
         self.categories = []
         self.thicks = []
 
+    def __str__(self):
+        """Return as text."""
+        return "Tube len {} wall {}".format(
+          self.length,
+          self.thick
+        )
+
     def finalize(self, dist, _warns):
         """Finalize tube data at given dist."""
         self.length = int(dist) - self.dist

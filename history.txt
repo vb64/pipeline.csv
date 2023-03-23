@@ -1,3 +1,5 @@
++ String representation for class `Tube`.
+
 + Add helper function orientation.add180
 
 16.03.2023 ver.1.1
