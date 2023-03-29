@@ -1,4 +1,6 @@
-+ Add Row.dist property
++ Add Row.orient1 and Row.orient2 properties.
+
++ Add Row.dist property.
 
 + Add helper Row class properties: is_metal_loss, is_dent, is_at_weld, is_at_seam, is_valve.
 

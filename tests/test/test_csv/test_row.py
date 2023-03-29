@@ -206,3 +206,14 @@ class TestRow(TestCsv):
         assert not Row.atweld_dict()
         assert not Row.atseam_dict()
         assert not Row.valve_dict()
+
+    def test_orient_minutes(self):
+        """Check row orient1/orient2 properties."""
+        from pipeline_csv.csvfile.row import Row
+
+        row = Row.as_weld(10)
+        row.orient_td = '1,10'
+        row.orient_bd = ''
+
+        assert row.orient1 == 70
+        assert row.orient2 is None

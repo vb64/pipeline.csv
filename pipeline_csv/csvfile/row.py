@@ -1,5 +1,6 @@
 """Csv file data row."""
 from .. import Error, ObjectClass, TypeHorWeld
+from ..orientation import Orientation
 
 COMMON = {
   ObjectClass.WELD: "Weld",
@@ -159,6 +160,26 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     def dist(self):
         """Return object distance as integer mm."""
         return int(self.dist_od)
+
+    @staticmethod
+    def get_minutes(text):
+        """Restore full integer minute from text 'hours,minites'."""
+        val = Orientation.from_csv(text)
+
+        if val is None:
+            return None
+
+        return val.as_minutes
+
+    @property
+    def orient1(self):
+        """Return start orientation as integer minutes or None."""
+        return self.get_minutes(self.orient_td)
+
+    @property
+    def orient2(self):
+        """Return end orientation as integer minutes or None."""
+        return self.get_minutes(self.orient_bd)
 
     def set_geo(self, latitude, longtitude, altitude):
         """Set geo coords for object."""
