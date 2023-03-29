@@ -47,3 +47,11 @@ class TestOrientation(TestIV):
         assert str(add180(Orientation(3, 0))) == '9,00'
         assert str(add180(Orientation(9, 0))) == '3,00'
         assert str(add180(Orientation(9, 30))) == '3,30'
+
+    @staticmethod
+    def test_from_csv():
+        """Method from_csv."""
+        from pipeline_csv.orientation import Orientation
+
+        assert Orientation.from_csv('1,10').as_minutes == 70
+        assert Orientation.from_csv('') is None
