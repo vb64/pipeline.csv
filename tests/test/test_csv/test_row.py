@@ -44,6 +44,10 @@ class TestRow(TestCsv):
             Row.as_defekt(10, 999, 666, 10, 10, 15, orient1, orient2, orient1, 11, 'comment')
         assert 'Wrong defekt type: 999' in str(context.exception)
 
+        row = Row.as_defekt(
+          10, TypeDefekt.CORROZ, DefektSide.INSIDE, '', '', '', orient1, orient2, mp_orient, 11, 'comment'
+        )
+
     def test_as_seam(self):
         """Check as_seam helpers."""
         from pipeline_csv.csvfile.row import Row
