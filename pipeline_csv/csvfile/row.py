@@ -18,6 +18,9 @@ SEAM = {
 
 def to_int(text):
     """Convert text to int."""
+    if not text:
+        return None
+
     return int(round(float(text.strip().replace(',', '.')), 0))
 
 
