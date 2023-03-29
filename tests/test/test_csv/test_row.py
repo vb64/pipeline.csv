@@ -47,6 +47,7 @@ class TestRow(TestCsv):
         row = Row.as_defekt(
           10, TypeDefekt.CORROZ, DefektSide.INSIDE, '', '', '', orient1, orient2, mp_orient, 11, 'comment'
         )
+        assert row.depth_max is None
 
     def test_as_seam(self):
         """Check as_seam helpers."""
