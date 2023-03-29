@@ -32,6 +32,11 @@ class Orientation:
 
         return "{},{}".format(hours, minutes)
 
+    @property
+    def as_minutes(self):
+        """Return orientation as integer minutes."""
+        return self.hours * 60 + self.minutes
+
     @classmethod
     def from_hour_float(cls, hour_float):
         """Construct object from hours as float."""
@@ -48,6 +53,15 @@ class Orientation:
     def from_degree(cls, degree):
         """Construct object from float degree."""
         return cls.from_minutes(int(degree * 2))
+
+    @classmethod
+    def from_csv(cls, text):
+        """Construct object from from text 'hours,minites'."""
+        if ',' not in text:
+            return None
+
+        hours, minutes = text.split(',')
+        return cls(int(hours), int(minutes))
 
 
 def from_infotech_html(text):
