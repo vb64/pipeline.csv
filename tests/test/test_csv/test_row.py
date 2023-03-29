@@ -87,7 +87,8 @@ class TestRow(TestCsv):
             Row.as_seam(10, 99, orient1, orient2)
         assert 'Wrong seam type: 99' in str(context.exception)
 
-    def test_is(self):
+    @staticmethod
+    def test_is():
         """Check  is_* helpers."""
         from pipeline_csv.csvfile.row import Row
 
