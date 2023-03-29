@@ -18,3 +18,9 @@ class TestOeg(TestIV):
         assert Row.name_object(ObjectClass.WELD) == "Шов"
         assert len(Row.markers_reverse()) == 4
         assert len(Row.markers_default()) == 3
+
+        assert len(Row.mloss_dict()) == 2
+        assert len(Row.dents_dict()) == 2
+        assert len(Row.atweld_dict()) == 2
+        assert len(Row.atseam_dict()) == 2
+        assert len(Row.valve_dict()) == 1

@@ -86,6 +86,17 @@ class TestRow(TestCsv):
             Row.as_seam(10, 99, orient1, orient2)
         assert 'Wrong seam type: 99' in str(context.exception)
 
+    def test_is(self):
+        """Check  is_* helpers."""
+        from pipeline_csv.csvfile.row import Row
+
+        row = Row.as_weld(10)
+        assert not row.is_metal_loss
+        assert not row.is_dent
+        assert not row.is_at_weld
+        assert not row.is_at_seam
+        assert not row.is_valve
+
     def test_as(self):
         """Check  as_* helpers."""
         from pipeline_csv.oegiv import Row, TypeMarker, LINEOBJ
@@ -188,3 +199,9 @@ class TestRow(TestCsv):
         assert not Row.markers_default()
         assert not Row.markers_reverse()
         assert not Row.comment_reverse()
+
+        assert not Row.mloss_dict()
+        assert not Row.dents_dict()
+        assert not Row.atweld_dict()
+        assert not Row.atseam_dict()
+        assert not Row.valve_dict()
