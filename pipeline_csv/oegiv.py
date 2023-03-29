@@ -46,6 +46,30 @@ class TypeDefekt:
     GRINDING = 18
 
 
+MLOSS = [
+  TypeDefekt.CORROZ,
+  TypeDefekt.GRINDING,
+]
+
+DENTS = [
+  TypeDefekt.DENT,
+  TypeDefekt.DENT_METAL_LOSS,
+]
+
+AT_WELD = [
+  TypeDefekt.GWAN,
+  TypeDefekt.CRACK_WELD,
+]
+
+AT_SEAM = [
+  TypeDefekt.ANOMALY_HOR_WELD,
+  TypeDefekt.ANOMALY_SPIRAL_WELD,
+]
+
+VALVE = [
+  TypeMarker.VALVE,
+]
+
 DEFEKTS = {
   TypeDefekt.CORROZ: "Коррозия",
   TypeDefekt.MECHANIC: "Мех. повреждение",
@@ -162,6 +186,31 @@ class Row(row.Row):
     def comment_reverse():
         """Return dict of comment substrings for reverse."""
         return REVERSE_COMMENTS
+
+    @staticmethod
+    def mloss_dict():
+        """Return dict of available metal loss defects."""
+        return MLOSS
+
+    @staticmethod
+    def dents_dict():
+        """Return dict of available dent defects."""
+        return DENTS
+
+    @staticmethod
+    def atweld_dict():
+        """Return dict of available at weld defects."""
+        return AT_WELD
+
+    @staticmethod
+    def atseam_dict():
+        """Return dict of available at seam defects."""
+        return AT_SEAM
+
+    @staticmethod
+    def valve_dict():
+        """Return dict of available valve like obects."""
+        return VALVE
 
 
 class File(FileBase):

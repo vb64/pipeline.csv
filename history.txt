@@ -1,4 +1,6 @@
-+ Add helper class method Orientation.from_csv and property Orientation.as_minutes.
++ Add helper Row class properties: is_metal_loss, is_dent, is_at_weld, is_at_seam, is_valve.
+
++ Add helper Orientation class method from_csv and property as_minutes.
 
 - Fix fail on empty string in defect depth field.
 
