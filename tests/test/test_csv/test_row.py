@@ -39,6 +39,7 @@ class TestRow(TestCsv):
         assert row.object_code == TypeDefekt.CORROZ
         assert row.orient_td == "9,15"
         assert row.orient_bd == "5,15"
+        assert row.dist == 10
 
         with self.assertRaises(Error) as context:
             Row.as_defekt(10, 999, 666, 10, 10, 15, orient1, orient2, orient1, 11, 'comment')

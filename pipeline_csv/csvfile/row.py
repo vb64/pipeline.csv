@@ -155,6 +155,11 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """String representation for row object."""
         return ';'.join([str(i) for i in self.values()])
 
+    @property
+    def dist(self):
+        """Return object distance as integer mm."""
+        return int(self.dist_od)
+
     def set_geo(self, latitude, longtitude, altitude):
         """Set geo coords for object."""
         if latitude and longtitude and altitude:
