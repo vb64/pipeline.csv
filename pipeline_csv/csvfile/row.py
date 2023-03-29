@@ -96,6 +96,31 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """Return dict of comment substrings for reverse."""
         return {}
 
+    @staticmethod
+    def mloss_dict():
+        """Return dict of available metal loss defects."""
+        return {}
+
+    @staticmethod
+    def dents_dict():
+        """Return dict of available dent defects."""
+        return {}
+
+    @staticmethod
+    def atweld_dict():
+        """Return dict of available at weld defects."""
+        return {}
+
+    @staticmethod
+    def atseam_dict():
+        """Return dict of available at seam defects."""
+        return {}
+
+    @staticmethod
+    def valve_dict():
+        """Return dict of available valve like obects."""
+        return {}
+
     def __init__(self):
         """Create empty csv row object."""
         self.dist_od = None
@@ -382,6 +407,31 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     def is_seam(self):
         """Row is seam object."""
         return int(self.type_object) == ObjectClass.HOR_WELD
+
+    @property
+    def is_metal_loss(self):
+        """Return True if item is metal loss defect."""
+        return self.is_defect and (int(self.object_code) in self.mloss_dict())
+
+    @property
+    def is_dent(self):
+        """Return True if item is dent defect."""
+        return self.is_defect and (int(self.object_code) in self.dents_dict())
+
+    @property
+    def is_at_weld(self):
+        """Return True if item is weld placed defect."""
+        return self.is_defect and (int(self.object_code) in self.atweld_dict())
+
+    @property
+    def is_at_seam(self):
+        """Return True if item is seam placed defect."""
+        return self.is_defect and (int(self.object_code) in self.atseam_dict())
+
+    @property
+    def is_valve(self):
+        """Return True if item is valve like object."""
+        return self.is_lineobj and (int(self.object_code) in self.valve_dict())
 
     def reverse(self, total_length):
         """Reverse dist, orientation and start point if objects with length."""
