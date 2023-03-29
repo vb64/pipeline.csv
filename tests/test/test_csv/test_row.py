@@ -207,7 +207,8 @@ class TestRow(TestCsv):
         assert not Row.atseam_dict()
         assert not Row.valve_dict()
 
-    def test_orient_minutes(self):
+    @staticmethod
+    def test_orient_minutes():
         """Check row orient1/orient2 properties."""
         from pipeline_csv.csvfile.row import Row
 
