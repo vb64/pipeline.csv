@@ -129,7 +129,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         self.object_code = 0
         self.object_name = ''
         self.object_code_t = ''
-        self.marker = self.get_bool(False)
+        self.is_marker_int = False
         self.length = ''
         self.width = ''
         self.depth_min = ''
@@ -155,6 +155,23 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     def __str__(self):
         """String representation for row object."""
         return ';'.join([str(i) for i in self.values()])
+
+    @property
+    def marker(self):
+        """Return string for marker feature."""
+        return self.get_bool(self.is_marker_int)
+
+    @marker.setter
+    def marker(self, val):
+        """Set internal field based on string for marker feature."""
+        self.is_marker_int = False
+        if val == self.get_bool(True):
+            self.is_marker_int = True
+
+    @property
+    def is_marker(self):
+        """Return marker feature as bool."""
+        return self.is_lineobj and self.is_marker_int
 
     @property
     def dist(self):
@@ -261,7 +278,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         obj.object_code = typ
         obj.object_code_t = lineobj[obj.object_code]
         obj.object_name = name
-        obj.marker = cls.get_bool(is_marker)
+        obj.is_marker_int = is_marker
         obj.comments = comment
 
         return obj

@@ -128,6 +128,9 @@ class TestRow(TestCsv):
         assert row.object_name == 'xxx'
         assert row.comments == 'yyy'
         assert row.marker == Row.get_bool(True)
+        assert row.is_marker
+        row.marker = Row.get_bool(False)
+        assert not row.is_marker
 
         with self.assertRaises(Error) as context:
             Row.as_lineobj(10, 666, 'xxx', True, 'yyy')
