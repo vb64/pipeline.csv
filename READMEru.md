@@ -34,46 +34,39 @@ class TypeMarker:
     CASE_START = 1
     CASE_END = 2
 
-LINEOBJ = {
-  TypeMarker.VALVE: "Кран",
-  TypeMarker.CASE_START: "Патрон начало",
-  TypeMarker.CASE_END: "Патрон конец",
-}
-
 class TypeDefekt:
     CORROZ = 0
     DENT = 1
-
-DEFEKTS = {
-  TypeDefekt.CORROZ: "Коррозия",
-  TypeDefekt.DENT: "Вмятина",
-}
 
 class MyRow(Row):
 
     @staticmethod
     def defekts_dict():
-        return DEFEKTS
+        return {
+          TypeDefekt.CORROZ: "Коррозия",
+          TypeDefekt.DENT: "Вмятина",
+        }
 
     @staticmethod
     def lineobj_dict():
-        return LINEOBJ
+        return {
+          TypeMarker.VALVE: "Кран",
+          TypeMarker.CASE_START: "Патрон начало",
+          TypeMarker.CASE_END: "Патрон конец",
+        }
 ```
 
 Для операции отзеркаливания данных нужно переопределить метод `markers_reverse`, который возвращает словарь, задающий правила замен при отзеркаливании.
 
 ```python
-REVERSE_MARKER = {
-  TypeMarker.CASE_START: TypeMarker.CASE_END,
-  TypeMarker.CASE_END: TypeMarker.CASE_START,
-}
-
 class MyRow(Row):
 
     @staticmethod
     def markers_reverse():
-        return REVERSE_MARKER
-
+        return {
+          TypeMarker.CASE_START: TypeMarker.CASE_END,
+          TypeMarker.CASE_END: TypeMarker.CASE_START,
+        }
 ```
 
 Далее класс MyRow можно использовать в операциях с данными CSV-файлов.

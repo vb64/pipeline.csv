@@ -37,45 +37,39 @@ class TypeMarker:
     CASE_START = 1
     CASE_END = 2
 
-LINEOBJ = {
-  TypeMarker.VALVE: "Valve",
-  TypeMarker.CASE_START: "Casing start",
-  TypeMarker.CASE_END: "Casing end",
-}
-
 class TypeDefekt:
     CORROZ = 0
     DENT = 1
-
-DEFEKTS = {
-  TypeDefekt.CORROZ: "Corrosion",
-  TypeDefekt.DENT: "Dent",
-}
 
 class MyRow(Row):
 
     @staticmethod
     def defekts_dict():
-        return DEFEKTS
+        return {
+          TypeDefekt.CORROZ: "Corrosion",
+          TypeDefekt.DENT: "Dent",
+        }
 
     @staticmethod
     def lineobj_dict():
-        return LINEOBJ
+        return {
+          TypeMarker.VALVE: "Valve",
+          TypeMarker.CASE_START: "Casing start",
+          TypeMarker.CASE_END: "Casing end",
+        }
 ```
 
 For the data mirroring operation, you need to override the `markers_reverse` method, which returns a dictionary that specifies the rules for replacing when mirroring.
 
 ```python
-REVERSE_MARKER = {
-  TypeMarker.CASE_START: TypeMarker.CASE_END,
-  TypeMarker.CASE_END: TypeMarker.CASE_START,
-}
-
 class MyRow(Row):
 
     @staticmethod
     def markers_reverse():
-        return REVERSE_MARKER
+        return {
+          TypeMarker.CASE_START: TypeMarker.CASE_END,
+          TypeMarker.CASE_END: TypeMarker.CASE_START,
+        }
 ```
 
 Further, the MyRow class can be used in operations with data of CSV files.
