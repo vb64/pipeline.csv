@@ -1,4 +1,6 @@
-+ `is_marker` property for Row class
++ File class method `at_folder`.
+
++ `is_marker` property for Row class.
 
 29.03.2023 ver.1.2
 ------------------

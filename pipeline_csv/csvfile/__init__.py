@@ -1,4 +1,5 @@
 """Interfaces for csv file."""
+import os
 import csv
 from .. import Error
 from .row import Row as BaseRow
@@ -98,6 +99,7 @@ class File:
     """Export/import csv file."""
 
     RowCls = BaseRow
+    file_name = 'DefTable.csv'
     ENCODING = 'utf-8'
     DELIMETER = ';'
     COLUMN_HEADS = [
@@ -142,6 +144,11 @@ class File:
     def open_file(cls, file_path, mode):
         """Open file wrapper."""
         return open(file_path, mode + 't', encoding=cls.ENCODING)
+
+    @classmethod
+    def at_folder(cls, folder):
+        """Restore from file in given folder."""
+        return cls.from_file(os.path.join(folder, cls.file_name))
 
     @classmethod
     def from_file(cls, file_path, float_delimiter=FloatDelimiter.Point):
