@@ -6,11 +6,14 @@ from unittest import TestCase
 class TestIV(TestCase):
     """Base class for InspectionViewer tests."""
 
-    fixtures_path = os.path.join(
-      os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-      'fixtures'
-    )
+    @staticmethod
+    def fixture(*path):
+        """Return full path for file in 'fixtures' dir."""
+        return os.path.join('fixtures', *path)
 
-    def fixture(self, file_name):
-        """Full file name for fixture."""
-        return os.path.join(self.fixtures_path, file_name)
+    @staticmethod
+    def build(*path):
+        """Return full path for file in 'build' dir."""
+        if not path:
+            return 'build'
+        return os.path.join('build', *path)

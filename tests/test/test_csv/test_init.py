@@ -24,6 +24,9 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile.row import Row
         from pipeline_csv.oegiv import File
 
+        csv_file = File.at_folder(self.fixture())
+        assert len(csv_file.data) == 178
+
         csv_file = File.from_file(self.fixture('DefTable.csv'))
         assert len(csv_file.data) == 178
 
