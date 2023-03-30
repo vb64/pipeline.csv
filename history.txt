@@ -1,3 +1,5 @@
++ `is_marker` property for Row class
+
 29.03.2023 ver.1.2
 ------------------
 
@@ -5,15 +7,15 @@
 
 + Add Row.dist property.
 
-+ Add helper Row class properties: is_metal_loss, is_dent, is_at_weld, is_at_seam, is_valve.
++ Add helper Row class properties: `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam`, `is_valve`.
 
-+ Add helper Orientation class method from_csv and property as_minutes.
++ Add helper Orientation class method `from_csv` and property `as_minutes`.
 
 - Fix fail on empty string in defect depth field.
 
 + String representation for class `Tube`.
 
-+ Add helper function orientation.add180
++ Add helper function `orientation.add180`
 
 16.03.2023 ver.1.1
 ------------------
