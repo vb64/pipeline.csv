@@ -35,7 +35,7 @@ class Orientation:
     @property
     def as_minutes(self):
         """Return orientation as integer minutes."""
-        return self.hours * 60 + self.minutes
+        return (self.hours * 60 + self.minutes) % 720
 
     @classmethod
     def from_hour_float(cls, hour_float):

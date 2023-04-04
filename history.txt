@@ -1,3 +1,5 @@
+- Orientation in minutes does not exceed 720 minutes.
+
 + File class method `at_folder`.
 
 + `is_marker` property for Row class.
