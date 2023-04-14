@@ -1,3 +1,6 @@
+14.04.2023 ver.1.3
+------------------
+
 - Orientation in minutes does not exceed 720 minutes.
 
 + File class method `at_folder`.
