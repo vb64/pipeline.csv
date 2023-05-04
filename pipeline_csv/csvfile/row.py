@@ -185,7 +185,18 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
     @obj_id.setter
     def obj_id(self, value):
+        """Set optional object ID as string."""
         self.dist_ml = str(value).strip()
+
+    @property
+    def min_diam(self):
+        """Return optional minimal pipe diameter as string (mm)."""
+        return self.depth_max
+
+    @min_diam.setter
+    def min_diam(self, value):
+        """Set optional minimal pipe diameter as string (mm)."""
+        self.depth_max = value
 
     @staticmethod
     def get_minutes(text):
@@ -235,7 +246,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     @classmethod
-    def as_weld(cls, distanse, obj_id='', custom_number='', latitude='', longtitude='', altitude=''):
+    def as_weld(cls, distanse, min_diam=None, obj_id='', custom_number='', latitude='', longtitude='', altitude=''):
         """Construct row as weld object."""
         obj = cls.as_common(
           distanse, ObjectClass.WELD,
@@ -245,6 +256,9 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         if custom_number:
             obj.object_name = custom_number
+
+        if min_diam:
+            obj.min_diam = min_diam
 
         return obj
 

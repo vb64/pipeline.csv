@@ -59,6 +59,20 @@ class TestInit(TestCsv):
             assert item.dist_od == vals[0]
             assert item.depth_max == vals[1]
 
+    def test_min_diam(self):
+        """Check file with min_diam fields."""
+        from pipeline_csv.csvfile import File
+        from pipeline_csv.csvfile.row import Row
+
+        csv_file = File.from_file(self.fixture('min_diam.csv'))
+        assert csv_file.data[-1].min_diam == '100'
+
+        csv_file = File()
+        csv_file.data = [
+          Row.as_weld(10, min_diam='200'),
+        ]
+        assert csv_file.data[-1].min_diam == '200'
+
     def test_dup_ids(self):
         """Check file with duplicated object IDs."""
         from pipeline_csv import Error
