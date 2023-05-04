@@ -1,3 +1,5 @@
++ Add Row.min_diam optional property as pipe minimal diameter.
+
 + Add Row.obj_id optional property.
 
 14.04.2023 ver.1.3
