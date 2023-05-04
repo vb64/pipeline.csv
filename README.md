@@ -1,6 +1,6 @@
 # PipelineCsv library
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/vb64/pipeline.csv/pep257.yml?label=Pep257&style=plastic&branch=main)](https://github.com/vb64/pipeline.csv/actions?query=workflow%3Apep257)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/vb64/pipeline.csv/py3.yml?label=Python%203.7-3.10&style=plastic&branch=main)](https://github.com/vb64/pipeline.csv/actions?query=workflow%3Apy3)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/vb64/pipeline.csv/py3.yml?label=Python%203.7-3.11&style=plastic&branch=main)](https://github.com/vb64/pipeline.csv/actions?query=workflow%3Apy3)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/031838411159440885e8c4a28f233c4e)](https://www.codacy.com/gh/vb64/pipeline.csv/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=vb64/pipeline.csv&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/031838411159440885e8c4a28f233c4e)](https://www.codacy.com/gh/vb64/pipeline.csv/dashboard?utm_source=github.com&utm_medium=referral&utm_content=vb64/pipeline.csv&utm_campaign=Badge_Coverage)
 
