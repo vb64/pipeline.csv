@@ -1,3 +1,6 @@
+04.05.2023 ver.1.4
+------------------
+
 + Add Python 3.11 support to autotests.
 
 + Add Row.min_diam amd Tube.min_diam optional properties as pipe minimal diameter.
