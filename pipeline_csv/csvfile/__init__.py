@@ -72,7 +72,7 @@ class Stream:
     """Holds current state of data stream."""
 
     def __init__(self):
-        """Inital data stream state."""
+        """Init data stream state."""
         self.thick = None
         self.category = None
 

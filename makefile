@@ -35,8 +35,8 @@ lint:
 	$(PYLINT) $(SOURCE)
 
 pep257:
-	$(PYTHON) -m pep257 $(SOURCE)
-	$(PYTHON) -m pep257 --match='.*\.py' $(TESTS)/test
+	$(PYTHON) -m pydocstyle $(SOURCE)
+	$(PYTHON) -m pydocstyle --match='.*\.py' $(TESTS)/test
 
 package:
 	$(PYTHON) -m build -n

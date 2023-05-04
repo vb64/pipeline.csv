@@ -153,7 +153,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         self.altitude = ''
 
     def __str__(self):
-        """String representation for row object."""
+        """As text."""
         return ';'.join([str(i) for i in self.values()])
 
     @property
