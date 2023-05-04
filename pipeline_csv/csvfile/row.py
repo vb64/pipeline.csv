@@ -183,6 +183,10 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """Return optional object ID as string."""
         return self.dist_ml
 
+    @obj_id.setter
+    def obj_id(self, value):
+        self.dist_ml = str(value).strip()
+
     @staticmethod
     def get_minutes(text):
         """Restore full integer minute from text 'hours,minites'."""
@@ -217,7 +221,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """Construct row as common object with dist and geo."""
         obj = cls()
         obj.dist_od = int(distanse)
-        obj.dist_ml = obj_id
+        obj.obj_id = obj_id
 
         return obj.set_geo(latitude, longtitude, altitude)
 
