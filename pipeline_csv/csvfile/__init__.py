@@ -138,6 +138,7 @@ class File:
         self.thicks = []
         self.categories = []
         self.float_delimiter = float_delimiter
+        self.ids = set()
         self.stream = Stream()
 
     @classmethod
@@ -162,6 +163,13 @@ class File:
                 continue
 
             item = cls.RowCls.from_csv_row(row)
+
+            # check ID is unique
+            if item.obj_id:
+                if item.obj_id in obj.ids:
+                    raise Error("Duplicate object ID: '{}'".format(item.obj_id))
+                obj.ids.add(item.obj_id)
+
             obj.data.append(item)
             if item.is_category:
                 obj.categories.append(item)
