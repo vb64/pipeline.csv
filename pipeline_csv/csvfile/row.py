@@ -178,6 +178,15 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """Return object distance as integer mm."""
         return int(self.dist_od)
 
+    @property
+    def obj_id(self):
+        """Return optional object ID as string."""
+        return self.dist_ml
+
+    @obj_id.setter
+    def obj_id(self, value):
+        self.dist_ml = str(value).strip()
+
     @staticmethod
     def get_minutes(text):
         """Restore full integer minute from text 'hours,minites'."""
@@ -208,52 +217,66 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return self
 
     @classmethod
-    def with_dist(cls, distanse, latitude='', longtitude='', altitude=''):
+    def with_dist(cls, distanse, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as common object with dist and geo."""
         obj = cls()
         obj.dist_od = int(distanse)
+        obj.obj_id = obj_id
 
         return obj.set_geo(latitude, longtitude, altitude)
 
     @classmethod
-    def as_common(cls, distanse, typ, latitude='', longtitude='', altitude=''):
+    def as_common(cls, distanse, typ, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as common object."""
-        obj = cls.with_dist(distanse, latitude, longtitude, altitude)
+        obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = typ
         obj.object_code_t = cls.name_object(obj.type_object)
 
         return obj
 
     @classmethod
-    def as_weld(cls, distanse, custom_number='', latitude='', longtitude='', altitude=''):
+    def as_weld(cls, distanse, obj_id='', custom_number='', latitude='', longtitude='', altitude=''):
         """Construct row as weld object."""
-        obj = cls.as_common(distanse, ObjectClass.WELD, latitude, longtitude, altitude)
+        obj = cls.as_common(
+          distanse, ObjectClass.WELD,
+          obj_id=obj_id,
+          latitude=latitude, longtitude=longtitude, altitude=altitude
+        )
+
         if custom_number:
             obj.object_name = custom_number
 
         return obj
 
     @classmethod
-    def as_thick(cls, distanse, thick, latitude='', longtitude='', altitude=''):
+    def as_thick(cls, distanse, thick, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as thickness change object."""
-        obj = cls.as_common(distanse, ObjectClass.THICK, latitude, longtitude, altitude)
+        obj = cls.as_common(
+          distanse, ObjectClass.THICK,
+          obj_id=obj_id,
+          latitude=latitude, longtitude=longtitude, altitude=altitude
+        )
         obj.depth_max = thick
         return obj
 
     @classmethod
-    def as_category(cls, distanse, category, latitude='', longtitude='', altitude=''):
+    def as_category(cls, distanse, category, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as pipeline category object."""
-        obj = cls.as_common(distanse, ObjectClass.PIPELINE_CATEGORY, latitude, longtitude, altitude)
+        obj = cls.as_common(
+          distanse, ObjectClass.PIPELINE_CATEGORY,
+          obj_id=obj_id,
+          latitude=latitude, longtitude=longtitude, altitude=altitude
+        )
         obj.depth_max = category
         return obj
 
     @classmethod
-    def as_seam(cls, distanse, typ, orient1, orient2):
+    def as_seam(cls, distanse, typ, orient1, orient2, obj_id=''):
         """Construct row as seam object with given typ."""
         if typ not in SEAM:
             raise Error("Wrong seam type: {}".format(typ))
 
-        obj = cls.with_dist(distanse, '', '', '')
+        obj = cls.with_dist(distanse, obj_id=obj_id, latitude='', longtitude='', altitude='')
         obj.type_object = ObjectClass.HOR_WELD
         obj.object_code = typ
         obj.object_code_t = cls.name_seam(obj.object_code)
@@ -267,13 +290,13 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     @classmethod
-    def as_lineobj(cls, distanse, typ, name, is_marker, comment, latitude='', longtitude='', altitude=''):
+    def as_lineobj(cls, distanse, typ, name, is_marker, comment, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as line object."""
         lineobj = cls.lineobj_dict()
         if typ not in lineobj:
             raise Error("Wrong lineobj type: {}".format(typ))
 
-        obj = cls.with_dist(distanse, latitude, longtitude, altitude)
+        obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = ObjectClass.MARKER
         obj.object_code = typ
         obj.object_code_t = lineobj[obj.object_code]
@@ -284,9 +307,9 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     @classmethod
-    def as_defekt(  # pylint: disable=too-many-locals
+    def as_defekt(  # pylint: disable=too-many-locals,too-many-arguments
       cls, distanse, typ, side, length, width, depth, orient1, orient2, mp_orient, mp_dist, comment,
-      latitude='', longtitude='', altitude=''
+      obj_id='', latitude='', longtitude='', altitude=''
     ):
         """Construct row as defekt object."""
         defekts = cls.defekts_dict()
@@ -295,7 +318,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         depth_int = to_int(depth)
 
-        obj = cls.with_dist(distanse, latitude, longtitude, altitude)
+        obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = ObjectClass.DEFEKT
         obj.object_code = typ
         obj.object_code_t = defekts[obj.object_code]

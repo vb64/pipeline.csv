@@ -138,6 +138,7 @@ class File:
         self.thicks = []
         self.categories = []
         self.float_delimiter = float_delimiter
+        self.ids = set()
         self.stream = Stream()
 
     @classmethod
@@ -162,13 +163,22 @@ class File:
                 continue
 
             item = cls.RowCls.from_csv_row(row)
+            obj.check_id_unique(item)
             obj.data.append(item)
+
             if item.is_category:
                 obj.categories.append(item)
             elif item.is_thick:
                 obj.thicks.append(item)
 
         return obj
+
+    def check_id_unique(self, row):
+        """Check for row ID property is unique."""
+        if row.obj_id:
+            if row.obj_id in self.ids:
+                raise Error("Duplicate object ID: '{}'".format(row.obj_id))
+            self.ids.add(row.obj_id)
 
     @property
     def total_length(self):
@@ -189,12 +199,14 @@ class File:
 
     def to_file(self, file_path):
         """Save csv to file."""
+        self.ids.clear()
         output = self.open_file(file_path, 'w')
         writer = csv.writer(output, delimiter=self.DELIMETER, lineterminator='\n')
 
         writer.writerow(self.COLUMN_HEADS)
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):
             if int(row.type_object) >= 0:
+                self.check_id_unique(row)
                 writer.writerow(format_floats(row.values(), self.float_delimiter))
 
         output.close()
