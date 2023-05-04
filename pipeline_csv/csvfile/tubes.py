@@ -108,6 +108,16 @@ class Tube:
         self.row.depth_min = val
 
     @property
+    def min_diam(self):
+        """Return optional minimal pipe diameter as string (mm)."""
+        return self.row.depth_max
+
+    @min_diam.setter
+    def min_diam(self, value):
+        """Set optional minimal pipe diameter as string (mm)."""
+        self.row.depth_max = value
+
+    @property
     def number(self):
         """Tube custom or auto number."""
         num = self.row.object_name.strip()

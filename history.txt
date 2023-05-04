@@ -1,4 +1,4 @@
-+ Add Row.min_diam optional property as pipe minimal diameter.
++ Add Row.min_diam amd Tube.min_diam optional properties as pipe minimal diameter.
 
 + Add Row.obj_id optional property.
 

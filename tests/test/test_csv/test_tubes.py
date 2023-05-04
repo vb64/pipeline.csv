@@ -22,6 +22,11 @@ class TestTubes(TestCsv):
         """Method str."""
         assert 'Tube len ' in str(self.tube)
 
+    def test_min_diam(self):
+        """Check min_diam."""
+        self.tube.min_diam = '100'
+        assert self.tube.min_diam == '100'
+
     @staticmethod
     def test_no_welds():
         """No welds in csv file."""
