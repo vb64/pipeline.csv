@@ -3,6 +3,7 @@
 make test T=test_csv/test_init.py
 """
 import os
+import pytest
 from . import TestCsv
 
 
@@ -57,6 +58,15 @@ class TestInit(TestCsv):
         for item, vals in zip(objects, val_list):
             assert item.dist_od == vals[0]
             assert item.depth_max == vals[1]
+
+    def test_dup_ids(self):
+        """Check file with duplicated object IDs."""
+        from pipeline_csv import Error
+        from pipeline_csv.oegiv import File
+
+        with pytest.raises(Error) as err:
+            File.from_file(self.fixture('dup_ids.csv'))
+        assert 'Duplicate object ID' in str(err.value)
 
     def test_no_thick_category(self):
         """Check reverse data file without thick and category objects."""
