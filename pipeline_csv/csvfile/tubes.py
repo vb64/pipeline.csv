@@ -161,3 +161,7 @@ class Tube:
             text = ' / '.join([i.orient_td for i in self.seams])
 
         return text
+
+    def features(self):
+        """Return defects and lineobjects of the pipe, arranged by distance."""
+        return sorted(self.lineobjects + self.defects, key=lambda i: i.dist)

@@ -169,3 +169,31 @@ class TestTubes(TestCsv):
 
         self.tube.finalize(self.tube.dist + 100)
         assert self.tube.category == '1'
+
+    def test_features(self):
+        """Method features."""
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeMarker, TypeDefekt, Row
+
+        self.tube.lineobjects = []
+        self.tube.defects = []
+
+        self.tube.add_object(Row.as_defekt(
+          str(self.tube.dist + 25),
+          TypeDefekt.CORROZ, DefektSide.OUTSIDE,
+          '10', '10', '10',
+          '100', '200', '150', str(self.tube.dist + 25),
+          'Coroz1 comment'
+        ))
+        self.tube.add_object(Row.as_lineobj(
+          self.tube.dist + 20,
+          TypeMarker.VALVE,
+          'V1',
+          True,
+          'Valve comment'
+        ))
+
+        features = list(self.tube.features())
+        assert len(features) == 2
+        assert features[0].is_lineobj
+        assert features[1].is_defect
