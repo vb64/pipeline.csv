@@ -311,7 +311,7 @@ class File:
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):
             if row.is_weld:
                 if tube:
-                    tube.finalize(row.dist_od, warns)
+                    tube.finalize(row.dist_od)
                     auto_num += 1
                 yield tube
                 tube = Tube(row, self.stream, str(auto_num))
@@ -319,9 +319,16 @@ class File:
                 if tube:
                     tube.add_object(row)
                 else:
-                    warns.append("Object before first weld: {}".format(row))
+                    self.add_warn("Object before first weld: {}".format(row), warns)
 
-    def get_tubes(self, warns):
+    @staticmethod
+    def add_warn(msg, warns):
+        """Add message to warn list."""
+        if warns is not None:
+            warns.append(msg)
+        return warns
+
+    def get_tubes(self, warns=None):
         """Return ready iterator for tubes in csv data."""
         tubes = self._create_tubes_iterator(warns)
         try:

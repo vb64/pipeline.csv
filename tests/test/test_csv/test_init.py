@@ -340,3 +340,13 @@ class TestInit(TestCsv):
         assert csv_file.make_distances_unique(dist_shift_mm=dist_shift_mm) == 1
         assert csv_file.data[0].dist_od == dist
         assert csv_file.data[-1].dist_od == dist + dist_shift_mm
+
+    def test_add_warn(self):
+        """Check add_warn method."""
+        from pipeline_csv.csvfile import File
+
+        csv_file = File()
+        assert csv_file.add_warn('', None) is None
+        warns = []
+        assert len(csv_file.add_warn('', warns)) == 1
+        assert len(warns) == 1

@@ -167,5 +167,5 @@ class TestTubes(TestCsv):
 
         assert self.tube.stream.category == '1'
 
-        self.tube.finalize(self.tube.dist + 100, [])
+        self.tube.finalize(self.tube.dist + 100)
         assert self.tube.category == '1'

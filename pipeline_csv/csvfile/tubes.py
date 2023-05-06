@@ -45,7 +45,7 @@ class Tube:
           self.thick
         )
 
-    def finalize(self, dist, _warns):
+    def finalize(self, dist):
         """Finalize tube data at given dist."""
         self.length = int(dist) - self.dist
         self.thick = self.stream.thick
