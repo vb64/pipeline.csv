@@ -1,3 +1,6 @@
+08.05.2023 ver.1.5
+------------------
+
 + Added method Tube.features return defects and lineobjects of the pipe, arranged by distance.
 
 * Parameter `warns` in `File.get_tubes` method made optional.
