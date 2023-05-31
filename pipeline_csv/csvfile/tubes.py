@@ -1,5 +1,6 @@
 """Tubes iterator interface for csv file."""
 from .. import Error, TypeHorWeld
+from ..orientation import Orientation
 
 
 def summary_text(objects, names):
@@ -143,24 +144,39 @@ class Tube:
 
     @property
     def typ(self):
-        """Pipe type according pipe seams data."""
+        """Return pipe type according pipe seams data."""
         if not self.seams:
             return TypeHorWeld.UNKNOWN
 
         return int(self.seams[0].object_code)
 
     @property
+    def seam1(self):
+        """Return orientation in minutes for longditual and spiral first pipe seam."""
+        ornt = None
+        if (len(self.seams) > 0) and (self.typ in [TypeHorWeld.HORIZONTAL, TypeHorWeld.SECOND, TypeHorWeld.SPIRAL]):
+            text = self.seams[0].orient_td
+            ornt = Orientation.from_csv(text).as_minutes if text else None
+
+        return ornt
+
+    @property
+    def seam2(self):
+        """Return orientation in minutes for longditual and spiral second pipe seam."""
+        ornt = None
+        if (len(self.seams) > 0) and (self.typ == TypeHorWeld.SECOND):
+            text = self.seams[0].orient_bd
+            ornt = Orientation.from_csv(text).as_minutes if text else None
+        elif (len(self.seams) > 1) and (self.typ == TypeHorWeld.SPIRAL):
+            text = self.seams[-1].orient_td
+            ornt = Orientation.from_csv(text).as_minutes if text else None
+
+        return ornt
+
+    @property
     def seam_info(self):
         """Return text string with seams orientation."""
-        text = ''
-        if self.typ == TypeHorWeld.HORIZONTAL:
-            text = self.seams[0].orient_td
-        elif self.typ == TypeHorWeld.SECOND:
-            text = self.seams[0].orient_td + ' / ' + self.seams[0].orient_bd
-        elif self.typ == TypeHorWeld.SPIRAL:
-            text = ' / '.join([i.orient_td for i in self.seams])
-
-        return text
+        return ' / '.join([str(Orientation.from_minutes(i)) for i in [self.seam1, self.seam2] if i])
 
     def features(self):
         """Return defects and lineobjects of the pipe, arranged by distance."""
