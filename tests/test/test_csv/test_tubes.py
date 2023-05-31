@@ -197,3 +197,31 @@ class TestTubes(TestCsv):
         assert len(features) == 2
         assert features[0].is_lineobj
         assert features[1].is_defect
+
+    def test_thickness(self):
+        """Check property is_thick_change."""
+        from pipeline_csv.oegiv import File
+        from pipeline_csv.oegiv import Row
+
+        csv_file = File()
+        csv_file.data = [
+          Row.as_weld(10),
+          Row.as_thick(11, 105),
+          Row.as_weld(1000),
+          Row.as_thick(1011, 105),
+          Row.as_weld(2000),
+          Row.as_weld(3000),
+          Row.as_thick(3011, 120),
+          Row.as_weld(4000),
+        ]
+
+        fname = self.build('thickness.csv')
+        csv_file.to_file(fname)
+        csv_file = File.from_file(fname)
+        pipes = list(csv_file.get_tubes())
+
+        assert len(pipes) == 4
+        assert pipes[0].is_thick_change is None
+        assert pipes[1].is_thick_change is None
+        assert pipes[2].is_thick_change is None
+        assert pipes[3].is_thick_change == 105
