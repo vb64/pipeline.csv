@@ -29,7 +29,7 @@ class Tube:
         self.thick = None
         self.category = None
 
-        self.is_thick_change = False
+        self.is_thick_change = None
         self.is_category_change = False
 
         self.seams = []
@@ -72,8 +72,8 @@ class Tube:
         elif row.is_thick:
             thick = int(row.depth_max)
             if self.stream.thick != thick:
+                self.is_thick_change = self.stream.thick
                 self.stream.thick = thick
-                self.is_thick_change = True
             self.thicks.append(row)
 
         else:
