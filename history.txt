@@ -1,3 +1,6 @@
+31.05.2023 ver.1.6
+------------------
+
 + Added properties `Tube.seam1` and `Tube.seam2`. Returns orientation in minutes for longditual and spiral pipe seams. Returns `None` if no data.
 
 + `Tube.is_thick_change` property return previous wall thickness if wall thickness was changed at the pipe. Returns `None` alterwise.
