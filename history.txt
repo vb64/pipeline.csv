@@ -1,3 +1,11 @@
++ Added next Row properties for defect's point of maximum signal:
+
+-   mp_up_weld: distance in mm to upstream weld
+-   mp_down_weld: distance in mm to downstream weld
+-   mp_to_weld: distance in mm to nearest weld
+
+For Row objects, except metal_loss and dent, this properties return None.
+
 31.05.2023 ver.1.6
 ------------------
 
