@@ -1,6 +1,7 @@
 """Tubes iterator interface for csv file."""
 from .. import Error, TypeHorWeld
 from ..orientation import Orientation
+from .defect import Defect
 
 
 def summary_text(objects, names):
@@ -55,7 +56,7 @@ class Tube:
     def add_object(self, row):
         """Add data to tube from csv row."""
         if row.is_defect:
-            self.defects.append(row)
+            self.defects.append(Defect(row, self))
 
         elif row.is_lineobj:
             self.lineobjects.append(row)
@@ -131,14 +132,14 @@ class Tube:
         """Return string with summary for given tube."""
         defect_names = {}
         if self.defects:
-            defect_names = self.defects[0].__class__.defekts_dict()
+            defect_names = self.defects[0].row.defekts_dict()
 
         line_names = {}
         if self.lineobjects:
             line_names = self.lineobjects[0].__class__.lineobj_dict()
 
         return ', '.join([i for i in [
-          summary_text(self.defects, defect_names),
+          summary_text([defect.row for defect in self.defects], defect_names),
           summary_text(self.lineobjects, line_names)
         ] if i])
 
@@ -180,4 +181,4 @@ class Tube:
 
     def features(self):
         """Return defects and lineobjects of the pipe, arranged by distance."""
-        return sorted(self.lineobjects + self.defects, key=lambda i: i.dist)
+        return sorted(self.lineobjects + [defect.row for defect in self.defects], key=lambda i: i.dist)

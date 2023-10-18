@@ -93,10 +93,6 @@ class TestRow(TestCsv):
         from pipeline_csv.csvfile.row import Row
 
         row = Row.as_weld(10)
-        assert not row.is_metal_loss
-        assert not row.is_dent
-        assert not row.is_at_weld
-        assert not row.is_at_seam
         assert not row.is_valve
 
     def test_as(self):

@@ -489,26 +489,6 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return int(self.type_object) == ObjectClass.HOR_WELD
 
     @property
-    def is_metal_loss(self):
-        """Return True if item is metal loss defect."""
-        return self.is_defect and (int(self.object_code) in self.mloss_dict())
-
-    @property
-    def is_dent(self):
-        """Return True if item is dent defect."""
-        return self.is_defect and (int(self.object_code) in self.dents_dict())
-
-    @property
-    def is_at_weld(self):
-        """Return True if item is weld placed defect."""
-        return self.is_defect and (int(self.object_code) in self.atweld_dict())
-
-    @property
-    def is_at_seam(self):
-        """Return True if item is seam placed defect."""
-        return self.is_defect and (int(self.object_code) in self.atseam_dict())
-
-    @property
     def is_valve(self):
         """Return True if item is valve like object."""
         return self.is_lineobj and (int(self.object_code) in self.valve_dict())
