@@ -55,3 +55,24 @@ class TestOrientation(TestIV):
 
         assert Orientation.from_csv('1,10').as_minutes == 70
         assert Orientation.from_csv('') is None
+
+    @staticmethod
+    def test_from_minutes():
+        """Method from_minutes."""
+        from pipeline_csv.orientation import Orientation
+
+        ornt = Orientation.from_minutes(700)
+        assert ornt.hours == 11
+        assert ornt.minutes == 40
+
+    @staticmethod
+    def test_dist_to():
+        """Method dist_to."""
+        from pipeline_csv.orientation import Orientation
+
+        ornt = Orientation.from_minutes(60)
+        assert ornt.dist_to(Orientation.from_minutes(0)) == 60
+        assert ornt.dist_to(Orientation.from_minutes(120)) == 60
+        assert ornt.dist_to(Orientation.from_minutes(420)) == 360
+        assert ornt.dist_to(Orientation.from_minutes(700)) == 80
+        assert ornt.dist_to(Orientation.from_minutes(600)) == 180
