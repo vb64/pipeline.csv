@@ -61,4 +61,6 @@ class TestDefect(TestCsv):
         assert mpoint_orient.minutes == 0
         assert mpoint_orient.as_minutes == 660
 
+        defect.row.mpoint_dist = 11
         assert not self.pipe.seams
+        assert defect.mp_seam is None

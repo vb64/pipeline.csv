@@ -1,4 +1,5 @@
 """Row with type Defect."""
+from pipeline_csv.orientation import Orientation
 
 
 class Defect:
@@ -67,4 +68,13 @@ class Defect:
     @_with_mp
     def mp_seam(self):
         """Return distance (angle minutes) from maximum depth point to nearest seam."""
-        return 666
+        if not self.pipe.seams:
+            return None
+
+        mpoint = Orientation.from_csv(self.row.mpoint_orient)
+        dist = mpoint.dist_to(self.pipe.seams[0])
+
+        if len(self.pipe.seams) == 1:
+            return dist
+
+        return min(dist, mpoint.dist_to(self.pipe.seams[1]))
