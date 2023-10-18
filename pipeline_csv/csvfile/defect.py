@@ -64,6 +64,10 @@ class Defect:
         """Return distance (mm) from maximum depth point to downstream weld."""
         return self.pipe.dist + self.pipe.length - self.row.mpoint_dist
 
+    def minutes2mm(self, minutes):
+        """Translate angle minutes to mm."""
+        return minutes
+
     @property
     @_with_mp
     def mp_seam(self):
@@ -75,6 +79,6 @@ class Defect:
         dist = mpoint.dist_to(self.pipe.seams[0])
 
         if len(self.pipe.seams) == 1:
-            return dist
+            return self.minutes2mm(dist)
 
-        return min(dist, mpoint.dist_to(self.pipe.seams[1]))
+        return self.minutes2mm(min(dist, mpoint.dist_to(self.pipe.seams[1])))
