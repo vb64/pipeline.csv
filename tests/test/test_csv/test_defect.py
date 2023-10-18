@@ -54,3 +54,11 @@ class TestDefect(TestCsv):
         defect.row.mpoint_dist = ''
         assert defect.mp_left_weld is None
         assert defect.mp_right_weld is None
+
+        assert defect.row.mpoint_orient == '11,00'
+        mpoint_orient = Orientation.from_csv(defect.row.mpoint_orient)
+        assert mpoint_orient.hours == 11
+        assert mpoint_orient.minutes == 0
+        assert mpoint_orient.as_minutes == 660
+
+        assert not self.pipe.seams
