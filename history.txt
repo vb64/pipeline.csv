@@ -2,6 +2,13 @@
 
 * `Row` class properties `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam` was moved to class `Defect`.
 
++ Added next `Defect` properties :
+
+-   mp_left_weld: distance (mm) from maximum depth point to upstream weld
+-   mp_right_weld: distance (mm) from maximum depth point to downstream weld
+
+If the defect does not have maximum depth point, or the defect is located on a seam/weld, these properties return None.
+
 31.05.2023 ver.1.6
 ------------------
 
