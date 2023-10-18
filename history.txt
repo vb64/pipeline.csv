@@ -1,10 +1,6 @@
-+ Added next Row properties for defect's maximum depth point:
+* `Tube.defects` list contain objects of new class `Defect`.
 
--   mp_up_weld: distance (mm) to upstream weld
--   mp_down_weld: distance (mm) to downstream weld
--   mp_to_weld: distance (mm) to nearest weld
-
-For Row objects, except metal_loss and dent, this properties returns None.
+* `Row` class properties `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam` was moved to class `Defect`.
 
 31.05.2023 ver.1.6
 ------------------
