@@ -46,3 +46,11 @@ class TestDefect(TestCsv):
         assert not defect.is_dent
         assert not defect.is_at_weld
         assert not defect.is_at_seam
+
+        assert defect.row.mpoint_dist == 11
+        assert defect.mp_left_weld == 1
+        assert defect.mp_right_weld == 11999
+
+        defect.row.mpoint_dist = ''
+        assert defect.mp_left_weld is None
+        assert defect.mp_right_weld is None
