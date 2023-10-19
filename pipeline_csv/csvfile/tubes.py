@@ -20,7 +20,9 @@ def summary_text(objects, names):
 class Tube:
     """Represent one pipe."""
 
-    def __init__(self, row, stream, auto_number):
+    diam = None
+
+    def __init__(self, row, stream, auto_number, diam=None):
         """Construct new tube object from csv row with given data stream state."""
         self.row = row
         self.dist = int(row.dist_od)
@@ -40,12 +42,19 @@ class Tube:
         self.categories = []
         self.thicks = []
 
+        if diam:
+            self.diam = diam
+
     def __str__(self):
         """Return as text."""
         return "Tube len {} wall {}".format(
           self.length,
           self.thick
         )
+
+    def minutes2mm(self, minutes):
+        """Translate angle minutes to mm."""
+        return minutes
 
     def finalize(self, dist):
         """Finalize tube data at given dist."""

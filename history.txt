@@ -1,3 +1,5 @@
+- Fix error in `Orientation.from_minutes` method.
+
 * `Tube.defects` list contain objects of new class `Defect`.
 
 * `Row` class properties `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam` was moved to class `Defect`.
