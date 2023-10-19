@@ -66,9 +66,7 @@ class Orientation:
     def dist_to(self, ornt):
         """Return distance in angle minutes to given orientation object."""
         dst = abs(int(self.as_minutes - ornt.as_minutes))
-        if dst <= (720 / 2):
-            return dst
-        return 720 - dst
+        return min(720 - dst, dst)
 
 
 def from_infotech_html(text):
