@@ -80,3 +80,13 @@ class Defect:
             dist = min(dist, mpoint.dist_to(Orientation.from_minutes(self.pipe.seam2)))
 
         return self.pipe.minutes2mm(dist)
+
+    @property
+    @_with_mp
+    def mp_seam_weld(self):
+        """Return distance (mm) from maximum depth point to nearest seam/weld.
+
+        If the defect does not have maximum depth point, return None.
+        """
+        values = [i for i in [self.mp_seam, self.mp_left_weld, self.mp_right_weld] if i is not None]
+        return min(values)

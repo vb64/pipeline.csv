@@ -18,7 +18,7 @@ class TestDefect(TestCsv):
         Tube.diam = 700
         self.pipe = Tube(Row.as_weld(10), Stream(), '1')
 
-    def test_props(self):
+    def test_props(self):  # pylint: disable=too-many-statements
         """Check defekt properties."""
         from pipeline_csv import DefektSide, TypeHorWeld
         from pipeline_csv.orientation import Orientation
@@ -93,3 +93,7 @@ class TestDefect(TestCsv):
           '11,10', '5,10'
         ))
         assert defect.mp_seam == 30
+        assert defect.mp_seam_weld == 1
+
+        self.pipe.seams = []
+        assert defect.mp_seam_weld == 1
