@@ -71,14 +71,12 @@ class Defect:
         """Return distance (angle minutes) from maximum depth point to nearest seam."""
         if not self.pipe.seams:
             return None
-
-        seam = self.pipe.seams[0]
-        if seam.object_code == TypeHorWeld.SPIRAL:
+        if self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL:
             return None
 
         mpoint = Orientation.from_csv(self.row.mpoint_orient)
-        dist = mpoint.dist_to(Orientation.from_csv(seam.orient_td))
-        if seam.object_code == TypeHorWeld.SECOND:
-            dist = min(dist, mpoint.dist_to(Orientation.from_csv(seam.orient_bd)))
+        dist = mpoint.dist_to(Orientation.from_minutes(self.pipe.seam1))
+        if self.pipe.seam2:
+            dist = min(dist, mpoint.dist_to(Orientation.from_minutes(self.pipe.seam2)))
 
         return self.pipe.minutes2mm(dist)
