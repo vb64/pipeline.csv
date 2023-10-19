@@ -15,11 +15,12 @@ class TestDefect(TestCsv):
         from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv.csvfile.row import Row
 
+        Tube.diam = 700
         self.pipe = Tube(Row.as_weld(10), Stream(), '1')
 
     def test_props(self):
         """Check defekt properties."""
-        from pipeline_csv import DefektSide
+        from pipeline_csv import DefektSide, TypeHorWeld
         from pipeline_csv.orientation import Orientation
         from pipeline_csv.oegiv import TypeDefekt, Row
         from pipeline_csv.csvfile.defect import Defect
@@ -46,3 +47,49 @@ class TestDefect(TestCsv):
         assert not defect.is_dent
         assert not defect.is_at_weld
         assert not defect.is_at_seam
+
+        assert defect.row.mpoint_dist == 11
+        assert defect.mp_left_weld == 1
+        assert defect.mp_right_weld == 11999
+
+        defect.row.mpoint_dist = ''
+        assert defect.mp_left_weld is None
+        assert defect.mp_right_weld is None
+
+        assert defect.row.mpoint_orient == '11,00'
+        mpoint_orient = Orientation.from_csv(defect.row.mpoint_orient)
+        assert mpoint_orient.hours == 11
+        assert mpoint_orient.minutes == 0
+        assert mpoint_orient.as_minutes == 660
+
+        defect.row.mpoint_dist = 11
+        assert not self.pipe.seams
+        assert defect.mp_seam is None
+
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.SPIRAL,
+          '1,10', ''
+        ))
+        assert len(self.pipe.seams) == 1
+        assert defect.mp_seam is None
+
+        self.pipe.seams = []
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.HORIZONTAL,
+          '1,10', ''
+        ))
+        assert len(self.pipe.seams) == 1
+        seam1 = Orientation.from_csv(self.pipe.seams[0].orient_td)
+        assert seam1.hours == 1
+        assert seam1.minutes == 10
+        assert defect.mp_seam == 397
+
+        self.pipe.seams = []
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.SECOND,
+          '11,10', '5,10'
+        ))
+        assert defect.mp_seam == 30

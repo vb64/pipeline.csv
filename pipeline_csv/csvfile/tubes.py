@@ -1,4 +1,6 @@
 """Tubes iterator interface for csv file."""
+from math import pi
+
 from .. import Error, TypeHorWeld
 from ..orientation import Orientation
 from .defect import Defect
@@ -20,7 +22,9 @@ def summary_text(objects, names):
 class Tube:
     """Represent one pipe."""
 
-    def __init__(self, row, stream, auto_number):
+    diam = 1400
+
+    def __init__(self, row, stream, auto_number, diam=None):
         """Construct new tube object from csv row with given data stream state."""
         self.row = row
         self.dist = int(row.dist_od)
@@ -40,12 +44,19 @@ class Tube:
         self.categories = []
         self.thicks = []
 
+        if diam:
+            self.diam = diam
+
     def __str__(self):
         """Return as text."""
         return "Tube len {} wall {}".format(
           self.length,
           self.thick
         )
+
+    def minutes2mm(self, minutes):
+        """Translate angle minutes to mm."""
+        return int(self.diam * pi * minutes / 720)
 
     def finalize(self, dist):
         """Finalize tube data at given dist."""

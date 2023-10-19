@@ -1,6 +1,19 @@
+- Fix error in `Orientation.from_minutes` method.
+
++ Added `Tube.diam` field (diameter in mm).
+
 * `Tube.defects` list contain objects of new class `Defect`.
 
 * `Row` class properties `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam` was moved to class `Defect`.
+
++ Added next `Defect` properties :
+
+-   mp_left_weld: distance (mm) from maximum depth point to upstream weld
+-   mp_right_weld: distance (mm) from maximum depth point to downstream weld
+
+If the defect does not have maximum depth point, or the defect is located on a seam/weld, these properties return None.
+
++ Added `Defect.mp_seam` property. Return distance (mm) from maximum depth point to nearest seam or None if pipe does not have seams.
 
 31.05.2023 ver.1.6
 ------------------

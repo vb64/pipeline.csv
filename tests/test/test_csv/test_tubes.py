@@ -2,6 +2,7 @@
 
 make test T=test_csv/test_tubes.py
 """
+from math import pi
 import pytest
 from . import TestCsv
 
@@ -16,7 +17,7 @@ class TestTubes(TestCsv):
         from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv.csvfile.row import Row
 
-        self.tube = Tube(Row.as_weld(10), Stream(), '1')
+        self.tube = Tube(Row.as_weld(10), Stream(), '1', diam=700)
 
     def test_str(self):
         """Method str."""
@@ -227,3 +228,11 @@ class TestTubes(TestCsv):
         assert pipes[1].is_thick_change is None
         assert pipes[2].is_thick_change is None
         assert pipes[3].is_thick_change == 105
+
+    def test_minutes2mm(self):
+        """Check minutes2mm method."""
+        circle = int(self.tube.diam * pi)
+        assert self.tube.minutes2mm(720) == circle
+        assert self.tube.minutes2mm(720 / 2) == int(circle / 2)
+        assert self.tube.minutes2mm(720 / 4) == int(circle / 4)
+        assert self.tube.minutes2mm(0) == 0

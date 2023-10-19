@@ -47,7 +47,7 @@ class Orientation:
     @classmethod
     def from_minutes(cls, minutes):
         """Construct object from integer minutes."""
-        return cls(minutes / 60, minutes % 60)
+        return cls(int(minutes / 60), minutes % 60)
 
     @classmethod
     def from_degree(cls, degree):
@@ -62,6 +62,11 @@ class Orientation:
 
         hours, minutes = text.split(',')
         return cls(int(hours), int(minutes))
+
+    def dist_to(self, ornt):
+        """Return distance in angle minutes to given orientation object."""
+        dst = abs(int(self.as_minutes - ornt.as_minutes))
+        return min(720 - dst, dst)
 
 
 def from_infotech_html(text):
