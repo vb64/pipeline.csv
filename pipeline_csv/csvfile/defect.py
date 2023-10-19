@@ -1,4 +1,5 @@
 """Row with type Defect."""
+from pipeline_csv import TypeHorWeld
 from pipeline_csv.orientation import Orientation
 
 
@@ -71,10 +72,13 @@ class Defect:
         if not self.pipe.seams:
             return None
 
+        seam = self.pipe.seams[0]
+        if seam.object_code == TypeHorWeld.SPIRAL:
+            return None
+
         mpoint = Orientation.from_csv(self.row.mpoint_orient)
-        dist = mpoint.dist_to(self.pipe.seams[0])
+        dist = mpoint.dist_to(Orientation.from_csv(seam.orient_td))
+        if seam.object_code == TypeHorWeld.SECOND:
+            dist = min(dist, mpoint.dist_to(Orientation.from_csv(seam.orient_bd)))
 
-        if len(self.pipe.seams) == 1:
-            return self.pipe.minutes2mm(dist)
-
-        return self.pipe.minutes2mm(min(dist, mpoint.dist_to(self.pipe.seams[1])))
+        return self.pipe.minutes2mm(dist)

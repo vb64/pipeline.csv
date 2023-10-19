@@ -16,7 +16,7 @@ class TestTubes(TestCsv):
         from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv.csvfile.row import Row
 
-        self.tube = Tube(Row.as_weld(10), Stream(), '1')
+        self.tube = Tube(Row.as_weld(10), Stream(), '1', diam=700)
 
     def test_str(self):
         """Method str."""
