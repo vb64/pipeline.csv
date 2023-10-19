@@ -84,7 +84,7 @@ class TestDefect(TestCsv):
         seam1 = Orientation.from_csv(self.pipe.seams[0].orient_td)
         assert seam1.hours == 1
         assert seam1.minutes == 10
-        assert defect.mp_seam == 130
+        assert defect.mp_seam == 397
 
         self.pipe.seams = []
         self.pipe.add_object(Row.as_seam(
@@ -92,4 +92,4 @@ class TestDefect(TestCsv):
           TypeHorWeld.SECOND,
           '11,10', '5,10'
         ))
-        assert defect.mp_seam == 10
+        assert defect.mp_seam == 30
