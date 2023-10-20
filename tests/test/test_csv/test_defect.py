@@ -97,3 +97,9 @@ class TestDefect(TestCsv):
 
         self.pipe.seams = []
         assert defect.mp_seam_weld == 1
+
+        assert defect.row.dist == 10
+        assert defect.row.length == '10'
+
+        assert defect.to_left_weld == 0
+        assert defect.to_right_weld == 11990

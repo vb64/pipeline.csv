@@ -10,8 +10,10 @@
 
 -   mp_left_weld: distance (mm) from maximum depth point to upstream weld
 -   mp_right_weld: distance (mm) from maximum depth point to downstream weld
+-   to_left_weld: distance (mm) from left defect border to upstream weld
+-   to_right_weld: distance (mm) from right defect border to downstream weld
 
-If the defect does not have maximum depth point, or the defect is located on a seam/weld, these properties return None.
+If the defect does not have maximum depth point, or the defect is located on a seam/weld, `mp_left_weld` and `mp_right_weld` properties return None.
 
 + Added `Defect.mp_seam` property. Return distance (mm) from maximum depth point to nearest seam or None if pipe does not have seams.
 
