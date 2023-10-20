@@ -87,8 +87,11 @@ class TestOrientation(TestIV):
         assert ornt.dist_to_int(Orientation.from_minutes(70)) == (10, 710)
         assert ornt.dist_to_int(Orientation.from_minutes(60)) == (0, 0)
 
+        assert Orientation.from_minutes(10).dist_to_int(Orientation.from_minutes(60)) == (50, 670)
+        assert Orientation.from_minutes(700).dist_to_int(Orientation.from_minutes(60)) == (80, 640)
+
     @staticmethod
-    def _test_is_inside():
+    def test_is_inside():
         """Check method is_inside."""
         from pipeline_csv.orientation import Orientation
 

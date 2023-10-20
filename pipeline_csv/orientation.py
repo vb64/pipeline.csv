@@ -76,9 +76,12 @@ class Orientation:
         clockwise, counterclock_wise = self.dist_to_int(ornt)
         return min([clockwise, counterclock_wise])
 
-    def is_inside(self, _ornt1, _ornt2):
+    def is_inside(self, ornt1, ornt2):
         """Return True if orientation located inside given arc."""
-        return False
+        arc, _ = ornt1.dist_to_int(ornt2)
+        dst, _ = self.dist_to_int(ornt2)
+
+        return dst <= arc
 
 
 def from_infotech_html(text):
