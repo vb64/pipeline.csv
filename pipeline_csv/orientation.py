@@ -63,10 +63,22 @@ class Orientation:
         hours, minutes = text.split(',')
         return cls(int(hours), int(minutes))
 
+    def dist_to_int(self, ornt):
+        """Return two distances (clockwise and counterclock-wise) in angle minutes to given orientation object."""
+        clockwise = int(ornt.as_minutes - self.as_minutes)
+        if clockwise < 0:
+            clockwise = 720 + clockwise
+
+        return (clockwise, (720 - clockwise) % 720)
+
     def dist_to(self, ornt):
         """Return distance in angle minutes to given orientation object."""
-        dst = abs(int(self.as_minutes - ornt.as_minutes))
-        return min(720 - dst, dst)
+        clockwise, counterclock_wise = self.dist_to_int(ornt)
+        return min([clockwise, counterclock_wise])
+
+    def is_inside(self, _ornt1, _ornt2):
+        """Return True if orientation located inside given arc."""
+        return False
 
 
 def from_infotech_html(text):

@@ -41,7 +41,7 @@ class TestOrientation(TestIV):
 
     @staticmethod
     def test_add180():
-        """Function add180."""
+        """Check function add180."""
         from pipeline_csv.orientation import Orientation, add180
 
         assert str(add180(Orientation(3, 0))) == '9,00'
@@ -50,7 +50,7 @@ class TestOrientation(TestIV):
 
     @staticmethod
     def test_from_csv():
-        """Method from_csv."""
+        """Check method from_csv."""
         from pipeline_csv.orientation import Orientation
 
         assert Orientation.from_csv('1,10').as_minutes == 70
@@ -58,7 +58,7 @@ class TestOrientation(TestIV):
 
     @staticmethod
     def test_from_minutes():
-        """Method from_minutes."""
+        """Check method from_minutes."""
         from pipeline_csv.orientation import Orientation
 
         ornt = Orientation.from_minutes(700)
@@ -67,7 +67,7 @@ class TestOrientation(TestIV):
 
     @staticmethod
     def test_dist_to():
-        """Method dist_to."""
+        """Check method dist_to."""
         from pipeline_csv.orientation import Orientation
 
         ornt = Orientation.from_minutes(60)
@@ -76,3 +76,29 @@ class TestOrientation(TestIV):
         assert ornt.dist_to(Orientation.from_minutes(420)) == 360
         assert ornt.dist_to(Orientation.from_minutes(700)) == 80
         assert ornt.dist_to(Orientation.from_minutes(600)) == 180
+
+    @staticmethod
+    def test_dist_to_int():
+        """Check method dist_to_int."""
+        from pipeline_csv.orientation import Orientation
+
+        ornt = Orientation.from_minutes(60)
+        assert ornt.dist_to_int(Orientation.from_minutes(50)) == (710, 10)
+        assert ornt.dist_to_int(Orientation.from_minutes(70)) == (10, 710)
+        assert ornt.dist_to_int(Orientation.from_minutes(60)) == (0, 0)
+
+    @staticmethod
+    def _test_is_inside():
+        """Check method is_inside."""
+        from pipeline_csv.orientation import Orientation
+
+        ornt = Orientation.from_minutes(60)
+
+        assert ornt.is_inside(Orientation.from_minutes(10), Orientation.from_minutes(60))
+        assert ornt.is_inside(Orientation.from_minutes(60), Orientation.from_minutes(180))
+        assert ornt.is_inside(Orientation.from_minutes(10), Orientation.from_minutes(180))
+        assert not ornt.is_inside(Orientation.from_minutes(180), Orientation.from_minutes(10))
+
+        assert ornt.is_inside(Orientation.from_minutes(700), Orientation.from_minutes(180))
+        assert ornt.is_inside(Orientation.from_minutes(700), Orientation.from_minutes(60))
+        assert not ornt.is_inside(Orientation.from_minutes(180), Orientation.from_minutes(700))
