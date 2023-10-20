@@ -90,3 +90,13 @@ class Defect:
         """
         values = [i for i in [self.mp_seam, self.mp_left_weld, self.mp_right_weld] if i is not None]
         return min(values)
+
+    @property
+    def to_left_weld(self):
+        """Return distance (mm) from left defect border to upstream weld."""
+        return self.row.dist - self.pipe.dist
+
+    @property
+    def to_right_weld(self):
+        """Return distance (mm) from right defect border to downstream weld."""
+        return self.pipe.dist + self.pipe.length - (self.row.dist + int(self.row.length))
