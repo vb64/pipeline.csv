@@ -11,6 +11,14 @@ class Defect:
         self.row = row
         self.pipe = pipe
 
+        self.orient1 = None
+        if self.row.orient_td:
+            self.orient1 = Orientation.from_csv(self.row.orient_td)
+
+        self.orient2 = None
+        if self.row.orient_bd:
+            self.orient2 = Orientation.from_csv(self.row.orient_bd)
+
     def __str__(self):
         """As text."""
         return '{} at {}'.format(self.row.object_code_t, self.pipe)
@@ -75,9 +83,9 @@ class Defect:
             return None
 
         mpoint = Orientation.from_csv(self.row.mpoint_orient)
-        dist = mpoint.dist_to(Orientation.from_minutes(self.pipe.seam1))
+        dist = mpoint.dist_to(self.pipe.seam1)
         if self.pipe.seam2:
-            dist = min(dist, mpoint.dist_to(Orientation.from_minutes(self.pipe.seam2)))
+            dist = min(dist, mpoint.dist_to(self.pipe.seam2))
 
         return self.pipe.minutes2mm(dist)
 
@@ -100,3 +108,36 @@ class Defect:
     def to_right_weld(self):
         """Return distance (mm) from right defect border to downstream weld."""
         return self.pipe.dist + self.pipe.length - (self.row.dist + int(self.row.length))
+
+    @property
+    def to_seam(self):  # pylint: disable=too-complex
+        """Return distance (mm) from defect borders to nearest seam or None if pipe does not have seams."""
+        if (not self.pipe.seams) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
+            return None
+
+        if self.orient1 and self.orient2:
+            if self.pipe.seam1.is_inside(self.orient1, self.orient2):
+                return 0
+            if self.pipe.seam2:
+                if self.pipe.seam2.is_inside(self.orient1, self.orient2):
+                    return 0
+
+        up_seam1 = None
+        up_seam2 = None
+        if self.orient1:
+            up_seam1 = self.orient1.dist_to(self.pipe.seam1)
+            if self.pipe.seam2:
+                up_seam2 = self.orient1.dist_to(self.pipe.seam2)
+
+        dn_seam1 = None
+        dn_seam2 = None
+        if self.orient2:
+            dn_seam1 = self.orient2.dist_to(self.pipe.seam1)
+            if self.pipe.seam2:
+                dn_seam2 = self.orient2.dist_to(self.pipe.seam2)
+
+        dists = [i for i in [up_seam1, up_seam2, dn_seam1, dn_seam2] if i is not None]
+        if not dists:
+            return None
+
+        return min(dists)
