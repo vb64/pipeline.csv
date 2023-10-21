@@ -111,7 +111,7 @@ class TestTubes(TestCsv):
           '1,10', ''
         ))
         assert self.tube.typ == TypeHorWeld.HORIZONTAL
-        assert self.tube.seam1 == 70
+        assert self.tube.seam1.as_minutes == 70
         assert self.tube.seam2 is None
         assert self.tube.seam_info == '1,10'
 

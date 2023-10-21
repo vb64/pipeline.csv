@@ -83,9 +83,9 @@ class Defect:
             return None
 
         mpoint = Orientation.from_csv(self.row.mpoint_orient)
-        dist = mpoint.dist_to(Orientation.from_minutes(self.pipe.seam1))
+        dist = mpoint.dist_to(self.pipe.seam1)
         if self.pipe.seam2:
-            dist = min(dist, mpoint.dist_to(Orientation.from_minutes(self.pipe.seam2)))
+            dist = min(dist, mpoint.dist_to(self.pipe.seam2))
 
         return self.pipe.minutes2mm(dist)
 
@@ -116,24 +116,24 @@ class Defect:
             return None
 
         if self.orient1 and self.orient2:
-            if Orientation.from_minutes(self.pipe.seam1).is_inside(self.orient1, self.orient2):
+            if self.pipe.seam1.is_inside(self.orient1, self.orient2):
                 return 0
             if self.pipe.seam2:
-                if Orientation.from_minutes(self.pipe.seam2).is_inside(self.orient1, self.orient2):
+                if self.pipe.seam2.is_inside(self.orient1, self.orient2):
                     return 0
 
         up_seam1 = None
         up_seam2 = None
         if self.orient1:
-            up_seam1 = self.orient1.dist_to(Orientation.from_minutes(self.pipe.seam1))
+            up_seam1 = self.orient1.dist_to(self.pipe.seam1)
             if self.pipe.seam2:
-                up_seam2 = self.orient1.dist_to(Orientation.from_minutes(self.pipe.seam2))
+                up_seam2 = self.orient1.dist_to(self.pipe.seam2)
 
         dn_seam1 = None
         dn_seam2 = None
         if self.orient2:
-            dn_seam1 = self.orient2.dist_to(Orientation.from_minutes(self.pipe.seam1))
+            dn_seam1 = self.orient2.dist_to(self.pipe.seam1)
             if self.pipe.seam2:
-                dn_seam2 = self.orient2.dist_to(Orientation.from_minutes(self.pipe.seam2))
+                dn_seam2 = self.orient2.dist_to(self.pipe.seam2)
 
         return min((i for i in [up_seam1, up_seam2, dn_seam1, dn_seam2] if i is not None))

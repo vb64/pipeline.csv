@@ -4,6 +4,8 @@
 
 + Added `Tube.diam` field (diameter in mm).
 
++ Properties `Tube.seam1` and `Tube.seam2` returns orientation object for longditual and spiral pipe seams. Returns `None` if no data.
+
 * `Tube.defects` list contain objects of new class `Defect`.
 
 * `Row` class properties `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam` was moved to class `Defect`.
