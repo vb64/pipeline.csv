@@ -197,7 +197,7 @@ class TestDefect(TestCsv):
 
         defect = Defect(
           Row.as_defekt(
-            10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15',
+            11, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15',
             Orientation(8, 0),
             Orientation(9, 0),
             None, 11, ''
@@ -205,3 +205,6 @@ class TestDefect(TestCsv):
           self.pipe
         )
         assert defect.to_seam == 300
+
+        self.pipe.length = 12000
+        assert defect.to_seam_weld == 1

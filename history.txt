@@ -25,6 +25,8 @@ If the defect does not have maximum depth point, or the defect is located on a s
 
 + Added `Defect.mp_seam_weld` property. Return distance (mm) from maximum depth point to nearest seam/weld. If the defect does not have maximum depth point, return None.
 
++ Added `Defect.to_seam_weld` property. Return distance (mm) from defect borders to nearest seam/weld. None if pipe does not have seams.
+
 31.05.2023 ver.1.6
 ------------------
 

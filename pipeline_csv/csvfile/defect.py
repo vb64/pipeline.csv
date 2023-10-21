@@ -141,3 +141,12 @@ class Defect:
             return None
 
         return min(dists)
+
+    @property
+    def to_seam_weld(self):
+        """Return distance (mm) from defect borders to nearest seam/weld.
+
+        None if pipe does not have seams.
+        """
+        values = [i for i in [self.to_seam, self.to_left_weld, self.to_right_weld] if i is not None]
+        return min(values)
