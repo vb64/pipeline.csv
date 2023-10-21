@@ -180,3 +180,28 @@ class TestDefect(TestCsv):
           self.pipe
         )
         assert defect.to_seam == 120
+
+    def test_one_seam(self):
+        """Check pipe with one seam."""
+        from pipeline_csv import TypeHorWeld, DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv.csvfile.defect import Defect
+        from pipeline_csv.orientation import Orientation
+
+        assert not self.pipe.seams
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.SECOND,
+          '2,0', ''
+        ))
+
+        defect = Defect(
+          Row.as_defekt(
+            10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15',
+            Orientation(8, 0),
+            Orientation(9, 0),
+            None, 11, ''
+          ),
+          self.pipe
+        )
+        assert defect.to_seam == 300
