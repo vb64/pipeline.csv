@@ -117,3 +117,48 @@ class TestDefect(TestCsv):
         assert defect.orient1 is None
         assert defect.orient2 is None
         assert defect.to_seam is None
+
+    def test_seam1_inside(self):
+        """Check seam1 inside defekt borders."""
+        from pipeline_csv import TypeHorWeld, DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv.csvfile.defect import Defect
+        from pipeline_csv.orientation import Orientation
+
+        assert not self.pipe.seams
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.HORIZONTAL,
+          '2,0', ''
+        ))
+        assert len(self.pipe.seams) == 1
+
+        orient1 = Orientation(1, 0)
+        orient2 = Orientation(3, 0)
+        row = Row.as_defekt(
+          10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15', orient1, orient2, None, 11, ''
+        )
+        defect = Defect(row, self.pipe)
+        assert defect.to_seam == 0
+
+    def test_seam2_inside(self):
+        """Check seam2 inside defekt borders."""
+        from pipeline_csv import TypeHorWeld, DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv.csvfile.defect import Defect
+        from pipeline_csv.orientation import Orientation
+
+        assert not self.pipe.seams
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.SECOND,
+          '2,0', '8,0'
+        ))
+        orient1 = Orientation(7, 0)
+        orient2 = Orientation(9, 0)
+        row = Row.as_defekt(
+          10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15',
+          orient1, orient2, None, 11, ''
+        )
+        defect = Defect(row, self.pipe)
+        assert defect.to_seam == 0

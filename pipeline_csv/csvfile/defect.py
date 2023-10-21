@@ -116,10 +116,10 @@ class Defect:
             return None
 
         if self.orient1 and self.orient2:
-            if self.pipe.seam1.is_inside(self.orient1, self.orient2):
+            if Orientation.from_minutes(self.pipe.seam1).is_inside(self.orient1, self.orient2):
                 return 0
             if self.pipe.seam2:
-                if self.pipe.seam2.is_inside(self.orient1, self.orient2):
+                if Orientation.from_minutes(self.pipe.seam2).is_inside(self.orient1, self.orient2):
                     return 0
 
         up_seam1 = None
