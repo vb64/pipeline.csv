@@ -106,7 +106,7 @@ class TestDefect(TestCsv):
 
     def test_no_orient(self):
         """Check defekt without orientations."""
-        from pipeline_csv import DefektSide
+        from pipeline_csv import TypeHorWeld, DefektSide
         from pipeline_csv.oegiv import TypeDefekt, Row
         from pipeline_csv.csvfile.defect import Defect
 
@@ -116,6 +116,13 @@ class TestDefect(TestCsv):
         defect = Defect(row, self.pipe)
         assert defect.orient1 is None
         assert defect.orient2 is None
+        assert defect.to_seam is None
+
+        self.pipe.add_object(Row.as_seam(
+          self.pipe.dist + 1,
+          TypeHorWeld.HORIZONTAL,
+          '2,0', ''
+        ))
         assert defect.to_seam is None
 
     def test_seam1_inside(self):

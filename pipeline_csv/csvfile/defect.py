@@ -110,7 +110,7 @@ class Defect:
         return self.pipe.dist + self.pipe.length - (self.row.dist + int(self.row.length))
 
     @property
-    def to_seam(self):
+    def to_seam(self):  # pylint: disable=too-complex
         """Return distance (mm) from defect borders to nearest seam or None if pipe does not have seams."""
         if (not self.pipe.seams) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
             return None
@@ -136,4 +136,8 @@ class Defect:
             if self.pipe.seam2:
                 dn_seam2 = self.orient2.dist_to(self.pipe.seam2)
 
-        return min((i for i in [up_seam1, up_seam2, dn_seam1, dn_seam2] if i is not None))
+        dists = [i for i in [up_seam1, up_seam2, dn_seam1, dn_seam2] if i is not None]
+        if not dists:
+            return None
+
+        return min(dists)
