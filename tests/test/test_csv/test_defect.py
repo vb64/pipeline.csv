@@ -103,3 +103,17 @@ class TestDefect(TestCsv):
 
         assert defect.to_left_weld == 0
         assert defect.to_right_weld == 11990
+
+    def test_no_orient(self):
+        """Check defekt without orientations."""
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv.csvfile.defect import Defect
+
+        row = Row.as_defekt(
+          10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15', None, None, None, 11, 'comment'
+        )
+        defect = Defect(row, self.pipe)
+        assert defect.orient1 is None
+        assert defect.orient2 is None
+        assert defect.to_seam is None
