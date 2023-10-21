@@ -162,3 +162,14 @@ class TestDefect(TestCsv):
         )
         defect = Defect(row, self.pipe)
         assert defect.to_seam == 0
+
+        defect = Defect(
+          Row.as_defekt(
+            10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15',
+            Orientation(10, 0),
+            Orientation(11, 0),
+            None, 11, ''
+          ),
+          self.pipe
+        )
+        assert defect.to_seam == 120
