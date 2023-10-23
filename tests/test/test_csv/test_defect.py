@@ -185,17 +185,8 @@ class TestDefect(TestCsv):
         from pipeline_csv.oegiv import Row
         from pipeline_csv.orientation import Orientation
 
-        self.pipe.add_object(Row.as_seam(
-          self.pipe.dist + 1,
-          TypeHorWeld.SECOND,
-          '2,0', ''
-        ))
-
-        defect = self.make_defect(
-          11, 10,
-          Orientation(8, 0), Orientation(9, 0),
-          None, 11
-        )
+        self.pipe.add_object(Row.as_seam(self.pipe.dist + 1, TypeHorWeld.SECOND, '2,0', ''))
+        defect = self.make_defect(11, 10, Orientation(8, 0), Orientation(9, 0), None, 11)
         assert defect.to_seam == 300
 
         self.pipe.length = 12000
@@ -205,8 +196,14 @@ class TestDefect(TestCsv):
         """Check orientation_point property."""
         from pipeline_csv.orientation import Orientation
 
-        defect = self.make_defect(
-          11, 10,
-          Orientation(8, 0), Orientation(9, 0), None, 11
-        )
+        defect = self.make_defect(11, 10, Orientation(8, 0), Orientation(9, 0), None, 11)
         assert defect.orientation_point.as_minutes == int(8 * 60 + 60 / 2)
+
+        defect = self.make_defect(11, 10, None, Orientation(9, 0), Orientation(8, 0), 11)
+        assert defect.orientation_point.as_minutes == 8 * 60
+
+        defect = self.make_defect(11, 10, None, Orientation(9, 0), None, 11)
+        assert defect.orientation_point.as_minutes == 9 * 60
+
+        defect = self.make_defect(11, 10, None, None, None, 11)
+        assert defect.orientation_point is None
