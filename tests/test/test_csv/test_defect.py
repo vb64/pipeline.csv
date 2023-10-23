@@ -208,3 +208,20 @@ class TestDefect(TestCsv):
 
         self.pipe.length = 12000
         assert defect.to_seam_weld == 1
+
+    def test_orientation_point(self):
+        """Check orientation_point property."""
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv.orientation import Orientation
+        from pipeline_csv.csvfile.defect import Defect
+
+        defect = Defect(
+          Row.as_defekt(
+            11, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15',
+            Orientation(8, 0), Orientation(9, 0),
+            None, 11, ''
+          ),
+          self.pipe
+        )
+        assert defect.orientation_point.as_minutes == int(8 * 60 + 60 / 2)
