@@ -245,18 +245,18 @@ assert last_tube.altitude == '12'
 
 ### Defect location at the pipe
 
-```python
-from pipeline_csv.csvfile.tubes import Tube
-```
-
 Set pipeline diameter to 1000 mm.
 
 ```python
+from pipeline_csv.csvfile.tubes import Tube
+
 Tube.diam = 1000
 ```
 
 Define one pipe at distance 1.0 m, length = 11.0 m with one seam with orientation 3 hour 00 minutes and one defect at distance 5.0 m from left tube weld.
+
 Defect length = 20 mm, width = 10 mm, depth = 30% tube wall thickness, orientation from 4 hours 00 minutes to 5 hours 00 minutes.
+
 Maximum depth point at 10 mm from left border of defect, orientation 4 hours 30 minutes.
 
 ```python
