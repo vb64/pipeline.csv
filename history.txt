@@ -31,6 +31,13 @@ If the defect does not have maximum depth point, or the defect is located on a s
 
 + Added `Defect.to_seam_weld` property. Return distance (mm) from defect borders to nearest seam/weld. None if pipe does not have seams.
 
++ Added `Defect.orientation_point` property. Return orientation for defect as point.
+
+-   maximum depth point orientation if mp is present
+-   appropriate orientation if only one from orient1/orient2 is present
+-   middle point orientation if both orient1 and orient2 is present
+-   None if no maximum depth point and both orient1 and orient2 is None
+
 31.05.2023 ver.1.6
 ------------------
 

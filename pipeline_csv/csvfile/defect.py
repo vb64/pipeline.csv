@@ -150,3 +150,27 @@ class Defect:
         """
         values = [i for i in [self.to_seam, self.to_left_weld, self.to_right_weld] if i is not None]
         return min(values)
+
+    @property
+    def orientation_point(self):
+        """Return orientation for defect as point.
+
+        maximum depth point orientation if mp is present
+        appropriate orientation if only one from orient1/orient2 is present
+        middle point orientation if both orient1 and orient2 is present
+        None if no maximum depth point and both orient1 and orient2 is None
+        """
+        if self.row.mpoint_orient:
+            return Orientation.from_csv(self.row.mpoint_orient)
+
+        ornts = [i for i in [self.orient1, self.orient2] if i is not None]
+
+        if len(ornts) == 1:
+            return ornts[0]
+        if len(ornts) == 2:
+            clockwise, _ = self.orient1.dist_to_int(self.orient2)
+            ornt = Orientation.from_minutes(self.orient1.as_minutes)
+            ornt.add_minutes(int(clockwise / 2))
+            return ornt
+
+        return None
