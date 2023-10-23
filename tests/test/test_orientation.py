@@ -105,3 +105,12 @@ class TestOrientation(TestIV):
         assert ornt.is_inside(Orientation.from_minutes(700), Orientation.from_minutes(180))
         assert ornt.is_inside(Orientation.from_minutes(700), Orientation.from_minutes(60))
         assert not ornt.is_inside(Orientation.from_minutes(180), Orientation.from_minutes(700))
+
+    @staticmethod
+    def test_constants():
+        """Check constants values."""
+        from pipeline_csv.orientation import CIRCLE_MINUTES, HOUR_MINUTES, CIRCLE_HOURS
+
+        assert CIRCLE_MINUTES == 720
+        assert HOUR_MINUTES == 60
+        assert CIRCLE_HOURS == 12

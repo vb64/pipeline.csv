@@ -1,6 +1,10 @@
 """Orientation object."""
 import math
 
+CIRCLE_MINUTES = 720
+HOUR_MINUTES = int(CIRCLE_MINUTES / 12)
+CIRCLE_HOURS = int(CIRCLE_MINUTES / 60)
+
 
 class Error(Exception):
     """Orientation exception."""
@@ -11,10 +15,10 @@ class Orientation:
 
     def __init__(self, hours, minutes):
         """Construct object from integer hours and minutes."""
-        if not (0 <= hours <= 12):
+        if not (0 <= hours <= CIRCLE_HOURS):
             raise Error("Wrong hours: {}. Must be 0-12".format(hours))
 
-        if not (0 <= minutes <= 59):
+        if not (0 <= minutes <= (HOUR_MINUTES - 1)):
             raise Error("Wrong minutes: {}. Must be 0-59".format(minutes))
 
         self.hours = hours
@@ -24,7 +28,7 @@ class Orientation:
         """Return orientation string in csv format."""
         hours = int(self.hours)
         if hours == 0:
-            hours = '12'
+            hours = str(CIRCLE_HOURS)
 
         minutes = self.minutes
         if minutes < 10:
@@ -35,19 +39,19 @@ class Orientation:
     @property
     def as_minutes(self):
         """Return orientation as integer minutes."""
-        return (self.hours * 60 + self.minutes) % 720
+        return (self.hours * HOUR_MINUTES + self.minutes) % CIRCLE_MINUTES
 
     @classmethod
     def from_hour_float(cls, hour_float):
         """Construct object from hours as float."""
         parttial_hour, hours = math.modf(hour_float)
-        minutes = parttial_hour * 60
+        minutes = parttial_hour * HOUR_MINUTES
         return cls(int(hours), int(minutes))
 
     @classmethod
     def from_minutes(cls, minutes):
         """Construct object from integer minutes."""
-        return cls(int(minutes / 60), minutes % 60)
+        return cls(int(minutes / HOUR_MINUTES), minutes % HOUR_MINUTES)
 
     @classmethod
     def from_degree(cls, degree):
@@ -67,9 +71,9 @@ class Orientation:
         """Return two distances (clockwise and counterclock-wise) in angle minutes to given orientation object."""
         clockwise = int(ornt.as_minutes - self.as_minutes)
         if clockwise < 0:
-            clockwise = 720 + clockwise
+            clockwise = CIRCLE_MINUTES + clockwise
 
-        return (clockwise, (720 - clockwise) % 720)
+        return (clockwise, (CIRCLE_MINUTES - clockwise) % CIRCLE_MINUTES)
 
     def dist_to(self, ornt):
         """Return distance in angle minutes to given orientation object."""
@@ -84,7 +88,7 @@ class Orientation:
 
     def add_minutes(self, minutes):
         """Increases the orientation angle by a specified number of minutes. Returns the new minutes value."""
-        ornt = self.from_minutes((self.as_minutes + minutes) % 720)
+        ornt = self.from_minutes((self.as_minutes + minutes) % CIRCLE_MINUTES)
         self.hours = ornt.hours
         self.minutes = ornt.minutes
         return self.as_minutes
