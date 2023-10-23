@@ -2,6 +2,10 @@
 
 + Added `Orientation.is_inside` method. Return True if orientation located inside given arc.
 
++ Added `Orientation.dist_to` method. Return distance in angle minutes to given orientation object.
+
++ Added `Orientation.add_minutes` method. Increases the orientation angle by a specified number of minutes. Returns the new minutes value.
+
 + Added `Tube.diam` field (diameter in mm).
 
 + Properties `Tube.seam1` and `Tube.seam2` returns orientation object for longditual and spiral pipe seams. Returns `None` if no data.

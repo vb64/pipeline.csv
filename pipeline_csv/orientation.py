@@ -80,8 +80,14 @@ class Orientation:
         """Return True if orientation located inside given arc."""
         arc, _ = ornt1.dist_to_int(ornt2)
         dst, _ = self.dist_to_int(ornt2)
-
         return dst <= arc
+
+    def add_minutes(self, minutes):
+        """Increases the orientation angle by a specified number of minutes. Returns the new minutes value."""
+        ornt = self.from_minutes((self.as_minutes + minutes) % 720)
+        self.hours = ornt.hours
+        self.minutes = ornt.minutes
+        return self.as_minutes
 
 
 def from_infotech_html(text):
@@ -91,8 +97,6 @@ def from_infotech_html(text):
 
 def add180(ornt):
     """Return the orientation 180 degrees away from the given one."""
-    full_minutes = ornt.hours * 60 + ornt.minutes + 180 * 2
-    return Orientation(
-      int(full_minutes / 60) % 12,
-      full_minutes % 60
-    )
+    new_ornt = Orientation.from_minutes(ornt.as_minutes)
+    new_ornt.add_minutes(180 * 2)  # degree to minutes
+    return new_ornt
