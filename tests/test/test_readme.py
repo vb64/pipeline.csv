@@ -136,6 +136,83 @@ def check_transform(csv_file):
     assert last_tube.altitude == '12'
 
 
+def check_defect():
+    """Check Defect class."""
+    from pipeline_csv.csvfile.tubes import Tube
+    from pipeline_csv.oegiv import File
+    from pipeline_csv.oegiv import TypeDefekt, Row
+    from pipeline_csv.orientation import Orientation
+    from pipeline_csv import TypeHorWeld, DefektSide
+
+    # set pipeline diameter to 1000 mm
+    Tube.diam = 1000
+
+    csv = File()
+
+    # define one pipe at distance 1.0 m, length = 11.0 m
+    # with one seam with orientation 3 hour 00 minutes
+    # and one defect at distance 5.0 m from left tube weld.
+    # defect length = 20 mm, width = 10 mm, depth = 30% tube wall thickness
+    # orientation from 4 hours 00 minutes to 5 hours 00 minutes
+    # max depth point at 10 mm from left border of defect, orientation 4 hours 30 minutes
+    csv.data = [
+      Row.as_weld(1000),
+      Row.as_seam(1020, TypeHorWeld.HORIZONTAL, Orientation(3, 0), None),
+      Row.as_defekt(
+        6000,
+        TypeDefekt.CORROZ, DefektSide.INSIDE,
+        '20', '10', '30',
+        Orientation(4, 0), Orientation(5, 0),
+        Orientation(4, 30), 6010,
+        'corrozion'
+      ),
+      Row.as_weld(12000),
+    ]
+
+    pipes = list(csv.get_tubes())
+    assert len(pipes) == 1
+    pipe = pipes[0]
+    assert pipe.diam == 1000
+
+    # one defect at the pipe
+    assert len(pipe.defects) == 1
+    defect = pipe.defects[0]
+
+    # defect is metal loss, not dent
+    # defect is not located at the weld/seam
+    assert defect.is_metal_loss
+    assert not defect.is_dent
+    assert not defect.is_at_weld
+    assert not defect.is_at_seam
+
+    # defect as point orientation is maximum depth point orientation at 4:30
+    assert defect.orientation_point.as_minutes == 270
+
+    # distance (mm) from maximum depth point to upstream weld
+    assert defect.mp_left_weld == 5010
+
+    # distance (mm) from maximum depth point to downstream weld
+    assert defect.mp_right_weld == 5990
+
+    # distance (mm) from maximum depth point to seam.
+    assert defect.mp_seam == 392
+
+    # distance (mm) from maximum depth point to nearest seam/weld.
+    assert defect.mp_seam_weld == 392
+
+    # distance (mm) from left defect border to upstream weld
+    assert defect.to_left_weld == 5000
+
+    # distance (mm) from right defect border to downstream weld
+    assert defect.to_right_weld == 5980
+
+    # distance (mm) from defect borders to seam
+    assert defect.to_seam == 60
+
+    # distance (mm) from defect borders to nearest seam/weld.
+    assert defect.to_seam_weld == 60
+
+
 class TestReadme(TestIV):
     """Example code for readme.md file."""
 
@@ -146,6 +223,7 @@ class TestReadme(TestIV):
         check_reversing(csv_file)
         check_join(csv_file)
         check_transform(csv_file)
+        check_defect()
 
         for name in [
           'example.csv',

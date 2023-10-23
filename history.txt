@@ -1,37 +1,34 @@
 - Fix error in `Orientation.from_minutes` method.
 
-+ Added `Orientation.is_inside` method. Return True if orientation located inside given arc.
++ Added `Orientation` methods:
 
-+ Added `Orientation.dist_to` method. Return distance in angle minutes to given orientation object.
-
-+ Added `Orientation.add_minutes` method. Increases the orientation angle by a specified number of minutes. Returns the new minutes value.
+-   `is_inside`: Return True if orientation located inside given arc.
+-   `dist_to`: Return distance in angle minutes to given orientation object.
+-   `add_minutes`: Increases the orientation angle by a specified number of minutes. Returns the new minutes value.
 
 + Added `Tube.diam` field (diameter in mm).
 
-+ Properties `Tube.seam1` and `Tube.seam2` returns orientation object for longditual and spiral pipe seams. Returns `None` if no data.
+* Properties `Tube.seam1` and `Tube.seam2` returns orientation object for longditual and spiral pipe seams. Returns `None` if no data.
 
 * `Tube.defects` list contain objects of new class `Defect`.
 
 * `Row` class properties `is_metal_loss`, `is_dent`, `is_at_weld`, `is_at_seam` was moved to class `Defect`.
 
-+ Added next `Defect` properties :
++ Added `Defect` properties :
 
 -   mp_left_weld: distance (mm) from maximum depth point to upstream weld
 -   mp_right_weld: distance (mm) from maximum depth point to downstream weld
 -   to_left_weld: distance (mm) from left defect border to upstream weld
 -   to_right_weld: distance (mm) from right defect border to downstream weld
+-   mp_seam: distance (mm) from maximum depth point to nearest seam or None if pipe does not have seams.
+-   to_seam: distance (mm) from defect borders to nearest seam or None if pipe does not have seams.
+-   mp_seam_weld: distance (mm) from maximum depth point to nearest seam/weld. If the defect does not have maximum depth point, return None.
+-   to_seam_weld: distance (mm) from defect borders to nearest seam/weld. None if pipe does not have seams.
+-   orientation_point: orientation for defect as point.
 
 If the defect does not have maximum depth point, or the defect is located on a seam/weld, `mp_left_weld` and `mp_right_weld` properties return None.
 
-+ Added `Defect.mp_seam` property. Return distance (mm) from maximum depth point to nearest seam or None if pipe does not have seams.
-
-+ Added `Defect.to_seam` property. Return distance (mm) from defect borders to nearest seam or None if pipe does not have seams.
-
-+ Added `Defect.mp_seam_weld` property. Return distance (mm) from maximum depth point to nearest seam/weld. If the defect does not have maximum depth point, return None.
-
-+ Added `Defect.to_seam_weld` property. Return distance (mm) from defect borders to nearest seam/weld. None if pipe does not have seams.
-
-+ Added `Defect.orientation_point` property. Return orientation for defect as point.
+`orientation_point` property return:
 
 -   maximum depth point orientation if mp is present
 -   appropriate orientation if only one from orient1/orient2 is present
