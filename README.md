@@ -76,12 +76,12 @@ Further, the MyRow class can be used in operations with data of CSV files.
 
 ### Creating a CSV file
 
-Construct new csv file from scratch.
+Construct new csv file from scratch for pipeline 1000 mm diameter.
 
 ```python
 from pipeline_csv.csvfile import File
 
-csv_file = File()
+csv_file = File(1000)
 ```
 
 Define tube at distance 1.0 m length = 11.0 m, thick = 10.5 mm with one seam with orientation 3 hour 00 minutes.
@@ -132,7 +132,7 @@ assert os.path.getsize('example.csv') > 0
 Create copy from saved file.
 
 ```python
-csv_copy = File.from_file('example.csv')
+csv_copy = File.from_file('example.csv', 1000)
 ```
 
 Check distance of the last object in copy and defect orientation.
@@ -204,7 +204,7 @@ assert os.path.getsize('transformed.csv') > 0
 Iterate by pipes.
 
 ```python
-csv_trans = File.from_file('transformed.csv')
+csv_trans = File.from_file('transformed.csv', 1000)
 warnings = []
 current_dist = 0
 for i in csv_trans.get_tubes(warnings):
@@ -235,7 +235,7 @@ assert os.path.getsize('geo.csv') > 0
 Load from saved file and check geodata from last pipe.
 
 ```python
-csv_geo = File.from_file('geo.csv')
+csv_geo = File.from_file('geo.csv', 1000)
 last_tube = list(csv_geo.get_tubes(warnings))[-1]
 
 assert last_tube.latitude == '10'
@@ -245,12 +245,10 @@ assert last_tube.altitude == '12'
 
 ### Defect location at the pipe
 
-Set pipeline diameter to 1000 mm.
+Pipeline diameter 1000 mm.
 
 ```python
-from pipeline_csv.csvfile.tubes import Tube
-
-Tube.diam = 1000
+csv = File(1000)
 ```
 
 Define one pipe at distance 1.0 m, length = 11.0 m with one seam with orientation 3 hour 00 minutes and one defect at distance 5.0 m from left tube weld.
@@ -260,7 +258,6 @@ Defect length = 20 mm, width = 10 mm, depth = 30% tube wall thickness, orientati
 Maximum depth point at 10 mm from left border of defect, orientation 4 hours 30 minutes.
 
 ```python
-csv = File()
 csv.data = [
   Row.as_weld(1000),
   Row.as_seam(1020, TypeHorWeld.HORIZONTAL, Orientation(3, 0), None),
