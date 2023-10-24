@@ -33,7 +33,7 @@ class TestTubes(TestCsv):
         """No welds in csv file."""
         from pipeline_csv.csvfile import File
 
-        ivc = File()
+        ivc = File(1400)
         warns = []
         assert not ivc.get_tubes(warns)
 
@@ -206,7 +206,7 @@ class TestTubes(TestCsv):
         from pipeline_csv.oegiv import File
         from pipeline_csv.oegiv import Row
 
-        csv_file = File()
+        csv_file = File(1400)
         csv_file.data = [
           Row.as_weld(10),
           Row.as_thick(11, 105),
@@ -220,7 +220,7 @@ class TestTubes(TestCsv):
 
         fname = self.build('thickness.csv')
         csv_file.to_file(fname)
-        csv_file = File.from_file(fname)
+        csv_file = File.from_file(fname, 1400)
         pipes = list(csv_file.get_tubes())
 
         assert len(pipes) == 4

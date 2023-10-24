@@ -13,7 +13,7 @@ def check_new():
     from pipeline_csv.oegiv import File
     from pipeline_csv.oegiv import TypeDefekt, Row
 
-    csv_file = File()
+    csv_file = File(1000)
 
     # define tube at distance 1.0 m
     # length = 11.0 m, thick = 10.5 mm
@@ -52,7 +52,7 @@ def check_reversing(csv_file):
     from pipeline_csv.oegiv import File
 
     # create copy from saved file
-    csv_copy = File.from_file('example.csv')
+    csv_copy = File.from_file('example.csv', 1000)
 
     # check distance of the last object in copy
     assert csv_copy.total_length == 12000
@@ -101,7 +101,7 @@ def check_transform(csv_file):
     assert os.path.getsize('transformed.csv') > 0
 
     # load new copy
-    csv_trans = File.from_file('transformed.csv')
+    csv_trans = File.from_file('transformed.csv', 1000)
 
     # iterate by tubes
     warnings = []
@@ -128,7 +128,7 @@ def check_transform(csv_file):
     assert os.path.getsize('geo.csv') > 0
 
     # load from saved file and check geodata from last pipe
-    csv_geo = File.from_file('geo.csv')
+    csv_geo = File.from_file('geo.csv', 1000)
     last_tube = list(csv_geo.get_tubes(warnings))[-1]
 
     assert last_tube.latitude == '10'
@@ -138,16 +138,13 @@ def check_transform(csv_file):
 
 def check_defect():
     """Check Defect class."""
-    from pipeline_csv.csvfile.tubes import Tube
     from pipeline_csv.oegiv import File
     from pipeline_csv.oegiv import TypeDefekt, Row
     from pipeline_csv.orientation import Orientation
     from pipeline_csv import TypeHorWeld, DefektSide
 
     # set pipeline diameter to 1000 mm
-    Tube.diam = 1000
-
-    csv = File()
+    csv = File(1000)
 
     # define one pipe at distance 1.0 m, length = 11.0 m
     # with one seam with orientation 3 hour 00 minutes

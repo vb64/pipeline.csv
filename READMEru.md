@@ -73,12 +73,12 @@ class MyRow(Row):
 
 ### Создание CSV-файла
 
-Создать новый пустой CSV-файл.
+Создать новый пустой CSV-файл для трубопровода диаметром 1000 мм.
 
 ```python
 from pipeline_csv.csvfile import File
 
-csv_file = File()
+csv_file = File(1000)
 ```
 
 Создаем трубу на дистанции 1.0 м длиной 11 м, с толщиной стенки 10.5 мм, с одним продольным швом на 3 часа 00 минут.
@@ -128,7 +128,7 @@ assert os.path.getsize('example.csv') > 0
 Загружаем данные из сохраненного файла.
 
 ```python
-csv_copy = File.from_file('example.csv')
+csv_copy = File.from_file('example.csv', 1000)
 ```
 
 Проверяем дистанцию последнего объекта и ориентацию дефекта.
@@ -200,7 +200,7 @@ assert os.path.getsize('transformed.csv') > 0
 Перебираем последовательность трубы.
 
 ```python
-csv_trans = File.from_file('transformed.csv')
+csv_trans = File.from_file('transformed.csv', 1000)
 warnings = []
 current_dist = 0
 for i in csv_trans.get_tubes(warnings):
@@ -231,7 +231,7 @@ assert os.path.getsize('geo.csv') > 0
 Загружаем сохраненный файл и проверяем геоданные для последней трубы.
 
 ```python
-csv_geo = File.from_file('geo.csv')
+csv_geo = File.from_file('geo.csv', 1000)
 last_tube = list(csv_geo.get_tubes(warnings))[-1]
 
 assert last_tube.latitude == '10'
@@ -241,12 +241,10 @@ assert last_tube.altitude == '12'
 
 ### Положение дефекта на трубе
 
-Задать диаметр трубопровода 1000 мм.
+Диаметр трубопровода 1000 мм.
 
 ```python
-from pipeline_csv.csvfile.tubes import Tube
-
-Tube.diam = 1000
+csv = File(1000)
 ```
 
 Создать одну трубу на дистанци 1.0 м, длиной 11 м с одним продольным швом на 3 часа и одним дефектом на расстоянии 5.0 м отначала трубы.
@@ -256,7 +254,6 @@ Tube.diam = 1000
 Точка максимальной глубины дефекта на расстоянии 10 мм от левой границы дефекта, ориентацией 4 часа 30 минут.
 
 ```python
-csv = File()
 csv.data = [
   Row.as_weld(1000),
   Row.as_seam(1020, TypeHorWeld.HORIZONTAL, Orientation(3, 0), None),

@@ -25,10 +25,10 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile.row import Row
         from pipeline_csv.oegiv import File
 
-        csv_file = File.at_folder(self.fixture())
+        csv_file = File.at_folder(self.fixture(), 1400)
         assert len(csv_file.data) == 178
 
-        csv_file = File.from_file(self.fixture('DefTable.csv'))
+        csv_file = File.from_file(self.fixture('DefTable.csv'), 1400)
         assert len(csv_file.data) == 178
 
         csv_file.data.insert(0, Row.as_seam(0, TypeHorWeld.NO_WELD, '', ''))
@@ -64,10 +64,10 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile import File
         from pipeline_csv.csvfile.row import Row
 
-        csv_file = File.from_file(self.fixture('min_diam.csv'))
+        csv_file = File.from_file(self.fixture('min_diam.csv'), 1400)
         assert csv_file.data[-1].min_diam == '100'
 
-        csv_file = File()
+        csv_file = File(1400)
         csv_file.data = [
           Row.as_weld(10, min_diam='200'),
         ]
@@ -80,10 +80,10 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile.row import Row
 
         with pytest.raises(Error) as err:
-            File.from_file(self.fixture('dup_ids.csv'))
+            File.from_file(self.fixture('dup_ids.csv'), 1400)
         assert 'Duplicate object ID' in str(err.value)
 
-        csv_file = File()
+        csv_file = File(1400)
         csv_file.data = [
           Row.as_weld(10, obj_id=333),
           Row.as_weld(1000, obj_id=333),
@@ -97,7 +97,7 @@ class TestInit(TestCsv):
         """Check reverse data file without thick and category objects."""
         from pipeline_csv.oegiv import File
 
-        csv_file = File.from_file(self.fixture('no_thicks.csv'))
+        csv_file = File.from_file(self.fixture('no_thicks.csv'), 1400)
         assert len(csv_file.data) == 8
 
         csv_file.reverse()
@@ -107,7 +107,7 @@ class TestInit(TestCsv):
         """Check reverse data file without welds."""
         from pipeline_csv.oegiv import File
 
-        csv_file = File.from_file(self.fixture('no_welds.csv'))
+        csv_file = File.from_file(self.fixture('no_welds.csv'), 1400)
         assert len(csv_file.data) == 1
 
         csv_file.reverse()
@@ -117,7 +117,7 @@ class TestInit(TestCsv):
         """Check reverse."""
         from pipeline_csv.oegiv import File
 
-        csv_file = File.from_file(self.fixture('DefTable.csv'))
+        csv_file = File.from_file(self.fixture('DefTable.csv'), 1400)
         assert len(csv_file.data) == 178
 
         expected = [
@@ -156,7 +156,7 @@ class TestInit(TestCsv):
 
         csv_file.to_file(fname)
         assert os.path.exists(fname)
-        csv_file = File.from_file(fname)
+        csv_file = File.from_file(fname, 1400)
 
         assert len(csv_file.data) == 178
         assert csv_file.total_length == 426625
@@ -182,7 +182,7 @@ class TestInit(TestCsv):
         from pipeline_csv.oegiv import File
 
         fname = self.fixture('DefTable.csv')
-        csv_file = File.from_file(fname)
+        csv_file = File.from_file(fname, 1400)
 
         assert len(csv_file.data) == 178
         assert csv_file.total_length == 426625
@@ -197,7 +197,7 @@ class TestInit(TestCsv):
         from pipeline_csv.oegiv import File
 
         fname = self.fixture('1.csv')
-        csv_file = File.from_file(fname)
+        csv_file = File.from_file(fname, 1400)
 
         assert len(csv_file.data) == 7
         assert csv_file.total_length == 8800
@@ -279,7 +279,7 @@ class TestInit(TestCsv):
         from pipeline_csv import Error
 
         fname = self.fixture('infotech.csv')
-        csv_file = File.from_file(fname)
+        csv_file = File.from_file(fname, 1400)
 
         assert len(csv_file.data) == 30897
         assert csv_file.total_length == 130111900
@@ -325,7 +325,7 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile import File
         from pipeline_csv.csvfile.row import Row
 
-        csv_file = File()
+        csv_file = File(1400)
         dist = 10
         dist_shift_mm = 2
 
@@ -345,7 +345,7 @@ class TestInit(TestCsv):
         """Check add_warn method."""
         from pipeline_csv.csvfile import File
 
-        csv_file = File()
+        csv_file = File(1400)
         assert csv_file.add_warn('', None) is None
         warns = []
         assert len(csv_file.add_warn('', warns)) == 1
