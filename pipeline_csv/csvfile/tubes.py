@@ -193,3 +193,8 @@ class Tube:
     def features(self):
         """Return defects and lineobjects of the pipe, arranged by distance."""
         return sorted(self.lineobjects + [defect.row for defect in self.defects], key=lambda i: i.dist)
+
+    @property
+    def to_seam_data(self):
+        """Return True if distance to pipe seams can be calculated."""
+        return (self.seam1 or self.seam2) and (self.typ in [TypeHorWeld.HORIZONTAL, TypeHorWeld.SECOND])
