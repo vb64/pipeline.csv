@@ -1,3 +1,5 @@
+- Fix error in `Defect.mp_seam`  and `Defect.to_seam` properties.
+
 23.10.2023 ver.1.7
 ------------------
 

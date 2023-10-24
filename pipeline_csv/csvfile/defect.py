@@ -77,9 +77,7 @@ class Defect:
     @_with_mp
     def mp_seam(self):
         """Return distance (angle minutes) from maximum depth point to nearest seam."""
-        if not self.pipe.seams:
-            return None
-        if self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL:
+        if (not any([self.pipe.seam1, self.pipe.seam2])) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
             return None
 
         mpoint = Orientation.from_csv(self.row.mpoint_orient)
@@ -112,7 +110,7 @@ class Defect:
     @property
     def to_seam(self):  # pylint: disable=too-complex
         """Return distance (mm) from defect borders to nearest seam or None if pipe does not have seams."""
-        if (not self.pipe.seams) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
+        if (not any([self.pipe.seam1, self.pipe.seam2])) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
             return None
 
         if self.orient1 and self.orient2:
