@@ -106,8 +106,18 @@ class Defect:
         """Return distance (mm) from right defect border to downstream weld."""
         return self.pipe.dist + self.pipe.length - (self.row.dist + int(self.row.length))
 
+    def get_to_seams(self, orient):
+        """Return distance (mm) from given orientation to pipe seams."""
+        to_seam1, to_seam2 = None, None
+        if orient:
+            to_seam1 = orient.dist_to(self.pipe.seam1)
+            if self.pipe.seam2:
+                to_seam2 = orient.dist_to(self.pipe.seam2)
+
+        return (to_seam1, to_seam2)
+
     @property
-    def to_seam(self):  # pylint: disable=too-complex
+    def to_seam(self):
         """Return distance (mm) from defect borders to nearest seam or None if pipe does not have seams."""
         if not self.pipe.to_seam_data:
             return None
@@ -119,20 +129,8 @@ class Defect:
                 if self.pipe.seam2.is_inside(self.orient1, self.orient2):
                     return 0
 
-        up_seam1 = None
-        up_seam2 = None
-        if self.orient1:
-            up_seam1 = self.orient1.dist_to(self.pipe.seam1)
-            if self.pipe.seam2:
-                up_seam2 = self.orient1.dist_to(self.pipe.seam2)
-
-        dn_seam1 = None
-        dn_seam2 = None
-        if self.orient2:
-            dn_seam1 = self.orient2.dist_to(self.pipe.seam1)
-            if self.pipe.seam2:
-                dn_seam2 = self.orient2.dist_to(self.pipe.seam2)
-
+        up_seam1, up_seam2 = self.get_to_seams(self.orient1)
+        dn_seam1, dn_seam2 = self.get_to_seams(self.orient2)
         dists = [i for i in [up_seam1, up_seam2, dn_seam1, dn_seam2] if i is not None]
         if not dists:
             return None
