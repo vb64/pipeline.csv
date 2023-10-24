@@ -132,7 +132,7 @@ class File:
       'Altitude',
     ]
 
-    def __init__(self, float_delimiter=FloatDelimiter.Point):
+    def __init__(self, diameter, float_delimiter=FloatDelimiter.Point):
         """Create empty csv file object."""
         self.data = []
         self.thicks = []
@@ -140,6 +140,7 @@ class File:
         self.float_delimiter = float_delimiter
         self.ids = set()
         self.stream = Stream()
+        self.diameter = diameter
 
     @classmethod
     def open_file(cls, file_path, mode):
@@ -147,14 +148,14 @@ class File:
         return open(file_path, mode + 't', encoding=cls.ENCODING)
 
     @classmethod
-    def at_folder(cls, folder):
+    def at_folder(cls, folder, diameter):
         """Restore from file in given folder."""
-        return cls.from_file(os.path.join(folder, cls.file_name))
+        return cls.from_file(os.path.join(folder, cls.file_name), diameter)
 
     @classmethod
-    def from_file(cls, file_path, float_delimiter=FloatDelimiter.Point):
+    def from_file(cls, file_path, diameter, float_delimiter=FloatDelimiter.Point):
         """Construct from export csv file."""
-        obj = cls(float_delimiter=float_delimiter)
+        obj = cls(diameter, float_delimiter=float_delimiter)
         reader = csv.reader(cls.open_file(file_path, 'r'), delimiter=cls.DELIMETER)
         next(reader)  # skip column titles row
         for row in reader:
@@ -224,7 +225,7 @@ class File:
             try:
                 tube_length = int(item)
             except ValueError:
-                self.append(self.from_file(item))
+                self.append(self.from_file(item, self.diameter))
                 continue
 
             point = self.RowCls()
@@ -306,6 +307,7 @@ class File:
         """Create iterator for tubes in csv data."""
         from .tubes import Tube
 
+        Tube.diam = self.diameter
         tube = None
         auto_num = 1
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):
