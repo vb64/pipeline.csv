@@ -1,5 +1,4 @@
 """Row with type Defect."""
-from pipeline_csv import TypeHorWeld
 from pipeline_csv.orientation import Orientation
 
 
@@ -77,7 +76,7 @@ class Defect:
     @_with_mp
     def mp_seam(self):
         """Return distance (angle minutes) from maximum depth point to nearest seam."""
-        if (not any([self.pipe.seam1, self.pipe.seam2])) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
+        if not self.pipe.to_seam_data:
             return None
 
         mpoint = Orientation.from_csv(self.row.mpoint_orient)
@@ -110,7 +109,7 @@ class Defect:
     @property
     def to_seam(self):  # pylint: disable=too-complex
         """Return distance (mm) from defect borders to nearest seam or None if pipe does not have seams."""
-        if (not any([self.pipe.seam1, self.pipe.seam2])) or (self.pipe.seams[0].object_code == TypeHorWeld.SPIRAL):
+        if not self.pipe.to_seam_data:
             return None
 
         if self.orient1 and self.orient2:
