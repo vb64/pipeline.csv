@@ -18,9 +18,25 @@ class Defect:
         if self.row.orient_bd:
             self.orient2 = Orientation.from_csv(self.row.orient_bd)
 
+        self.orient_mp = None
+        if self.row.mpoint_orient:
+            self.orient_mp = Orientation.from_csv(self.row.mpoint_orient)
+
     def __str__(self):
         """As text."""
         return '{} at {}'.format(self.row.object_code_t, self.pipe)
+
+    @property
+    def length(self):
+        """Return object length as integer."""
+        if self.row.length:
+            return int(self.row.length)
+        return 0
+
+    @property
+    def number_at_pipe(self):
+        """Return object number at pipe as integer."""
+        return self.pipe.defects.index(self) + 1
 
     @property
     def code(self):
