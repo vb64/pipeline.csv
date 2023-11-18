@@ -24,7 +24,7 @@ class TestDefect(TestCsv):
         from pipeline_csv.oegiv import TypeDefekt, Row
         from pipeline_csv.csvfile.defect import Defect
 
-        return Defect(
+        defect = Defect(
           Row.as_defekt(
             dist, TypeDefekt.CORROZ, DefektSide.INSIDE, str(length), '10', '15',
             orient1, orient2,
@@ -32,8 +32,11 @@ class TestDefect(TestCsv):
           ),
           self.pipe
         )
+        self.pipe.defects.append(defect)
 
-    def test_props(self):
+        return defect
+
+    def test_props(self):  # pylint: disable=too-many-statements
         """Check defekt properties."""
         from pipeline_csv import TypeHorWeld
         from pipeline_csv.orientation import Orientation
@@ -57,6 +60,10 @@ class TestDefect(TestCsv):
         assert not defect.is_dent
         assert not defect.is_at_weld
         assert not defect.is_at_seam
+
+        assert defect.orient_mp.as_minutes == 660
+        assert defect.length == 10
+        assert defect.number_at_pipe == 1
 
         assert defect.row.mpoint_dist == 11
         assert defect.mp_left_weld == 1
@@ -113,6 +120,9 @@ class TestDefect(TestCsv):
 
         assert defect.to_left_weld == 0
         assert defect.to_right_weld == 11990
+
+        defect.row.length = ''
+        assert defect.length == 0
 
     def test_no_orient(self):
         """Check defekt without orientations."""

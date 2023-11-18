@@ -1,3 +1,9 @@
++ Added `Defect` properties :
+
+-   orient_mp: orientation for defect maximum depth point
+-   length: defect length in mm as integer
+-   number_at_pipe: defect number at pipe as integer
+
 24.10.2023 ver.1.8
 ------------------
 
