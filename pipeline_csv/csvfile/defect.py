@@ -80,13 +80,13 @@ class Defect:
     @_with_mp
     def mp_left_weld(self):
         """Return distance (mm) from maximum depth point to upstream weld."""
-        return self.row.mpoint_dist - self.pipe.dist
+        return int(self.row.mpoint_dist) - self.pipe.dist
 
     @property
     @_with_mp
     def mp_right_weld(self):
         """Return distance (mm) from maximum depth point to downstream weld."""
-        return self.pipe.dist + self.pipe.length - self.row.mpoint_dist
+        return self.pipe.dist + self.pipe.length - int(self.row.mpoint_dist)
 
     @property
     @_with_mp
