@@ -1,3 +1,8 @@
+20.11.2023 ver.1.9.1
+------------------
+
+- Fix error in Defect mp_left_weld and mp_right_weld properties.
+
 18.11.2023 ver.1.9
 ------------------
 
