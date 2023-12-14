@@ -1,3 +1,6 @@
+14.12.2023 ver.1.9.2
+------------------
+
 - Fix error in Defect.to_right_weld property if defect has zero length.
 
 20.11.2023 ver.1.9.1
