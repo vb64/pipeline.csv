@@ -120,7 +120,7 @@ class Defect:
     @property
     def to_right_weld(self):
         """Return distance (mm) from right defect border to downstream weld."""
-        return self.pipe.dist + self.pipe.length - (self.row.dist + int(self.row.length))
+        return self.pipe.dist + self.pipe.length - self.row.dist - self.length
 
     def get_to_seams(self, orient):
         """Return distance (mm) from given orientation to pipe seams."""
