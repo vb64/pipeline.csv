@@ -1,3 +1,5 @@
++ Extend `csvfile.Row.as_lineobj` method with keyargs: length, width, orient1, orient2.
+
 14.12.2023 ver.1.9.2
 ------------------
 
