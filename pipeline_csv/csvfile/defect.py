@@ -2,11 +2,11 @@
 from pipeline_csv.orientation import Orientation
 
 
-class Defect:
-    """Defect at the pipe."""
+class Anomaly:
+    """Anomaly at the pipe."""
 
     def __init__(self, row, pipe):
-        """Create defect at the pipe from csv Row."""
+        """Create anomaly at the pipe from csv Row."""
         self.row = row
         self.pipe = pipe
 
@@ -17,10 +17,6 @@ class Defect:
         self.orient2 = None
         if self.row.orient_bd:
             self.orient2 = Orientation.from_csv(self.row.orient_bd)
-
-        self.orient_mp = None
-        if self.row.mpoint_orient:
-            self.orient_mp = Orientation.from_csv(self.row.mpoint_orient)
 
     def __str__(self):
         """As text."""
@@ -34,14 +30,36 @@ class Defect:
         return 0
 
     @property
-    def number_at_pipe(self):
-        """Return object number at pipe as integer."""
-        return self.pipe.defects.index(self) + 1
-
-    @property
     def code(self):
         """Return object code as integer."""
         return int(self.row.object_code)
+
+    @property
+    def to_left_weld(self):
+        """Return distance (mm) from left defect border to upstream weld."""
+        return self.row.dist - self.pipe.dist
+
+    @property
+    def to_right_weld(self):
+        """Return distance (mm) from right defect border to downstream weld."""
+        return self.pipe.dist + self.pipe.length - self.row.dist - self.length
+
+
+class Defect(Anomaly):
+    """Defect at the pipe."""
+
+    def __init__(self, row, pipe):
+        """Create defect at the pipe from csv Row."""
+        super().__init__(row, pipe)
+
+        self.orient_mp = None
+        if self.row.mpoint_orient:
+            self.orient_mp = Orientation.from_csv(self.row.mpoint_orient)
+
+    @property
+    def number_at_pipe(self):
+        """Return object number at pipe as integer."""
+        return self.pipe.defects.index(self) + 1
 
     @property
     def is_metal_loss(self):
@@ -111,16 +129,6 @@ class Defect:
         """
         values = [i for i in [self.mp_seam, self.mp_left_weld, self.mp_right_weld] if i is not None]
         return min(values)
-
-    @property
-    def to_left_weld(self):
-        """Return distance (mm) from left defect border to upstream weld."""
-        return self.row.dist - self.pipe.dist
-
-    @property
-    def to_right_weld(self):
-        """Return distance (mm) from right defect border to downstream weld."""
-        return self.pipe.dist + self.pipe.length - self.row.dist - self.length
 
     def get_to_seams(self, orient):
         """Return distance (mm) from given orientation to pipe seams."""
