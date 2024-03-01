@@ -303,8 +303,24 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         return obj
 
+    def set_anomaly(self, typ, orient1, orient2, length, width, comment):
+        """Set shared defekt/lineobj properties."""
+        self.object_code = typ
+        if orient1:
+            self.orient_td = str(orient1)
+        if orient2:
+            self.orient_bd = str(orient2)
+
+        self.length = length
+        self.width = width
+        self.comments = comment
+
     @classmethod
-    def as_lineobj(cls, distanse, typ, name, is_marker, comment, obj_id='', latitude='', longtitude='', altitude=''):
+    def as_lineobj(  # pylint: disable=too-many-locals
+      cls, distanse, typ, name, is_marker, comment,
+      length='', width='', orient1=None, orient2=None,
+      obj_id='', latitude='', longtitude='', altitude=''
+    ):
         """Construct row as line object."""
         lineobj = cls.lineobj_dict()
         if typ not in lineobj:
@@ -312,11 +328,11 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = ObjectClass.MARKER
-        obj.object_code = typ
+        obj.set_anomaly(typ, orient1, orient2, length, width, comment)
+
         obj.object_code_t = lineobj[obj.object_code]
         obj.object_name = name
         obj.is_marker_int = is_marker
-        obj.comments = comment
 
         return obj
 
@@ -334,16 +350,9 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = ObjectClass.DEFEKT
-        obj.object_code = typ
+        obj.set_anomaly(typ, orient1, orient2, length, width, comment)
+
         obj.object_code_t = defekts[obj.object_code]
-
-        if orient1:
-            obj.orient_td = str(orient1)
-        if orient2:
-            obj.orient_bd = str(orient2)
-
-        obj.length = length
-        obj.width = width
         obj.depth_min = depth_int
         obj.depth_max = depth_int
         obj.type_def = side
@@ -352,8 +361,6 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
             obj.mpoint_orient = str(mp_orient)
         if mp_dist:
             obj.mpoint_dist = mp_dist
-
-        obj.comments = comment
 
         return obj
 
