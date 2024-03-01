@@ -9,10 +9,10 @@
 
 Данные можно
 
--   зеркально переворачивать
--   склеивать вместе несколько CSV-файлов
--   растягивать/сжимать по дистанции по заданному набору опорных точек
--   интерпретировать как последовательность труб с геоданными
+- зеркально переворачивать
+- склеивать вместе несколько CSV-файлов
+- растягивать/сжимать по дистанции по заданному набору опорных точек
+- интерпретировать как последовательность труб с геоданными
 
 ## Установка
 
@@ -347,9 +347,9 @@ assert defect.to_seam_weld == 60
 
 ## Разработка
 
-```
-$ git clone git@github.com:vb64/pipeline.csv.git
-$ cd pipeline.csv
-$ make setup PYTHON_BIN=/path/to/python3
-$ make tests
+```bash
+git clone git@github.com:vb64/pipeline.csv.git
+cd pipeline.csv
+make setup PYTHON_BIN=/path/to/python3
+make tests
 ```

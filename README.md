@@ -1,4 +1,5 @@
 # PipelineCsv library
+
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/vb64/pipeline.csv/pep257.yml?label=Pep257&style=plastic&branch=main)](https://github.com/vb64/pipeline.csv/actions?query=workflow%3Apep257)
 [![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/vb64/pipeline.csv/py3.yml?label=Python%203.7-3.12&style=plastic&branch=main)](https://github.com/vb64/pipeline.csv/actions?query=workflow%3Apy3)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/031838411159440885e8c4a28f233c4e)](https://app.codacy.com/gh/vb64/pipeline.csv/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
@@ -12,10 +13,10 @@ The library provides a set of high-level operations with CSV file.
 
 Data can be
 
--   mirrored
--   glued together from several CSV files
--   stretched/compressed along the distance according to a given set of intermediate points
--   interpreted as an iterable sequence of pipes with geodata
+- mirrored
+- glued together from several CSV files
+- stretched/compressed along the distance according to a given set of intermediate points
+- interpreted as an iterable sequence of pipes with geodata
 
 ## Installation
 
@@ -351,9 +352,9 @@ assert defect.to_seam_weld == 60
 
 ## Development
 
-```
-$ git clone git@github.com:vb64/pipeline.csv.git
-$ cd pipeline.csv
-$ make setup PYTHON_BIN=/path/to/python3
-$ make tests
+```bash
+git clone git@github.com:vb64/pipeline.csv.git
+cd pipeline.csv
+make setup PYTHON_BIN=/path/to/python3
+make tests
 ```
