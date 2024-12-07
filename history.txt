@@ -1,3 +1,5 @@
++ New pipeline diameter change class.
+
 01.03.2024 ver.1.10
 -------------------
 
