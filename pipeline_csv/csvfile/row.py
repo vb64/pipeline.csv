@@ -274,6 +274,17 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     @classmethod
+    def as_diam(cls, distanse, diam, obj_id='', latitude='', longtitude='', altitude=''):
+        """Construct row as diameter change object."""
+        obj = cls.as_common(
+          distanse, ObjectClass.DIAM,
+          obj_id=obj_id,
+          latitude=latitude, longtitude=longtitude, altitude=altitude
+        )
+        obj.depth_max = diam
+        return obj
+
+    @classmethod
     def as_category(cls, distanse, category, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as pipeline category object."""
         obj = cls.as_common(
@@ -474,6 +485,11 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     def is_thick(self):
         """Row is wall thick change object."""
         return int(self.type_object) == ObjectClass.THICK
+
+    @property
+    def is_diam(self):
+        """Row is diameter change object."""
+        return int(self.type_object) == ObjectClass.DIAM
 
     @property
     def is_weld(self):

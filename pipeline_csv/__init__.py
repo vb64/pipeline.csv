@@ -19,6 +19,7 @@ class ObjectClass:
     THICK = 3
     HOR_WELD = 4
     PIPELINE_CATEGORY = 5
+    DIAM = 5
 
 
 class TypeHorWeld:
