@@ -350,3 +350,13 @@ class TestInit(TestCsv):
         warns = []
         assert len(csv_file.add_warn('', warns)) == 1
         assert len(warns) == 1
+
+    def test_default_diameter(self):
+        """Check File with and without default diameters."""
+        from pipeline_csv.csvfile import File
+
+        csv_file = File(1420)
+        assert len(csv_file.diameters) == 1
+
+        csv_file = File()
+        assert not csv_file.diameters
