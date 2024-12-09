@@ -251,6 +251,7 @@ class TestTubes(TestCsv):
 
           Row.as_weld(1000),
           Row.as_diam(1011, 1000),
+          Row.as_diam(1012, 1000),
 
           Row.as_weld(2000),
 
