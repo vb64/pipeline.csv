@@ -6,6 +6,7 @@ COMMON = {
   ObjectClass.WELD: "Weld",
   ObjectClass.THICK: "Wall thickness change",
   ObjectClass.PIPELINE_CATEGORY: "Category",
+  ObjectClass.DIAM: "Diameter change",
 }
 
 SEAM = {

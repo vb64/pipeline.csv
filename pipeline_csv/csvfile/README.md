@@ -24,6 +24,7 @@
 - 3 Переход толщины
 - 4 Продольный шов
 - 5 Категория трубопровода
+- 6 Переход (изменение) диаметра
 
 ### Код обьекта
 
@@ -211,26 +212,38 @@
 
 Остальные колонки должны быть пустыми.
 
+### Переход диаметра
+
+Если значение колонки 02 TypeObject установлено в 6 (Переход диаметра)
+
+Колонка 03 Object_Code должна содержать код 0
+
+Колонка 05 Object_Code_T может содержать текстовое название обьекта, например 'Изменение диаметра трубы'.
+
+Колонка 10 Depth_max должна содержать значение диамера трубы в миллиметрах.
+
+Остальные колонки должны быть пустыми.
+
 ## Схема использования колонок по типам обьектов
 
 ```text
-                                   All  Weld  Mark  Defect  Wall  Seam  Category
-01 DistOd                          +    +     +     +       +     +     +
-02 TypeObject                      +    +     +     +       +     +     +
-03 Object_Code                          +     +     +       +     +     +
+                                   All  Weld  Mark  Defect  Wall  Seam  Category  Diam
+01 DistOd                          +    +     +     +       +     +     +         +
+02 TypeObject                      +    +     +     +       +     +     +         +
+03 Object_Code                          +     +     +       +     +     +         +
 04 ObjectName                           +     
-05 Object_Code_T                        +     +     +       +           +
-06 Marker                          +    +     +     +       +     +     +
+05 Object_Code_T                        +     +     +       +           +         +
+06 Marker                          +    +     +     +       +     +     +         +
 07 Length                                           +
 08 Width                                            +
 09 Depth_min                            +           +
-10 Depth_max                            +           +       +           +
+10 Depth_max                            +           +       +           +         +
 11 OrientTD                                         +             +
 12 OrientBD                                         +             +
 13 MPoint_Orient                                    +
 14 MPoint_Dist                                      +
 15 Type_Def                                         +
-16 DistML                          +    +     +     +       +     +     +
+16 DistML                          +    +     +     +       +     +     +         +
 17 DistMR                          -     
 18 DistStL                         -      
 19 DistStR                         -      
@@ -238,8 +251,8 @@
 21 LinkStR                         -      
 22 LinkML                          -     
 23 LinkMR                          -     
-24 Comments                        +    +     +     +       +     +     +
-25 Latitude                        +    +     +     +       +     +     +
-26 Longtitude                      +    +     +     +       +     +     +
-27 Altitude                        +    +     +     +       +     +     +
+24 Comments                        +    +     +     +       +     +     +         +
+25 Latitude                        +    +     +     +       +     +     +         +
+26 Longtitude                      +    +     +     +       +     +     +         +
+27 Altitude                        +    +     +     +       +     +     +         +
 ```
