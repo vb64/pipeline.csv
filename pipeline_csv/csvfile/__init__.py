@@ -71,10 +71,11 @@ def transform_dist(dist_od, table, table_index):
 class Stream:
     """Holds current state of data stream."""
 
-    def __init__(self):
+    def __init__(self, diameter=None):
         """Init data stream state."""
         self.thick = None
         self.category = None
+        self.diameter = diameter
 
 
 class FloatDelimiter:
@@ -132,15 +133,18 @@ class File:
       'Altitude',
     ]
 
-    def __init__(self, diameter, float_delimiter=FloatDelimiter.Point):
+    def __init__(self, diameter=None, float_delimiter=FloatDelimiter.Point):
         """Create empty csv file object."""
         self.data = []
         self.thicks = []
+        self.diameters = []
         self.categories = []
         self.float_delimiter = float_delimiter
         self.ids = set()
-        self.stream = Stream()
-        self.diameter = diameter
+        self.stream = Stream(diameter=diameter)
+
+        if self.stream.diameter:
+            self.diameters.append(self.RowCls.as_diam(1, self.stream.diameter))
 
     @classmethod
     def open_file(cls, file_path, mode):
@@ -153,7 +157,7 @@ class File:
         return cls.from_file(os.path.join(folder, cls.file_name), diameter)
 
     @classmethod
-    def from_file(cls, file_path, diameter, float_delimiter=FloatDelimiter.Point):
+    def from_file(cls, file_path, diameter=None, float_delimiter=FloatDelimiter.Point):
         """Construct from export csv file."""
         obj = cls(diameter, float_delimiter=float_delimiter)
         reader = csv.reader(cls.open_file(file_path, 'r'), delimiter=cls.DELIMETER)
@@ -225,7 +229,7 @@ class File:
             try:
                 tube_length = int(item)
             except ValueError:
-                self.append(self.from_file(item, self.diameter))
+                self.append(self.from_file(item, self.stream.diameter))
                 continue
 
             point = self.RowCls()
@@ -307,7 +311,7 @@ class File:
         """Create iterator for tubes in csv data."""
         from .tubes import Tube
 
-        Tube.diam = self.diameter
+        Tube.diam = self.stream.diameter
         tube = None
         auto_num = 1
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):

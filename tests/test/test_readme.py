@@ -235,4 +235,4 @@ class TestReadme(TestIV):
         """Function attr_list."""
         from pipeline_csv import attr_list, ObjectClass
 
-        assert len(attr_list(ObjectClass)) == 6
+        assert len(attr_list(ObjectClass)) == 7

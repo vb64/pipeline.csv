@@ -19,12 +19,10 @@ def summary_text(objects, names):
     return ', '.join(["{}: {}".format(names[key], items[key]) for key in sorted(items.keys())])
 
 
-class Tube:
+class Tube:  # pylint: disable=too-many-instance-attributes
     """Represent one pipe."""
 
-    diam = 1400
-
-    def __init__(self, row, stream, auto_number, diam=None):
+    def __init__(self, row, stream, auto_number):
         """Construct new tube object from csv row with given data stream state."""
         self.row = row
         self.dist = int(row.dist_od)
@@ -34,7 +32,9 @@ class Tube:
         self.length = None
         self.thick = None
         self.category = None
+        self.diameter = self.stream.diameter
 
+        self.is_diameter_change = None
         self.is_thick_change = None
         self.is_category_change = False
 
@@ -43,20 +43,19 @@ class Tube:
         self.defects = []
         self.categories = []
         self.thicks = []
-
-        if diam:
-            self.diam = diam
+        self.diameters = []
 
     def __str__(self):
         """Return as text."""
-        return "Tube len {} wall {}".format(
+        return "Tube diam {} len {} wall {}".format(
+          self.diameter,
           self.length,
           self.thick
         )
 
     def minutes2mm(self, minutes):
         """Translate angle minutes to mm."""
-        return int(self.diam * pi * minutes / 720)
+        return int(self.diameter * pi * minutes / 720)
 
     def finalize(self, dist):
         """Finalize tube data at given dist."""
@@ -64,7 +63,10 @@ class Tube:
         self.thick = self.stream.thick
         self.category = self.stream.category
 
-    def add_object(self, row):
+        if self.stream.diameter != self.diameter:
+            self.is_diameter_change = self.stream.diameter
+
+    def add_object(self, row):  # pylint: disable=too-complex
         """Add data to tube from csv row."""
         if row.is_defect:
             self.defects.append(Defect(row, self))
@@ -81,6 +83,16 @@ class Tube:
                 self.stream.category = category
                 self.is_category_change = True
             self.categories.append(row)
+
+        elif row.is_diam:
+            diameter = row.depth_max
+
+            if self.diameter is None:
+                self.diameter = diameter
+
+            if self.stream.diameter != diameter:
+                self.stream.diameter = diameter
+            self.diameters.append(row)
 
         elif row.is_thick:
             thick = int(row.depth_max)

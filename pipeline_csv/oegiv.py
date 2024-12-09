@@ -133,6 +133,7 @@ COMMON = {
   ObjectClass.WELD: "Шов",
   ObjectClass.THICK: "Изменение толщины стенки трубы",
   ObjectClass.PIPELINE_CATEGORY: "Категория трубопровода",
+  ObjectClass.DIAM: "Переход диаметра",
 }
 
 SEAM = {

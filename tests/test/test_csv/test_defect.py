@@ -15,8 +15,8 @@ class TestDefect(TestCsv):
         from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv.csvfile.row import Row
 
-        Tube.diam = 700
-        self.pipe = Tube(Row.as_weld(10), Stream(), '1')
+        stream = Stream(diameter=700)
+        self.pipe = Tube(Row.as_weld(10), stream, '1')
 
     def make_defect(self, dist, length, orient1, orient2, mp_orient, mp_dist):
         """Make new defect."""
