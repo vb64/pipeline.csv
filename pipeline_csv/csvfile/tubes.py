@@ -55,7 +55,7 @@ class Tube:  # pylint: disable=too-many-instance-attributes
 
     def minutes2mm(self, minutes):
         """Translate angle minutes to mm."""
-        return int(self.diam * pi * minutes / 720)
+        return int(self.diameter * pi * minutes / 720)
 
     def finalize(self, dist):
         """Finalize tube data at given dist."""

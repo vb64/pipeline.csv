@@ -232,8 +232,32 @@ class TestTubes(TestCsv):
 
     def test_minutes2mm(self):
         """Check minutes2mm method."""
-        circle = int(self.tube.diam * pi)
+        circle = int(self.tube.diameter * pi)
         assert self.tube.minutes2mm(720) == circle
         assert self.tube.minutes2mm(720 / 2) == int(circle / 2)
         assert self.tube.minutes2mm(720 / 4) == int(circle / 4)
         assert self.tube.minutes2mm(0) == 0
+
+    def test_diam(self):
+        """Check property is_diameter_change."""
+        from pipeline_csv.oegiv import File
+        from pipeline_csv.oegiv import Row
+
+        csv_file = File(1400)
+        csv_file.data = [
+          Row.as_weld(10),
+          Row.as_diam(11, 1200),
+          Row.as_weld(1000),
+          Row.as_thick(1011, 1000),
+          Row.as_weld(2000),
+          Row.as_weld(3000),
+          Row.as_thick(3011, 1200),
+          Row.as_weld(4000),
+        ]
+
+        fname = self.build('diam_change.csv')
+        csv_file.to_file(fname)
+        csv_file = File.from_file(fname)
+        pipes = list(csv_file.get_tubes())
+
+        assert len(pipes) == 4

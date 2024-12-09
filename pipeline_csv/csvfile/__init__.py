@@ -157,7 +157,7 @@ class File:
         return cls.from_file(os.path.join(folder, cls.file_name), diameter)
 
     @classmethod
-    def from_file(cls, file_path, diameter, float_delimiter=FloatDelimiter.Point):
+    def from_file(cls, file_path, diameter=None, float_delimiter=FloatDelimiter.Point):
         """Construct from export csv file."""
         obj = cls(diameter, float_delimiter=float_delimiter)
         reader = csv.reader(cls.open_file(file_path, 'r'), delimiter=cls.DELIMETER)
