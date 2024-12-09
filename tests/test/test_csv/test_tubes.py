@@ -256,7 +256,7 @@ class TestTubes(TestCsv):
           Row.as_weld(2000),
 
           Row.as_weld(3000),
-          Row.as_diam(3011, 1200),
+          Row.as_diam(3011, 1400),
 
           Row.as_weld(4000),
         ]
@@ -278,4 +278,13 @@ class TestTubes(TestCsv):
         assert pipes[2].is_diameter_change is None
 
         assert pipes[3].diameter == '1000'
-        assert pipes[3].is_diameter_change == '1200'
+        assert pipes[3].is_diameter_change == '1400'
+
+        csv_file.reverse()
+
+        fname = self.build('diam_change_reverse.csv')
+        csv_file.to_file(fname)
+        csv_file = File.from_file(fname)
+        pipes = list(csv_file.get_tubes())
+
+        assert len(pipes) == 4
