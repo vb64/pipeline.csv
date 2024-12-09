@@ -60,11 +60,13 @@ class Tube:  # pylint: disable=too-many-instance-attributes
     def finalize(self, dist):
         """Finalize tube data at given dist."""
         self.length = int(dist) - self.dist
-        self.diameter = self.stream.diameter
         self.thick = self.stream.thick
         self.category = self.stream.category
 
-    def add_object(self, row):
+        if self.stream.diameter != self.diameter:
+            self.is_diameter_change = self.stream.diameter
+
+    def add_object(self, row):  # pylint: disable=too-complex
         """Add data to tube from csv row."""
         if row.is_defect:
             self.defects.append(Defect(row, self))
@@ -84,8 +86,11 @@ class Tube:  # pylint: disable=too-many-instance-attributes
 
         elif row.is_diam:
             diameter = row.depth_max
+
+            if self.diameter is None:
+                self.diameter = diameter
+
             if self.stream.diameter != diameter:
-                self.is_diameter_change = self.stream.diameter
                 self.stream.diameter = diameter
             self.diameters.append(row)
 

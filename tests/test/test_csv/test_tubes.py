@@ -243,15 +243,20 @@ class TestTubes(TestCsv):
         from pipeline_csv.oegiv import File
         from pipeline_csv.oegiv import Row
 
-        csv_file = File(1400)
+        csv_file = File()
         csv_file.data = [
+
           Row.as_weld(10),
           Row.as_diam(11, 1200),
+
           Row.as_weld(1000),
-          Row.as_thick(1011, 1000),
+          Row.as_diam(1011, 1000),
+
           Row.as_weld(2000),
+
           Row.as_weld(3000),
-          Row.as_thick(3011, 1200),
+          Row.as_diam(3011, 1200),
+
           Row.as_weld(4000),
         ]
 
@@ -261,3 +266,15 @@ class TestTubes(TestCsv):
         pipes = list(csv_file.get_tubes())
 
         assert len(pipes) == 4
+
+        assert pipes[0].diameter == '1200'
+        assert pipes[0].is_diameter_change is None
+
+        assert pipes[1].diameter == '1200'
+        assert pipes[1].is_diameter_change == '1000'
+
+        assert pipes[2].diameter == '1000'
+        assert pipes[2].is_diameter_change is None
+
+        assert pipes[3].diameter == '1000'
+        assert pipes[3].is_diameter_change == '1200'
