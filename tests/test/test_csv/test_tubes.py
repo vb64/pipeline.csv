@@ -17,11 +17,12 @@ class TestTubes(TestCsv):
         from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv.csvfile.row import Row
 
-        self.tube = Tube(Row.as_weld(10), Stream(), '1', diam=700)
+        stream = Stream(diameter=700)
+        self.tube = Tube(Row.as_weld(10), stream, '1')
 
     def test_str(self):
         """Method str."""
-        assert 'Tube len ' in str(self.tube)
+        assert 'Tube diam ' in str(self.tube)
 
     def test_min_diam(self):
         """Check min_diam."""
