@@ -1,4 +1,4 @@
-+ New pipeline diameter change class.
++ New ObjectClass.DIAM item for pipeline diameter changes.
 
 01.03.2024 ver.1.10
 -------------------
