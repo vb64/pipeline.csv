@@ -288,3 +288,15 @@ class TestTubes(TestCsv):
         pipes = list(csv_file.get_tubes())
 
         assert len(pipes) == 4
+
+        assert pipes[0].diameter == '1400'
+        assert pipes[0].is_diameter_change is None
+
+        assert pipes[1].diameter == '1400'
+        assert pipes[1].is_diameter_change is None
+
+        assert pipes[2].diameter == '1400'
+        assert pipes[2].is_diameter_change == '1000'
+
+        assert pipes[3].diameter == '1000'
+        assert pipes[3].is_diameter_change == '1200'
