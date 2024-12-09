@@ -175,6 +175,8 @@ class File:
                 obj.categories.append(item)
             elif item.is_thick:
                 obj.thicks.append(item)
+            elif item.is_diam:
+                obj.diameters.append(item)
 
         return obj
 
