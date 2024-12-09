@@ -300,3 +300,38 @@ class TestTubes(TestCsv):
 
         assert pipes[3].diameter == '1000'
         assert pipes[3].is_diameter_change == '1200'
+
+    def test_diam_reverse(self):
+        """Check reversed diameter changes."""
+        from pipeline_csv.oegiv import File
+        from pipeline_csv.oegiv import Row
+
+        csv_file = File()
+        csv_file.data = [
+
+          Row.as_weld(10),
+          Row.as_diam(11, 1200),
+
+          Row.as_weld(1000),
+          Row.as_weld(2000),
+          Row.as_weld(3000),
+          Row.as_weld(4000),
+        ]
+
+        fname = self.build('diam_reverse.csv')
+        csv_file.to_file(fname)
+        csv_file = File.from_file(fname)
+        pipes = list(csv_file.get_tubes())
+
+        assert len(pipes) == 4
+        assert pipes[3].diameter == '1200'
+        assert pipes[3].is_diameter_change is None
+
+        csv_file.reverse()
+        csv_file.to_file(fname)
+        csv_file = File.from_file(fname)
+        pipes = list(csv_file.get_tubes())
+
+        assert len(pipes) == 4
+        assert pipes[0].diameter == '1200'
+        assert pipes[0].is_diameter_change is None
