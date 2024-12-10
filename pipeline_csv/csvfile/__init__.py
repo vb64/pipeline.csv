@@ -283,6 +283,14 @@ class File:
             self.data.insert(index, first_category)
             self.data.remove(self.categories[-1])
 
+        if self.diameters:
+            base_dist += 1
+            index += 1
+            first_diameter = self.diameters[-1].copy()
+            first_diameter.dist_od = str(base_dist)
+            self.data.insert(index, first_diameter)
+            # self.data.remove(self.diameters[-1])
+
     @classmethod
     def load_dist_modify(cls, file_name):
         """Load distance modificatons from file_name."""

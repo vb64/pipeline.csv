@@ -69,7 +69,7 @@ def check_reversing(csv_file):
     csv_copy.reverse()
 
     # relative position of defekt must change
-    defect_row = csv_copy.data[2]
+    defect_row = csv_copy.data[3]
     assert defect_row.is_defect
 
     # defect orientation must be mirrored

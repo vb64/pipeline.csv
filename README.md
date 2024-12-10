@@ -157,7 +157,7 @@ csv_copy.reverse()
 Relative position of defekt must change and defect orientation must be mirrored.
 
 ```python
-defect_row = csv_copy.data[2]
+defect_row = csv_copy.data[3]
 assert defect_row.is_defect
 
 assert defect_row.orient_td == '7,00'
