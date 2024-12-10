@@ -288,6 +288,7 @@ class File:
             index += 1
             first_diameter = self.diameters[-1].copy()
             first_diameter.dist_od = str(base_dist)
+            first_diameter.depth_min = ""
             self.data.insert(index, first_diameter)
             # self.data.remove(self.diameters[-1])
 
