@@ -175,6 +175,8 @@ class File:
                 obj.categories.append(item)
             elif item.is_thick:
                 obj.thicks.append(item)
+            elif item.is_diam:
+                obj.diameters.append(item)
 
         return obj
 
@@ -280,6 +282,14 @@ class File:
             first_category.dist_od = str(base_dist)
             self.data.insert(index, first_category)
             self.data.remove(self.categories[-1])
+
+        if self.diameters:
+            base_dist += 1
+            index += 1
+            first_diameter = self.diameters[-1].copy()
+            first_diameter.dist_od = str(base_dist)
+            self.data.insert(index, first_diameter)
+            # self.data.remove(self.diameters[-1])
 
     @classmethod
     def load_dist_modify(cls, file_name):

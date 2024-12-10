@@ -101,7 +101,7 @@ class TestInit(TestCsv):
         assert len(csv_file.data) == 8
 
         csv_file.reverse()
-        assert len(csv_file.data) == 8
+        assert len(csv_file.data) == 9
 
     def test_no_welds(self):
         """Check reverse data file without welds."""
@@ -139,7 +139,7 @@ class TestInit(TestCsv):
 
         csv_file.reverse()
 
-        assert len(csv_file.data) == 178
+        assert len(csv_file.data) == 179
         assert csv_file.total_length == 426625
 
         expected = [
@@ -158,7 +158,7 @@ class TestInit(TestCsv):
         assert os.path.exists(fname)
         csv_file = File.from_file(fname, 1400)
 
-        assert len(csv_file.data) == 178
+        assert len(csv_file.data) == 179
         assert csv_file.total_length == 426625
 
         expected = [
@@ -359,4 +359,22 @@ class TestInit(TestCsv):
         assert len(csv_file.diameters) == 1
 
         csv_file = File()
+        assert not csv_file.diameters
+
+    def test_no_diam_reverse(self):
+        """Reverse File without diameters change."""
+        from pipeline_csv.csvfile import File
+        from pipeline_csv.csvfile.row import Row
+
+        csv_file = File()
+
+        dist = 10
+        csv_file.data = [
+          Row.as_weld(dist, ''),
+          Row.as_weld(dist + 1000, ''),
+          Row.as_thick(dist, 100),
+        ]
+
+        assert not csv_file.diameters
+        csv_file.reverse()
         assert not csv_file.diameters
