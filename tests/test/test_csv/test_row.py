@@ -113,7 +113,7 @@ class TestRow(TestCsv):
         assert row.is_thick
         assert row.depth_max == 105
 
-        row = Row.as_diam(10, 1420)
+        row = Row.as_diam(10, "", 1420)
         assert row.is_diam
         assert row.depth_max == 1420
 

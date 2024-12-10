@@ -144,7 +144,7 @@ class File:
         self.stream = Stream(diameter=diameter)
 
         if self.stream.diameter:
-            self.diameters.append(self.RowCls.as_diam(1, self.stream.diameter))
+            self.diameters.append(self.RowCls.as_diam(1, "", self.stream.diameter))
 
     @classmethod
     def open_file(cls, file_path, mode):

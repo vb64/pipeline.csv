@@ -247,16 +247,16 @@ class TestTubes(TestCsv):
         csv_file.data = [
 
           Row.as_weld(10),
-          Row.as_diam(11, 1200),
+          Row.as_diam(11, "", 1200),
 
           Row.as_weld(1000),
-          Row.as_diam(1011, 1000),
-          Row.as_diam(1012, 1000),
+          Row.as_diam(1011, 1200, 1000),
+          Row.as_diam(1012, 1200, 1000),
 
           Row.as_weld(2000),
 
           Row.as_weld(3000),
-          Row.as_diam(3011, 1400),
+          Row.as_diam(3011, 1000, 1400),
 
           Row.as_weld(4000),
         ]
@@ -310,7 +310,7 @@ class TestTubes(TestCsv):
         csv_file.data = [
 
           Row.as_weld(10),
-          Row.as_diam(11, 1200),
+          Row.as_diam(11, "", 1200),
 
           Row.as_weld(1000),
           Row.as_weld(2000),
