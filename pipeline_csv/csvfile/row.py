@@ -560,6 +560,8 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         if int(self.type_object) == ObjectClass.MARKER:
             object_code = int(self.object_code)
             self.object_code = str(self.markers_reverse().get(object_code, object_code))
+        elif int(self.type_object) == ObjectClass.DIAM:
+            self.depth_min, self.depth_max = self.depth_max, self.depth_min
 
         # comments
         for key, val in self.comment_reverse().items():
