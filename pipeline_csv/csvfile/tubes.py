@@ -64,7 +64,7 @@ class Tube:  # pylint: disable=too-many-instance-attributes
         self.category = self.stream.category
 
         if self.stream.diameter != self.diameter:
-            self.is_diameter_change = self.stream.diameter
+            self.is_diameter_change = self.stream.diameter if self.stream.diameter else None
 
     def add_object(self, row):  # pylint: disable=too-complex
         """Add data to tube from csv row."""

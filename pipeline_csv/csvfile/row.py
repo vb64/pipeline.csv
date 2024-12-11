@@ -275,14 +275,15 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     @classmethod
-    def as_diam(cls, distanse, diam, obj_id='', latitude='', longtitude='', altitude=''):
+    def as_diam(cls, distanse, diam_start, diam_end, obj_id='', latitude='', longtitude='', altitude=''):
         """Construct row as diameter change object."""
         obj = cls.as_common(
           distanse, ObjectClass.DIAM,
           obj_id=obj_id,
           latitude=latitude, longtitude=longtitude, altitude=altitude
         )
-        obj.depth_max = diam
+        obj.depth_min = diam_start
+        obj.depth_max = diam_end
         return obj
 
     @classmethod
@@ -559,6 +560,8 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         if int(self.type_object) == ObjectClass.MARKER:
             object_code = int(self.object_code)
             self.object_code = str(self.markers_reverse().get(object_code, object_code))
+        elif int(self.type_object) == ObjectClass.DIAM:
+            self.depth_min, self.depth_max = self.depth_max, self.depth_min
 
         # comments
         for key, val in self.comment_reverse().items():

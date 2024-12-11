@@ -144,7 +144,7 @@ class File:
         self.stream = Stream(diameter=diameter)
 
         if self.stream.diameter:
-            self.diameters.append(self.RowCls.as_diam(1, self.stream.diameter))
+            self.diameters.append(self.RowCls.as_diam(1, "", self.stream.diameter))
 
     @classmethod
     def open_file(cls, file_path, mode):
@@ -286,10 +286,11 @@ class File:
         if self.diameters:
             base_dist += 1
             index += 1
-            first_diameter = self.diameters[-1].copy()
-            first_diameter.dist_od = str(base_dist)
-            self.data.insert(index, first_diameter)
-            # self.data.remove(self.diameters[-1])
+            last_diameter = self.diameters[-1]
+            self.data.insert(
+              index,
+              self.RowCls.as_diam(base_dist, "", last_diameter.depth_min)
+            )
 
     @classmethod
     def load_dist_modify(cls, file_name):
