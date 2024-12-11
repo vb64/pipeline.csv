@@ -2,6 +2,8 @@
 
 + New ObjectClass.DIAM item for pipeline diameter changes.
 
++ Custom data for ObjectClass.DEFEKT
+
 01.03.2024 ver.1.10
 -------------------
 
