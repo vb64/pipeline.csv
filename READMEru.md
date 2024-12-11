@@ -345,10 +345,6 @@ assert defect.to_seam == 60
 assert defect.to_seam_weld == 60
 ```
 
-### Изменение диаметра трубопровода
-
-
-
 ## Разработка
 
 ```bash
