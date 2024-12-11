@@ -286,11 +286,14 @@ class File:
         if self.diameters:
             base_dist += 1
             index += 1
-            last_diameter = self.diameters[-1]
             first_diameter = self.diameters[0]
             first_diameter.dist_od = str(base_dist)
-            first_diameter.depth_min = ""
-            first_diameter.depth_max = last_diameter.depth_min
+            if len(self.diameters) > 1:
+                first_diameter.depth_min = ""
+                last_diameter = self.diameters[-1]
+                first_diameter.depth_max = last_diameter.depth_min
+            else:
+                first_diameter.depth_max, first_diameter.depth_min = first_diameter.depth_min, first_diameter.depth_max
 
     @classmethod
     def load_dist_modify(cls, file_name):

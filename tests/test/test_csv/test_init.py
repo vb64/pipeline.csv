@@ -26,18 +26,18 @@ class TestInit(TestCsv):
         from pipeline_csv.oegiv import File
 
         csv_file = File.at_folder(self.fixture(), 1400)
-        assert len(csv_file.data) == 178
+        assert len(csv_file.data) == 179
 
         csv_file = File.from_file(self.fixture('DefTable.csv'), 1400)
-        assert len(csv_file.data) == 178
+        assert len(csv_file.data) == 179
 
         csv_file.data.insert(0, Row.as_seam(0, TypeHorWeld.NO_WELD, '', ''))
-        assert len(csv_file.data) == 179
+        assert len(csv_file.data) == 180
 
         warns = []
         tubes = csv_file.get_tubes(warns)
         assert tubes
-        assert len(warns) == 1
+        assert len(warns) == 2
 
         tube = next(tubes)
         assert tube.dist == 0
@@ -49,7 +49,7 @@ class TestInit(TestCsv):
             pass
 
         assert tube.dist == 416088
-        assert len(warns) == 1
+        assert len(warns) == 2
 
     @staticmethod
     def check_objects(objects, val_list):
@@ -98,7 +98,7 @@ class TestInit(TestCsv):
         from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('no_thicks.csv'), 1400)
-        assert len(csv_file.data) == 8
+        assert len(csv_file.data) == 9
 
         csv_file.reverse()
         assert len(csv_file.data) == 9
@@ -108,17 +108,17 @@ class TestInit(TestCsv):
         from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('no_welds.csv'), 1400)
-        assert len(csv_file.data) == 1
+        assert len(csv_file.data) == 2
 
         csv_file.reverse()
-        assert len(csv_file.data) == 1
+        assert len(csv_file.data) == 2
 
     def test_reverse(self):
         """Check reverse."""
         from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('DefTable.csv'), 1400)
-        assert len(csv_file.data) == 178
+        assert len(csv_file.data) == 179
 
         expected = [
           ('1000', '1'),
@@ -158,7 +158,7 @@ class TestInit(TestCsv):
         assert os.path.exists(fname)
         csv_file = File.from_file(fname, 1400)
 
-        assert len(csv_file.data) == 179
+        assert len(csv_file.data) == 180
         assert csv_file.total_length == 426625
 
         expected = [
@@ -184,12 +184,12 @@ class TestInit(TestCsv):
         fname = self.fixture('DefTable.csv')
         csv_file = File.from_file(fname, 1400)
 
-        assert len(csv_file.data) == 178
+        assert len(csv_file.data) == 179
         assert csv_file.total_length == 426625
 
         csv_file.join(['11000', fname])
 
-        assert len(csv_file.data) == (178 * 2 + 1)
+        assert len(csv_file.data) == (179 * 2 + 1)
         assert csv_file.total_length == (426625 * 2 + 11000)
 
     def test_join_short(self):
@@ -199,12 +199,12 @@ class TestInit(TestCsv):
         fname = self.fixture('1.csv')
         csv_file = File.from_file(fname, 1400)
 
-        assert len(csv_file.data) == 7
+        assert len(csv_file.data) == 8
         assert csv_file.total_length == 8800
 
         csv_file.join(['11000', fname])
 
-        assert len(csv_file.data) == (7 * 2 + 1)
+        assert len(csv_file.data) == (8 * 2 + 1)
         assert csv_file.total_length == (8800 * 2 + 11000)
 
         fname = os.path.join('build', '1.csv')
@@ -281,7 +281,7 @@ class TestInit(TestCsv):
         fname = self.fixture('infotech.csv')
         csv_file = File.from_file(fname, 1400)
 
-        assert len(csv_file.data) == 30897
+        assert len(csv_file.data) == 30898
         assert csv_file.total_length == 130111900
 
         mname = self.fixture('dist_modifi.csv')
@@ -356,7 +356,7 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile import File
 
         csv_file = File(1420)
-        assert len(csv_file.diameters) == 1
+        assert not csv_file.diameters
 
         csv_file = File()
         assert not csv_file.diameters
