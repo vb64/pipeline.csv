@@ -6,6 +6,72 @@ import os
 from . import TestIV
 
 
+def save_and_load(filecls, csv, fname):
+    """Save and reload."""
+    csv.to_file(fname)
+    csv = filecls.from_file(fname)
+
+
+def check_diam():
+    """Check operation with pipeline diameter change."""
+    from pipeline_csv.oegiv import File, Row
+
+    csv_file = File(1200)
+
+    csv_file.data += [
+      Row.as_weld(0),
+      Row.as_weld(1000),
+      Row.as_diam(1001, 1200, 1400),
+      Row.as_weld(2000),
+      Row.as_weld(3000),
+      Row.as_weld(4000),
+    ]
+
+    # 4 pipes
+    pipes = list(csv_file.get_tubes())
+    assert len(pipes) == 4
+
+    # first pipe diameter 1200, no diameter change
+    assert pipes[0].diameter == 1200
+    assert pipes[0].is_diameter_change is None
+
+    # second pipe diam change 1200 -> 1400
+    assert pipes[1].diameter == 1200
+    assert pipes[1].is_diameter_change == 1400
+
+    # next two pipes diameter 1400, no diameter change
+    assert pipes[2].diameter == 1400
+    assert pipes[2].is_diameter_change is None
+    assert pipes[3].diameter == 1400
+    assert pipes[3].is_diameter_change is None
+
+    fname = 'diam.csv'
+    save_and_load(File, csv_file, fname)
+    # csv_file.to_file(fname)
+    # csv_file = File.from_file(fname)
+
+    # reverse data, save to file and reload
+    csv_file.reverse()
+    save_and_load(File, csv_file, fname)
+
+    pipes = list(csv_file.get_tubes())
+    assert len(pipes) == 4
+
+    # first two pipes has diameter 1400, no diameter change
+    assert int(pipes[0].diameter) == 1400
+    assert pipes[0].is_diameter_change is None
+    assert int(pipes[1].diameter) == 1400
+    assert pipes[1].is_diameter_change is None
+
+    # Third pipe has diam change 1400 -> 1200
+    assert int(pipes[2].diameter) == (1400)
+    assert int(pipes[2].is_diameter_change) == 1200
+
+    # last pipe diameter 1200, no diameter change
+    assert int(pipes[3].diameter) == 1200
+    assert pipes[3].is_diameter_change is None
+
+
 def check_new():
     """Construct new csv file from scratch."""
     from pipeline_csv import TypeHorWeld, DefektSide
@@ -56,10 +122,10 @@ def check_reversing(csv_file):
 
     # check distance of the last object in copy
     assert csv_copy.total_length == 12000
-    assert len(csv_copy.data) == 5
+    assert len(csv_copy.data) == 6
 
     # check defect orientation
-    defect_row = csv_copy.data[3]
+    defect_row = csv_copy.data[4]
     assert defect_row.is_defect
     assert defect_row.orient_td == '4,00'
     assert defect_row.orient_bd == '5,00'
@@ -69,7 +135,7 @@ def check_reversing(csv_file):
     csv_copy.reverse()
 
     # relative position of defekt must change
-    defect_row = csv_copy.data[3]
+    defect_row = csv_copy.data[2]
     assert defect_row.is_defect
 
     # defect orientation must be mirrored
@@ -86,7 +152,7 @@ def check_join(csv_file):
     """Append to initial CSV empty pipe with length = 10.0 m and reversed copy from the file."""
     csv_file.join([10000, 'reversed.csv'])
     assert csv_file.total_length == 28000
-    assert len(csv_file.data) == 11
+    assert len(csv_file.data) == 12
 
 
 def check_transform(csv_file):
@@ -111,7 +177,7 @@ def check_transform(csv_file):
         current_dist = i.dist
         tube = i
 
-    assert not warnings
+    assert len(warnings) == 1  # diam change before first weld
 
     # set geodata for tube
     assert tube.latitude == ''
@@ -221,12 +287,14 @@ class TestReadme(TestIV):
         check_join(csv_file)
         check_transform(csv_file)
         check_defect()
+        check_diam()
 
         for name in [
           'example.csv',
           'reversed.csv',
           'transformed.csv',
           'geo.csv',
+          'diam.csv',
         ]:
             os.remove(name)
 
