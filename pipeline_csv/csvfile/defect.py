@@ -44,6 +44,11 @@ class Anomaly:
         """Return distance (mm) from right defect border to downstream weld."""
         return self.pipe.dist + self.pipe.length - self.row.dist - self.length
 
+    @property
+    def custom_data(self):
+        """Return custom data for anomaly."""
+        return self.row.object_name
+
 
 class Defect(Anomaly):
     """Defect at the pipe."""

@@ -317,7 +317,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     def set_anomaly(self, typ, orient1, orient2, length, width, comment, custom_data):
-        """Set shared defekt/lineobj properties."""
+        """Set shared defekt/lineobj properties and custom data."""
         self.object_code = typ
         if orient1:
             self.orient_td = str(orient1)
