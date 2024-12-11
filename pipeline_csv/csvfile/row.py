@@ -316,7 +316,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         return obj
 
-    def set_anomaly(self, typ, orient1, orient2, length, width, comment):
+    def set_anomaly(self, typ, orient1, orient2, length, width, comment, custom_data):
         """Set shared defekt/lineobj properties."""
         self.object_code = typ
         if orient1:
@@ -327,12 +327,14 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         self.length = length
         self.width = width
         self.comments = comment
+        self.object_name = custom_data
 
     @classmethod
     def as_lineobj(  # pylint: disable=too-many-locals
       cls, distanse, typ, name, is_marker, comment,
       length='', width='', orient1=None, orient2=None,
-      obj_id='', latitude='', longtitude='', altitude=''
+      obj_id='', latitude='', longtitude='', altitude='',
+      custom_data=''
     ):
         """Construct row as line object."""
         lineobj = cls.lineobj_dict()
@@ -341,7 +343,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = ObjectClass.MARKER
-        obj.set_anomaly(typ, orient1, orient2, length, width, comment)
+        obj.set_anomaly(typ, orient1, orient2, length, width, comment, custom_data)
 
         obj.object_code_t = lineobj[obj.object_code]
         obj.object_name = name
@@ -352,7 +354,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @classmethod
     def as_defekt(  # pylint: disable=too-many-locals,too-many-arguments
       cls, distanse, typ, side, length, width, depth, orient1, orient2, mp_orient, mp_dist, comment,
-      obj_id='', latitude='', longtitude='', altitude=''
+      obj_id='', latitude='', longtitude='', altitude='', custom_data=''
     ):
         """Construct row as defekt object."""
         defekts = cls.defekts_dict()
@@ -363,7 +365,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         obj = cls.with_dist(distanse, obj_id=obj_id, latitude=latitude, longtitude=longtitude, altitude=altitude)
         obj.type_object = ObjectClass.DEFEKT
-        obj.set_anomaly(typ, orient1, orient2, length, width, comment)
+        obj.set_anomaly(typ, orient1, orient2, length, width, comment, custom_data)
 
         obj.object_code_t = defekts[obj.object_code]
         obj.depth_min = depth_int
