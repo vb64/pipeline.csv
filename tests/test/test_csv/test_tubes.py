@@ -348,18 +348,22 @@ class TestTubes(TestCsv):
           Row.as_diam(11, "", 1200),
 
           Row.as_weld(1000),
-          Row.as_diam(11, 1200, 1400),
+          Row.as_diam(1010, 1200, 1400),
 
           Row.as_weld(2000),
           Row.as_weld(3000),
           Row.as_weld(4000),
         ]
 
-        fname = self.build('diam_item_reverse.csv')
+        fname = self.build('diam_item.csv')
         csv_file.to_file(fname)
+
         csv_file = File.from_file(fname)
         csv_file.reverse()
+
+        fname = self.build('diam_item_reverse.csv')
         csv_file.to_file(fname)
+
         csv_file = File.from_file(fname)
         pipes = list(csv_file.get_tubes())
 
