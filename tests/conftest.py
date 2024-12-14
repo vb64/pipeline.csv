@@ -13,8 +13,4 @@ def path_setup():
 @pytest.fixture(scope="session", autouse=True)
 def session_setup(request):
     """Auto session resource fixture."""
-    build_path = 'build'
-    if not os.path.exists(build_path):
-        os.mkdir(build_path)
-
     path_setup()
