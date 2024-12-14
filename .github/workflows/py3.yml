@@ -32,8 +32,8 @@ jobs:
 
     - name: flake8
       run: |
-        flake8 --count --show-source --statistics --max-line-length=120 pipeline_csv
-        flake8 --count --show-source --statistics --max-line-length=120 tests/test
+        flake8 --count --show-source --statistics pipeline_csv
+        flake8 --count --show-source --statistics tests/test
 
     - name: pylint
       run: |

@@ -27,8 +27,8 @@ tests: flake8 pep257 lint
 	$(COVERAGE) html --skip-covered
 
 flake8:
-	$(PYTHON) -m flake8 --max-line-length=120 $(TESTS)
-	$(PYTHON) -m flake8 --max-line-length=120 $(SOURCE)
+	$(PYTHON) -m flake8 $(TESTS)
+	$(PYTHON) -m flake8 $(SOURCE)
 
 lint:
 	$(PYLINT) $(TESTS)/test
