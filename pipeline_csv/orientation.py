@@ -41,6 +41,11 @@ class Orientation:
         """Return orientation as integer minutes."""
         return (self.hours * HOUR_MINUTES + self.minutes) % CIRCLE_MINUTES
 
+    @property
+    def as_hour_float(self):
+        """Return orientation as as float hour."""
+        return float(self.hours) + float(self.minutes) / 60.0
+
     @classmethod
     def from_hour_float(cls, hour_float):
         """Construct object from hours as float."""

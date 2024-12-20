@@ -114,3 +114,11 @@ class TestOrientation(TestIV):
         assert CIRCLE_MINUTES == 720
         assert HOUR_MINUTES == 60
         assert CIRCLE_HOURS == 12
+
+    @staticmethod
+    def test_as_hour_float():
+        """Check method is_inside."""
+        from pipeline_csv.orientation import Orientation
+
+        assert Orientation.from_minutes(60).as_hour_float == 1.0
+        assert Orientation.from_minutes(90).as_hour_float == 1.5
