@@ -1,3 +1,6 @@
+20.12.2024 ver.1.12
+-------------------
+
 + Add Orientation.as_hour_float property.
 
 * Change rules for Tube.seam2 property.
