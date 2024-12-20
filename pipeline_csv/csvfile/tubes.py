@@ -191,7 +191,7 @@ class Tube:  # pylint: disable=too-many-instance-attributes
         if (len(self.seams) > 0) and (self.typ == TypeHorWeld.SECOND):
             text = self.seams[0].orient_bd
             ornt = Orientation.from_csv(text) if text else None
-        elif (len(self.seams) > 1) and (self.typ == TypeHorWeld.SPIRAL):
+        elif len(self.seams) > 1:
             text = self.seams[-1].orient_td
             ornt = Orientation.from_csv(text) if text else None
 
