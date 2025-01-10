@@ -357,3 +357,11 @@ class File:
             return []
 
         return tubes
+
+    def last_weld(self):
+        """Return data row for last weld."""
+        for row in reversed(self.data):
+            if row.is_weld:
+                return row
+
+        return None

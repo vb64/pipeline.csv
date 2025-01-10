@@ -378,3 +378,15 @@ class TestInit(TestCsv):
         assert not csv_file.diameters
         csv_file.reverse()
         assert not csv_file.diameters
+
+    def test_last_weld(self):
+        """Check File.last_weld method."""
+        from pipeline_csv.csvfile import File
+
+        csv_file = File(1420)
+        assert csv_file.last_weld() is None
+
+        from pipeline_csv.oegiv import File as FileIV
+
+        csv_file = FileIV.from_file(self.fixture('1.csv'), 1400)
+        assert csv_file.last_weld() is not None
