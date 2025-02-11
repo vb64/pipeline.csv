@@ -1,5 +1,4 @@
 + Custom data moved from field `04 ObjectName` to `17 DistMR` (for all object classes).
-https://github.com/vb64/pipeline.csv/pull/62/files
 
 10.01.2025 ver.1.13
 -------------------
