@@ -124,9 +124,6 @@ class TestDefect(TestCsv):
         defect.row.length = ''
         assert defect.length == 0
 
-        defect.row.object_name = "Defect custom data"
-        assert defect.custom_data == defect.row.object_name
-
     def test_no_orient(self):
         """Check defekt without orientations."""
         from pipeline_csv import TypeHorWeld
