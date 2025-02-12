@@ -327,7 +327,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         self.length = length
         self.width = width
         self.comments = comment
-        self.object_name = custom_data
+        self.set_custom(custom_data)
 
     @classmethod
     def as_lineobj(  # pylint: disable=too-many-locals
@@ -479,6 +479,15 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
             obj.altitude = self.values()
 
         return obj
+
+    @property
+    def custom_data(self):
+        """Return custom data for row."""
+        return self.dist_mr
+
+    def set_custom(self, data):
+        """Set custom data for row."""
+        self.dist_mr = data
 
     @property
     def is_category(self):

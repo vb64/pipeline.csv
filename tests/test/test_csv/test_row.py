@@ -9,6 +9,21 @@ class TestRow(TestCsv):
     """Check row.py file."""
 
     @staticmethod
+    def test_custom():
+        """Check custom data."""
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, TypeMarker, Row
+
+        row = Row.as_defekt(
+          10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15', '', '', '', '', '',
+          custom_data="xxx"
+        )
+        assert row.custom_data == "xxx"
+
+        row = Row.as_lineobj(10, TypeMarker.VALVE, 'xxx', True, 'yyy', custom_data="zzz")
+        assert row.custom_data == "zzz"
+
+    @staticmethod
     def test_set_geo():
         """Check set_geo."""
         from pipeline_csv import DefektSide
