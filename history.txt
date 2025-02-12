@@ -1,3 +1,6 @@
+12.02.2025 ver.1.14
+-------------------
+
 + Custom data moved from field `04 ObjectName` to `17 DistMR` (for all object classes).
 
 10.01.2025 ver.1.13
