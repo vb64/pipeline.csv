@@ -359,9 +359,11 @@ class File:
         return tubes
 
     def last_weld(self):
-        """Return data row for last weld."""
+        """Return list of data rows, that starting from last weld."""
+        data = []
         for row in reversed(self.data):
+            data.append(row)
             if row.is_weld:
-                return row
+                break
 
-        return None
+        return reversed(data)

@@ -384,9 +384,9 @@ class TestInit(TestCsv):
         from pipeline_csv.csvfile import File
 
         csv_file = File(1420)
-        assert csv_file.last_weld() is None
+        assert len(list(csv_file.last_weld())) == 1
 
         from pipeline_csv.oegiv import File as FileIV
 
         csv_file = FileIV.from_file(self.fixture('1.csv'), 1400)
-        assert csv_file.last_weld() is not None
+        assert len(list(csv_file.last_weld())) == 2
