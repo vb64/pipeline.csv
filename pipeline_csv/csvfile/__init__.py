@@ -358,7 +358,7 @@ class File:
 
         return tubes
 
-    def last_pipe(self, previos_pipe):
+    def last_pipe(self, stream):
         """Return pseudo pipe without length, that starting from last weld."""
         data = []
         for row in reversed(self.data):
@@ -369,7 +369,7 @@ class File:
         from .tubes import Tube
 
         data = list(reversed(data))
-        pipe = Tube(data[0], previos_pipe.stream, None)
+        pipe = Tube(data[0], stream, None)
         for row in data[1:]:
             pipe.add_object(row)
 

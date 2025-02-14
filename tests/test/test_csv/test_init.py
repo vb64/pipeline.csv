@@ -382,20 +382,24 @@ class TestInit(TestCsv):
     def test_last_pipe(self):
         """Check File.last_weld method."""
         from pipeline_csv.csvfile import Stream, File
-        from pipeline_csv.csvfile.tubes import Tube
-        from pipeline_csv.csvfile.row import Row
 
         stream = Stream(diameter=700)
-        prev = Tube(Row.as_weld(10), stream, '1')
+        stream.thick = 100
 
         csv_file = File(1420)
-        pipe = csv_file.last_pipe(prev)
+        pipe = csv_file.last_pipe(stream)
         assert pipe.length == 0
         assert len(pipe.features()) == 0
+        assert pipe.thick == 100
+        assert pipe.category is None
 
         from pipeline_csv.oegiv import File as FileIV
 
         csv_file = FileIV.from_file(self.fixture('1.csv'), 1400)
-        pipe = csv_file.last_pipe(prev)
+        stream.thick = 80
+
+        pipe = csv_file.last_pipe(stream)
         assert pipe.length == 0
         assert len(pipe.features()) == 0
+        assert pipe.thick == 80
+        assert pipe.category is None
