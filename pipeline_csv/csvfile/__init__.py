@@ -358,12 +358,21 @@ class File:
 
         return tubes
 
-    def last_weld(self):
-        """Return list of data rows, that starting from last weld."""
+    def last_pipe(self, previos_pipe):
+        """Return pseudo pipe without length, that starting from last weld."""
         data = []
         for row in reversed(self.data):
             data.append(row)
             if row.is_weld:
                 break
 
-        return reversed(data)
+        from .tubes import Tube
+
+        data = list(reversed(data))
+        pipe = Tube(data[0], previos_pipe.stream, None)
+        for row in data[1:]:
+            pipe.add_object(row)
+
+        pipe.finalize(pipe.dist)
+
+        return pipe

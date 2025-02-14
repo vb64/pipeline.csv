@@ -1,4 +1,4 @@
-+ Method csvfile.last_weld returns list of data rows, that starting from last weld.
++ Method csvfile.last_weld renamed to csvfile.last_pipe and returns pseudo pipe without length, that starting from last weld.
 
 12.02.2025 ver.1.14
 -------------------

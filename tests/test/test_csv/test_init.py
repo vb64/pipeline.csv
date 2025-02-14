@@ -379,14 +379,23 @@ class TestInit(TestCsv):
         csv_file.reverse()
         assert not csv_file.diameters
 
-    def test_last_weld(self):
+    def test_last_pipe(self):
         """Check File.last_weld method."""
-        from pipeline_csv.csvfile import File
+        from pipeline_csv.csvfile import Stream, File
+        from pipeline_csv.csvfile.tubes import Tube
+        from pipeline_csv.csvfile.row import Row
+
+        stream = Stream(diameter=700)
+        prev = Tube(Row.as_weld(10), stream, '1')
 
         csv_file = File(1420)
-        assert len(list(csv_file.last_weld())) == 1
+        pipe = csv_file.last_pipe(prev)
+        assert pipe.length == 0
+        assert len(pipe.features()) == 0
 
         from pipeline_csv.oegiv import File as FileIV
 
         csv_file = FileIV.from_file(self.fixture('1.csv'), 1400)
-        assert len(list(csv_file.last_weld())) == 2
+        pipe = csv_file.last_pipe(prev)
+        assert pipe.length == 0
+        assert len(pipe.features()) == 0
