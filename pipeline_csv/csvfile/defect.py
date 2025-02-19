@@ -63,7 +63,7 @@ class Defect(Anomaly):
         if not self.row.depth_max:
             return None
 
-        if self.row.depth_units == Depth.PercentWallThickness:
+        if self.row.depth_units == Depth.PercentWallThickness and (self.is_dent or self.is_metal_loss):
             return float(self.row.depth_max)
 
         # Depth.HundredthsOfMillimeter
@@ -80,12 +80,12 @@ class Defect(Anomaly):
         if not self.row.depth_max:
             return None
 
-        if self.row.depth_units == Depth.HundredthsOfMillimeter:
+        if self.row.depth_units == Depth.HundredthsOfMillimeter and (self.is_dent or self.is_metal_loss):
             return float(self.row.depth_max) / 100.0
 
         # Depth.PercentWallThickness
         if self.is_dent:
-            return float(self.row.depth_max) * 100.0 / self.pipe.diameter
+            return self.pipe.diameter * float(self.row.depth_max) / 100.0
         if self.is_metal_loss:
             return (self.pipe.thick / 10.0) * float(self.row.depth_max) / 100.0
 

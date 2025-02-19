@@ -53,8 +53,36 @@ class TestDefect(TestCsv):
         assert mloss.depth_units == Depth.PercentWallThickness
 
         mloss_defekt = Defect(mloss, self.pipe)
+        assert mloss_defekt.is_metal_loss
+        assert not mloss_defekt.is_dent
         assert mloss_defekt.depth_percent == 50
         assert mloss_defekt.depth_mm == 5
+
+        dent = Row.as_defekt(
+          11, TypeDefekt.DENT, DefektSide.INSIDE, '10', '10', str(depth_percent),
+          None, None,
+          None, None, ''
+        )
+        assert dent.depth_units == Depth.PercentWallThickness
+
+        dent_defekt = Defect(dent, self.pipe)
+        assert not dent_defekt.is_metal_loss
+        assert dent_defekt.is_dent
+        assert dent_defekt.depth_percent == 50
+        assert dent_defekt.depth_mm == 350
+
+        mech = Row.as_defekt(
+          11, TypeDefekt.MECHANIC, DefektSide.INSIDE, '10', '10', str(depth_percent),
+          None, None,
+          None, None, ''
+        )
+        assert mech.depth_units == Depth.PercentWallThickness
+
+        mech_defekt = Defect(mech, self.pipe)
+        assert not mech_defekt.is_metal_loss
+        assert not mech_defekt.is_dent
+        assert mech_defekt.depth_percent is None
+        assert mech_defekt.depth_mm is None
 
     def test_props(self):  # pylint: disable=too-many-statements
         """Check defekt properties."""
