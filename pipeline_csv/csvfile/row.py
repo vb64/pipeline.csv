@@ -55,8 +55,17 @@ def reverse_orient(orient_str):
     return "{},{}".format(hours, minutes)
 
 
+class Depth:
+    """Units for defekt depth."""
+
+    PercentWallThickness = 0
+    HundredthsOfMillimeter = 1
+
+
 class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-methods
     """Row of csv file."""
+
+    depth_units = Depth.PercentWallThickness
 
     @staticmethod
     def get_bool(val):
