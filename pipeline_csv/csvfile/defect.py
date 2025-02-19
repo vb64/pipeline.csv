@@ -1,5 +1,6 @@
 """Row with type Defect."""
 from pipeline_csv.orientation import Orientation
+from .row import Depth
 
 
 class Anomaly:
@@ -55,6 +56,40 @@ class Defect(Anomaly):
         self.orient_mp = None
         if self.row.mpoint_orient:
             self.orient_mp = Orientation.from_csv(self.row.mpoint_orient)
+
+    @property
+    def depth_percent(self):
+        """Return defekt depth as percent from wall thickness for metal loss or pipe diameter for dents."""
+        if not self.row.depth_max:
+            return None
+
+        if self.row.depth_units == Depth.PercentWallThickness and (self.is_dent or self.is_metal_loss):
+            return float(self.row.depth_max)
+
+        # Depth.HundredthsOfMillimeter
+        if self.is_dent:
+            return float(self.row.depth_max) / self.pipe.diameter
+        if self.is_metal_loss:
+            return float(self.row.depth_max) / (self.pipe.thick / 10.0)
+
+        return None
+
+    @property
+    def depth_mm(self):
+        """Return defekt depth as mm."""
+        if not self.row.depth_max:
+            return None
+
+        if self.row.depth_units == Depth.HundredthsOfMillimeter and (self.is_dent or self.is_metal_loss):
+            return float(self.row.depth_max) / 100.0
+
+        # Depth.PercentWallThickness
+        if self.is_dent:
+            return self.pipe.diameter * float(self.row.depth_max) / 100.0
+        if self.is_metal_loss:
+            return (self.pipe.thick / 10.0) * float(self.row.depth_max) / 100.0
+
+        return None
 
     @property
     def number_at_pipe(self):

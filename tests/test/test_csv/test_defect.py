@@ -36,6 +36,68 @@ class TestDefect(TestCsv):
 
         return defect
 
+    def test_depth(self):
+        """Check depth_percent/depth_mm properties."""
+        from pipeline_csv.csvfile.defect import Defect, Depth
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv import DefektSide
+
+        self.pipe.thick = 100  # 10 mm
+        depth_percent = 50  # 5 mm
+
+        mloss = Row.as_defekt(
+          11, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', str(depth_percent),
+          None, None,
+          None, None, ''
+        )
+        assert mloss.depth_units == Depth.PercentWallThickness
+
+        mloss_defekt = Defect(mloss, self.pipe)
+        assert mloss_defekt.is_metal_loss
+        assert not mloss_defekt.is_dent
+        assert mloss_defekt.depth_percent == 50
+        assert mloss_defekt.depth_mm == 5
+
+        dent = Row.as_defekt(
+          11, TypeDefekt.DENT, DefektSide.INSIDE, '10', '10', str(depth_percent),
+          None, None,
+          None, None, ''
+        )
+        assert dent.depth_units == Depth.PercentWallThickness
+
+        dent_defekt = Defect(dent, self.pipe)
+        assert not dent_defekt.is_metal_loss
+        assert dent_defekt.is_dent
+        assert dent_defekt.depth_percent == 50
+        assert dent_defekt.depth_mm == 350
+
+        mech = Row.as_defekt(
+          11, TypeDefekt.MECHANIC, DefektSide.INSIDE, '10', '10', str(depth_percent),
+          None, None,
+          None, None, ''
+        )
+        assert mech.depth_units == Depth.PercentWallThickness
+
+        mech_defekt = Defect(mech, self.pipe)
+        assert not mech_defekt.is_metal_loss
+        assert not mech_defekt.is_dent
+        assert mech_defekt.depth_percent is None
+        assert mech_defekt.depth_mm is None
+
+        mloss.depth_units = Depth.HundredthsOfMillimeter
+        mloss_defekt.row.depth_max = '500'  # 5 mm
+        assert mloss_defekt.depth_mm == 5
+        assert mloss_defekt.depth_percent == 50
+
+        dent.depth_units = Depth.HundredthsOfMillimeter
+        dent_defekt.row.depth_max = '35000'  # 350 mm
+        assert dent_defekt.depth_mm == 350
+        assert dent_defekt.depth_percent == 50
+
+        mloss_defekt.row.depth_max = ''
+        assert mloss_defekt.depth_percent is None
+        assert mloss_defekt.depth_mm is None
+
     def test_props(self):  # pylint: disable=too-many-statements
         """Check defekt properties."""
         from pipeline_csv import TypeHorWeld

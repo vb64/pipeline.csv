@@ -1,3 +1,5 @@
++ Properties `Defect.depth_percent` and `Defect.depth_mm` returns values depend from `Defect.is_metal_loss`, `Defect.is_dent` and `Row.depth_units`.
+
 14.02.2025 ver.1.15
 -------------------
 
