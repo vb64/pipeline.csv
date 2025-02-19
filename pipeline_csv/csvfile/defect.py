@@ -70,7 +70,7 @@ class Defect(Anomaly):
         if self.is_dent:
             return float(self.row.depth_max) / self.pipe.diameter
         if self.is_metal_loss:
-            return float(self.row.depth_max) / self.pipe.thick / 10.0
+            return float(self.row.depth_max) / (self.pipe.thick / 10.0)
 
         return None
 
