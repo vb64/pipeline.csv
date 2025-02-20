@@ -41,6 +41,7 @@ class TypeMarker:
 class TypeDefekt:
     CORROZ = 0
     DENT = 1
+    FACTORY = 2
 
 class MyRow(Row):
 
@@ -49,6 +50,7 @@ class MyRow(Row):
         return {
           TypeDefekt.CORROZ: "Corrosion",
           TypeDefekt.DENT: "Dent",
+          TypeDefekt.FACTORY: "Manufacturing defect",
         }
 
     @staticmethod
@@ -80,6 +82,7 @@ Further, the MyRow class can be used in operations with data of CSV files.
 - [Docking new data and compression/stretching](docs/en/join.md)
 - [Pipe sequence](docs/en/pipes.md)
 - [Defect location at the pipe](docs/en/defekt_location.md)
+- [Depth of defect](docs/en/defekt_depth.md)
 - [Pipeline diameter changing](docs/en/diam.md)
 
 ## Development

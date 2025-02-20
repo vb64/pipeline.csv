@@ -110,27 +110,27 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @staticmethod
     def mloss_dict():
         """Return dict of available metal loss defects."""
-        return {}
+        return []
 
     @staticmethod
     def dents_dict():
         """Return dict of available dent defects."""
-        return {}
+        return []
 
     @staticmethod
     def atweld_dict():
         """Return dict of available at weld defects."""
-        return {}
+        return []
 
     @staticmethod
     def atseam_dict():
         """Return dict of available at seam defects."""
-        return {}
+        return []
 
     @staticmethod
     def valve_dict():
         """Return dict of available valve like obects."""
-        return {}
+        return []
 
     def __init__(self):
         """Create empty csv row object."""

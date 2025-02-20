@@ -37,6 +37,7 @@ class TypeMarker:
 class TypeDefekt:
     CORROZ = 0
     DENT = 1
+    FACTORY = 2
 
 class MyRow(Row):
 
@@ -45,6 +46,7 @@ class MyRow(Row):
         return {
           TypeDefekt.CORROZ: "Коррозия",
           TypeDefekt.DENT: "Вмятина",
+          TypeDefekt.FACTORY: "Производственный дефект",
         }
 
     @staticmethod
@@ -76,6 +78,7 @@ class MyRow(Row):
 - [Пристыковка новых данных и сжатие/растяжение](docs/ru/join.md)
 - [Последовательность труб](docs/ru/pipes.md)
 - [Положение дефекта на трубе](docs/ru/defekt_location.md)
+- [Глубина дефекта](docs/ru/defekt_depth.md)
 - [Изменение диаметра трубопровода](docs/ru/diam.md)
 
 ## Разработка
