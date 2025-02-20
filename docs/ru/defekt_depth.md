@@ -12,7 +12,7 @@ from pipeline_csv.csvfile.row import Row, Depth
 
 class MyRow(Row):
 
-    depth_units == Depth.HundredthsOfMillimeter
+    depth_units = Depth.HundredthsOfMillimeter
 
 ```
 
