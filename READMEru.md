@@ -37,6 +37,7 @@ class TypeMarker:
 class TypeDefekt:
     CORROZ = 0
     DENT = 1
+    FACTORY = 2
 
 class MyRow(Row):
 
@@ -45,6 +46,7 @@ class MyRow(Row):
         return {
           TypeDefekt.CORROZ: "Коррозия",
           TypeDefekt.DENT: "Вмятина",
+          TypeDefekt.FACTORY: "Производственный дефект",
         }
 
     @staticmethod
