@@ -76,6 +76,7 @@ class MyRow(Row):
 - [Пристыковка новых данных и сжатие/растяжение](docs/ru/join.md)
 - [Последовательность труб](docs/ru/pipes.md)
 - [Положение дефекта на трубе](docs/ru/defekt_location.md)
+- [Глубина дефекта](docs/ru/defekt_depth.md)
 - [Изменение диаметра трубопровода](docs/ru/diam.md)
 
 ## Разработка
