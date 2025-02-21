@@ -16,13 +16,13 @@ class MyRow(Row):
 
 ```
 
-Метод `Row.dents_dict` задает список типов дефектов, которые интерпретируются как вмятины.
+Метод `Row.dents_codes` задает список типов дефектов, которые интерпретируются как вмятины.
 
 ```python
 class MyRow(Row):
 
     @staticmethod
-    def dents_dict():
+    def dents_codes():
         return [TypeDefekt.DENT]
 ```
 
@@ -53,13 +53,13 @@ assert dent.depth_mm == 70
 assert dent.depth_percent == 10
 ```
 
-Метод `Row.mloss_dict` задает список типов дефектов, которые интерпретируются как потери металла.
+Метод `Row.mloss_codes` задает список типов дефектов, которые интерпретируются как потери металла.
 
 ```python
 class MyRow(Row):
 
     @staticmethod
-    def mloss_dict():
+    def mloss_codes():
         return [TypeDefekt.CORROZ]
 ```
 
