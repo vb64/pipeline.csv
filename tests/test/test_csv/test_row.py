@@ -220,11 +220,11 @@ class TestRow(TestCsv):
         assert not Row.markers_reverse()
         assert not Row.comment_reverse()
 
-        assert not Row.mloss_dict()
-        assert not Row.dents_dict()
-        assert not Row.atweld_dict()
-        assert not Row.atseam_dict()
-        assert not Row.valve_dict()
+        assert not Row.mloss_codes()
+        assert not Row.dents_codes()
+        assert not Row.atweld_codes()
+        assert not Row.atseam_codes()
+        assert not Row.valve_codes()
 
     @staticmethod
     def test_orient_minutes():

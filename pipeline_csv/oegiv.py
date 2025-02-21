@@ -189,28 +189,28 @@ class Row(row.Row):
         return REVERSE_COMMENTS
 
     @staticmethod
-    def mloss_dict():
-        """Return dict of available metal loss defects."""
+    def mloss_codes():
+        """Return list of available metal loss defect codes."""
         return MLOSS
 
     @staticmethod
-    def dents_dict():
-        """Return dict of available dent defects."""
+    def dents_codes():
+        """Return list of available dent defect codes."""
         return DENTS
 
     @staticmethod
-    def atweld_dict():
-        """Return dict of available at weld defects."""
+    def atweld_codes():
+        """Return list of available at weld defect codes."""
         return AT_WELD
 
     @staticmethod
-    def atseam_dict():
-        """Return dict of available at seam defects."""
+    def atseam_codes():
+        """Return list of available at seam defect codes."""
         return AT_SEAM
 
     @staticmethod
-    def valve_dict():
-        """Return dict of available valve like obects."""
+    def valve_codes():
+        """Return list of available valve like obect codes."""
         return VALVE
 
 
