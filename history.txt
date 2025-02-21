@@ -1,3 +1,11 @@
+* Class Row methods was renamed:
+
+- mloss_dict -> mloss_codes
+- dents_dict -> dents_codes
+- atweld_dict -> atweld_codes
+- atseam_dict -> atseam_codes
+- valve_dict -> valve_codes
+
 + Properties `Defect.depth_percent` and `Defect.depth_mm` returns values depend from `Defect.is_metal_loss`, `Defect.is_dent` and `Row.depth_units`.
 
 14.02.2025 ver.1.15
