@@ -99,22 +99,22 @@ class Defect(Anomaly):
     @property
     def is_metal_loss(self):
         """Return True if metal loss defect."""
-        return self.code in self.row.mloss_dict()
+        return self.code in self.row.mloss_codes()
 
     @property
     def is_dent(self):
         """Return True if dent defect."""
-        return self.code in self.row.dents_dict()
+        return self.code in self.row.dents_codes()
 
     @property
     def is_at_weld(self):
         """Return True if weld placed defect."""
-        return self.code in self.row.atweld_dict()
+        return self.code in self.row.atweld_codes()
 
     @property
     def is_at_seam(self):
         """Return True if seam placed defect."""
-        return self.code in self.row.atseam_dict()
+        return self.code in self.row.atseam_codes()
 
     def _with_mp(prop):  # pylint: disable=no-self-argument
         """Return decorator for property.

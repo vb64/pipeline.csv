@@ -16,13 +16,13 @@ class MyRow(Row):
 
 ```
 
-The `Row.dents_dict` method specifies a list of defect types that are interpreted as dents.
+The `Row.dents_codes` method specifies a list of defect types that are interpreted as dents.
 
 ```python
 class MyRow(Row):
 
     @staticmethod
-    def dents_dict():
+    def dents_codes():
         return [TypeDefekt.DENT]
 ```
 
@@ -53,13 +53,13 @@ As a percentage of the pipe diameter, the dent depth is 10%.
 assert dent.depth_percent == 10
 ```
 
-The `Row.mloss_dict` method specifies a list of defect types that are interpreted as metal loss.
+The `Row.mloss_codes` method specifies a list of defect types that are interpreted as metal loss.
 
 ```python
 class MyRow(Row):
 
     @staticmethod
-    def mloss_dict():
+    def mloss_codes():
         return [TypeDefekt.CORROZ]
 ```
 

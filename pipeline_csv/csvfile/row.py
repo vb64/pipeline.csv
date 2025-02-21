@@ -108,28 +108,28 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return {}
 
     @staticmethod
-    def mloss_dict():
-        """Return dict of available metal loss defects."""
+    def mloss_codes():
+        """Return list of available metal loss defect codes."""
         return []
 
     @staticmethod
-    def dents_dict():
-        """Return dict of available dent defects."""
+    def dents_codes():
+        """Return list of available dent defect codes."""
         return []
 
     @staticmethod
-    def atweld_dict():
-        """Return dict of available at weld defects."""
+    def atweld_codes():
+        """Return list of available at weld defect codes."""
         return []
 
     @staticmethod
-    def atseam_dict():
-        """Return dict of available at seam defects."""
+    def atseam_codes():
+        """Return list of available at seam defect codes."""
         return []
 
     @staticmethod
-    def valve_dict():
-        """Return dict of available valve like obects."""
+    def valve_codes():
+        """Return list of available valve like obect codes."""
         return []
 
     def __init__(self):
@@ -536,7 +536,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @property
     def is_valve(self):
         """Return True if item is valve like object."""
-        return self.is_lineobj and (int(self.object_code) in self.valve_dict())
+        return self.is_lineobj and (int(self.object_code) in self.valve_codes())
 
     def reverse(self, total_length):
         """Reverse dist, orientation and start point if objects with length."""
