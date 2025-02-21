@@ -1,3 +1,6 @@
+21.02.2025 ver.1.16
+-------------------
+
 * Class Row methods was renamed:
 
 - mloss_dict -> mloss_codes
