@@ -196,7 +196,7 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
     @obj_id.setter
     def obj_id(self, value):
         """Set optional object ID as string."""
-        self.dist_ml = str(value).strip()
+        self.dist_ml = '' if value is None else str(value).strip()
 
     @property
     def min_diam(self):
