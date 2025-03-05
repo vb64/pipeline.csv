@@ -9,6 +9,21 @@ class TestRow(TestCsv):
     """Check row.py file."""
 
     @staticmethod
+    def test_obj_id():
+        """Check obj_id property."""
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row
+
+        row = Row.as_defekt(10, TypeDefekt.CORROZ, DefektSide.INSIDE, '10', '10', '15', '', '', '', '', '')
+        assert row.obj_id == ""
+
+        row.obj_id = None
+        assert row.obj_id == ""
+
+        row.obj_id = 'xxx'
+        assert row.obj_id == "xxx"
+
+    @staticmethod
     def test_custom():
         """Check custom data."""
         from pipeline_csv import DefektSide
