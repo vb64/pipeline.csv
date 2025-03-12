@@ -1,3 +1,5 @@
+- Fixed possible KeyError in `summary_text` function.
+
 05.03.2025 ver.1.16.1
 ---------------------
 
