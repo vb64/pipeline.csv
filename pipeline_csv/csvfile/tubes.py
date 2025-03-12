@@ -16,7 +16,7 @@ def summary_text(objects, names):
         else:
             items[code] = 1
 
-    return ', '.join(["{}: {}".format(names[key], items[key]) for key in sorted(items.keys())])
+    return ', '.join(["{}: {}".format(names.get(key, '??'), items[key]) for key in sorted(items.keys())])
 
 
 class Tube:  # pylint: disable=too-many-instance-attributes
