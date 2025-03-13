@@ -548,22 +548,9 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         if self.mpoint_dist:
             self.mpoint_dist = str(total_length - int(self.mpoint_dist))
-
-        tmp = self.dist_ml
-        self.dist_ml = self.dist_mr
-        self.dist_mr = tmp
-
-        tmp = self.dist_stl
-        self.dist_str = self.dist_stl
-        self.dist_stl = tmp
-
-        tmp = self.link_stl
-        self.link_stl = self.link_str
-        self.link_str = tmp
-
-        tmp = self.link_ml
-        self.link_ml = self.link_mr
-        self.link_mr = tmp
+        # self.dist_str, self.dist_stl = self.dist_stl, self.dist_str
+        # self.link_stl, self.link_str = self.link_str, self.link_stl
+        # self.link_ml, self.link_mr = self.link_mr, self.link_ml
 
         # orientatations
         self.orient_td = reverse_orient(self.orient_td)
