@@ -69,10 +69,8 @@ class Defect(Anomaly):
         # Depth.HundredthsOfMillimeter
         if self.is_dent:
             return float(self.row.depth_max) / self.pipe.diameter
-        if self.is_metal_loss:
-            return float(self.row.depth_max) / (self.pipe.thick / 10.0)
 
-        return None
+        return float(self.row.depth_max) / (self.pipe.thick / 10.0)
 
     @property
     def depth_mm(self):
@@ -86,10 +84,8 @@ class Defect(Anomaly):
         # Depth.PercentWallThickness
         if self.is_dent:
             return self.pipe.diameter * float(self.row.depth_max) / 100.0
-        if self.is_metal_loss:
-            return (self.pipe.thick / 10.0) * float(self.row.depth_max) / 100.0
 
-        return None
+        return (self.pipe.thick / 10.0) * float(self.row.depth_max) / 100.0
 
     @property
     def number_at_pipe(self):
