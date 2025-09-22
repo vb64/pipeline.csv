@@ -339,7 +339,13 @@ class File:
                 if tube:
                     tube.add_object(row)
                 else:
-                    self.add_warn("Object before first weld: {}".format(row), warns)
+                    if not self.can_be_first(row):
+                        self.add_warn("Object before first weld: {}".format(row), warns)
+
+    @staticmethod
+    def can_be_first(row):
+        """Return True if row object can be placed before first weld."""
+        return row.is_category or row.is_diam or row.is_thick
 
     @staticmethod
     def add_warn(msg, warns):
