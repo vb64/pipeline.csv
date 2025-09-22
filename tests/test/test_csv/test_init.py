@@ -37,7 +37,7 @@ class TestInit(TestCsv):
         warns = []
         tubes = csv_file.get_tubes(warns)
         assert tubes
-        assert len(warns) == 2
+        assert len(warns) == 1
 
         tube = next(tubes)
         assert tube.dist == 0
@@ -49,7 +49,7 @@ class TestInit(TestCsv):
             pass
 
         assert tube.dist == 416088
-        assert len(warns) == 2
+        assert len(warns) == 1
 
     @staticmethod
     def check_objects(objects, val_list):

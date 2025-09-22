@@ -177,7 +177,7 @@ def check_transform(csv_file):
         current_dist = i.dist
         tube = i
 
-    assert len(warnings) == 1  # diam change before first weld
+    assert not warnings  # ignored diam change before first weld
 
     # set geodata for tube
     assert tube.latitude == ''
