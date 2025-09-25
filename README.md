@@ -17,6 +17,7 @@ Data can be
 - glued together from several CSV files
 - stretched/compressed along the distance according to a given set of intermediate points
 - interpreted as an iterable sequence of pipes with geodata
+- get statistics about objects in a CSV file
 
 ## Installation
 
@@ -84,6 +85,7 @@ Further, the MyRow class can be used in operations with data of CSV files.
 - [Defect location at the pipe](docs/en/defekt_location.md)
 - [Depth of defect](docs/en/defekt_depth.md)
 - [Pipeline diameter changing](docs/en/diam.md)
+- [Object statistics](docs/en/statistics.md)
 
 ## Development
 
