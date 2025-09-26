@@ -10,7 +10,6 @@ class TestTotals(TestStatistics):
 
     def test_property_counter(self):
         """Check Totals class."""
-        from pipeline_csv.oegiv import File
         from pipeline_csv.csvfile.statistics.totals import Totals
 
         totals = Totals()
@@ -20,7 +19,6 @@ class TestTotals(TestStatistics):
         self.tube.length = 100
         totals.add_data(self.tube)
 
-        csv_file = File.from_file(self.fixture('DefTable.csv'), 1400)
         warns = []
-        totals.fill(csv_file, warns)
+        totals.fill(self.csv_file, warns)
         assert not warns

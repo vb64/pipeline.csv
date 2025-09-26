@@ -7,10 +7,10 @@ class TestCsv(TestIV):
 
     def setUp(self):
         """Init tube tests."""
-        TestIV.setUp(self)
+        super().setUp()
         from pipeline_csv.csvfile import Stream
-        from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv.csvfile.row import Row
+        from pipeline_csv.csvfile.tubes import Tube
 
         stream = Stream(diameter=700)
         self.tube = Tube(Row.as_weld(10), stream, '1')
