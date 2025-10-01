@@ -150,7 +150,7 @@ class GradeTube(GradeBase):
         """Text representation."""
         return "total_num: {}".format(self.number)
 
-    def extended_number(self, grade):
+    def pipes_with_grade(self, grade):
         """Return number of pipes for grade."""
         return len(self.tubes[grade])
 

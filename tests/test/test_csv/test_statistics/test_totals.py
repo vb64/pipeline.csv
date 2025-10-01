@@ -32,9 +32,10 @@ class TestTotals(TestStatistics):
         self.tube.length = 100
         totals.add_data(self.tube)
 
-    def test_fill(self):
+    def test_fill(self):  # pylint: disable=too-many-statements
         """Check Totals.fill method."""
         from pipeline_csv.csvfile.statistics.totals import Totals
+        from pipeline_csv.csvfile.statistics.defects import GRADE_OVER_MAX
         from pipeline_csv import TypeHorWeld, DefektSide
         from pipeline_csv.oegiv import TypeDefekt
 
@@ -77,6 +78,9 @@ class TestTotals(TestStatistics):
         assert totals.defects.number == 75
         assert totals.defects.depth.number == 56
         assert totals.defects.depth.max_percent == 12.0
+        assert totals.defects.depth.pipes_with_grade(80) == 12
+        assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 0
+
         assert totals.defects.dents.number == 2
 
         prop = totals.defects.wallside
