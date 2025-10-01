@@ -80,4 +80,4 @@ class Totals:
 
         self.thick.add_data(tube.thick, tube.length)
         self.category.add_data(tube.category, tube.length)
-        self.types.add_data(tube.row.object_code_t, tube.length)
+        self.types.add_data(tube.typ, tube.length)
