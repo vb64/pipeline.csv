@@ -398,7 +398,7 @@ class Totals:
         """Add defect to statistics."""
         row = defect.row
         self.wallside.add_item(int(row.type_def), tube)
-        self.types.add_item(int(row.type_object), tube)
+        self.types.add_item(int(row.object_code), tube)
 
         if defect.is_metal_loss:
             self.depth.add_data(defect)
