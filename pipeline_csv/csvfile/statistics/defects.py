@@ -118,28 +118,6 @@ class GradeHolder(GradeBase):
         self.data[grade].append(defect)
 
 
-class MetalLoss(GradeHolder):
-    """Class for collecting metal losses divided by grade."""
-
-    grades = [80]
-
-    def __init__(self, grades=None):
-        """Make new metal losses object."""
-        super().__init__(grades=grades)
-        self.pipes_numbers = {}
-        self.max_percent = 0
-
-    def add_item(self, grade, defect, tube):
-        """Add to container."""
-        super().add_item(grade, defect, tube)
-        self.pipes_numbers[tube.number] = True
-        self.max_percent = max((defect.depth_percent or 0), self.max_percent)
-
-    def get_grade(self, defect, _tube):
-        """Return defect depth in percents."""
-        return int(defect.row.depth_max) if defect.row.depth_max else 0
-
-
 class SingleDist(GradeHolder):
     """Class for collecting items without grades."""
 
@@ -191,6 +169,16 @@ class Depth(GradeTube):
     """Class for counting defects by depth."""
 
     grades = [80]
+
+    def __init__(self, grades=None):
+        """Make new metal losses object."""
+        super().__init__(grades=grades)
+        self.max_percent = 0
+
+    def add_item(self, grade, defect, tube):
+        """Add to container."""
+        super().add_item(grade, defect, tube)
+        self.max_percent = max((defect.depth_percent or 0), self.max_percent)
 
     def get_grade(self, defect, _tube):
         """Return depth in percents for defect."""

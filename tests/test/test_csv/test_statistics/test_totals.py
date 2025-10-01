@@ -76,6 +76,7 @@ class TestTotals(TestStatistics):
 
         assert totals.defects.number == 75
         assert totals.defects.depth.number == 56
+        assert totals.defects.depth.max_percent == 12.0
         assert totals.defects.dents.number == 2
 
         prop = totals.defects.wallside
