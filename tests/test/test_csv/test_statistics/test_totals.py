@@ -96,3 +96,8 @@ class TestTotals(TestStatistics):
         check_count_property(prop, TypeDefekt.GWAN, 1)
         check_count_property(prop, TypeDefekt.TECHNOLOGY, 8)
         check_count_property(prop, TypeDefekt.FACTORY, 2)
+
+        assert totals.defects.distribution.number == totals.defects.number
+
+        # print('---')
+        # print(totals.defects.mloss_distr)

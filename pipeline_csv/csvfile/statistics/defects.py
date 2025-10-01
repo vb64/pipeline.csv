@@ -372,6 +372,7 @@ class Totals:
         self.dents = Dents(grades=[5, 10])
         self.types = PropertyCounter()
         self.wallside = PropertyCounter()
+        self.distribution = SingleDist()
 
     def __str__(self):
         """Text representation."""
@@ -387,6 +388,7 @@ class Totals:
         row = defect.row
         self.wallside.add_item(int(row.type_def), tube)
         self.types.add_item(int(row.object_code), tube)
+        self.distribution.add_data(defect)
 
         if defect.is_metal_loss:
             self.depth.add_data(defect)
