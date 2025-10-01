@@ -98,6 +98,7 @@ class TestTotals(TestStatistics):
         check_count_property(prop, TypeDefekt.FACTORY, 2)
 
         assert totals.defects.distribution.number == totals.defects.number
-
+        hours = {0: 6, 1: 3, 2: 6, 3: 8, 4: 8, 5: 7, 6: 9, 7: 15, 8: 9, 9: 17, 10: 7, 11: 8}
+        assert totals.defects.angle_anomalies.hours == hours
         # print('---')
-        # print(totals.defects.mloss_distr)
+        # print(totals.defects.angle_anomalies.hours)

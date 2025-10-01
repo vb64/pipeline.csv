@@ -29,7 +29,7 @@ def at_hours(minutes_start, minutes_end):
     start = get_hour(minutes_start)
     hours = [start]
 
-    if minutes_end < 0:
+    if (minutes_end is None) or (minutes_end < 0):
         return hours
 
     end = get_hour(minutes_end)
@@ -373,6 +373,7 @@ class Totals:
         self.types = PropertyCounter()
         self.wallside = PropertyCounter()
         self.distribution = SingleDist()
+        self.angle_anomalies = Angles()
 
     def __str__(self):
         """Text representation."""
@@ -389,6 +390,7 @@ class Totals:
         self.wallside.add_item(int(row.type_def), tube)
         self.types.add_item(int(row.object_code), tube)
         self.distribution.add_data(defect)
+        self.angle_anomalies.add_data(defect)
 
         if defect.is_metal_loss:
             self.depth.add_data(defect)
