@@ -121,7 +121,7 @@ class GradeHolder(GradeBase):
 class MetalLoss(GradeHolder):
     """Class for collecting metal losses divided by grade."""
 
-    grades = [15, 30, 50]
+    grades = [80]
 
     def __init__(self, grades=None):
         """Make new metal losses object."""
@@ -180,12 +180,7 @@ class GradeTube(GradeBase):
 class Dents(GradeTube):
     """Class for counting dents by grade."""
 
-    grades = [2, 6, 10]
-
-    def __init__(self, pipe_diam):
-        """Make new defect counter object."""
-        super().__init__()
-        self.pipe_diam = pipe_diam
+    grades = [10]
 
     def get_grade(self, defect, _tube):
         """Return percent for dent depth from diameter."""
@@ -195,7 +190,7 @@ class Dents(GradeTube):
 class Depth(GradeTube):
     """Class for counting defects by depth."""
 
-    grades = [10, 20, 30, 40, 50]
+    grades = [80]
 
     def get_grade(self, defect, _tube):
         """Return depth in percents for defect."""
@@ -386,6 +381,7 @@ class Totals:
         self.root = root
         self.number = 0
         self.depth = Depth()
+        self.dents = Dents(grades=[5, 10])
         self.types = PropertyCounter()
         self.wallside = PropertyCounter()
 
@@ -398,13 +394,19 @@ class Totals:
           '\n\n', "wallside {}".format(self.wallside),
         ))
 
-    def add_defect(self, defect, tube, _warns):
+    def add_defect(self, defect, tube, warns):
         """Add defect to statistics."""
         row = defect.row
         self.wallside.add_item(int(row.type_def), tube)
         self.types.add_item(int(row.type_object), tube)
+
         if defect.is_metal_loss:
             self.depth.add_data(defect)
+
+        if defect.is_dent:
+            if not defect.depth_percent:
+                warns.append("Zero depth dent: ID {} dist {}".format(row.obj_id, row.dist))
+            self.dents.add_data(defect)
 
     def add_data(self, tube, warns):
         """Add tube defects to statistics."""
