@@ -9,6 +9,17 @@ from . import TestStatistics
 class TestDefects(TestStatistics):
     """File defects.py."""
 
+    def test_dist_stacked(self):
+        """Test DistStacked class."""
+        from pipeline_csv.csvfile.statistics.defects import DistStacked
+
+        prop = DistStacked(0, 100, 10)
+        assert len(prop.nodes) == 10
+
+        with pytest.raises(NotImplementedError) as err:
+            prop.get_val(None)
+        assert 'get_val' in str(err.value)
+
     def test_property_code_counter(self):
         """Test PropertyCodeCounter class."""
         from pipeline_csv.csvfile.statistics.defects import PropertyCodeCounter
