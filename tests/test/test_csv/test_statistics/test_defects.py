@@ -20,6 +20,8 @@ class TestDefects(TestStatistics):
             prop.get_val(None)
         assert 'get_val' in str(err.value)
 
+        assert prop.get_node(10) == 10.0
+
     def test_property_code_counter(self):
         """Test PropertyCodeCounter class."""
         from pipeline_csv.csvfile.statistics.defects import PropertyCodeCounter
