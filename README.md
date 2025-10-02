@@ -85,7 +85,7 @@ Further, the MyRow class can be used in operations with data of CSV files.
 - [Defect location at the pipe](docs/en/defekt_location.md)
 - [Depth of defect](docs/en/defekt_depth.md)
 - [Pipeline diameter changing](docs/en/diam.md)
-- [Object statistics](docs/en/statistics.md)
+- [Get statistics](docs/en/statistics.md)
 
 ## Development
 
