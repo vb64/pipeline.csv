@@ -1,5 +1,7 @@
 + Statistics for CSV file.
 
++ Warning for dents with zero depth.
+
 22.09.2025 ver.1.18
 -------------------
 
