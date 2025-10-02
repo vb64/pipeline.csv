@@ -101,7 +101,7 @@ class TestTotals(TestStatistics):
         from pipeline_csv.csvfile.statistics.totals import Totals
         from pipeline_csv.csvfile.statistics.defects import (
           GRADE_OVER_MAX, Totals as DefectsTotalsBase,
-          Depth, Dents, DangerValve, SingleDist, DistDanger
+          Depth, Dents, DangerValve, SingleDist, DistDanger, DistWallside, DistSingle
         )
 
         class DefectsTotals(DefectsTotalsBase):
@@ -115,6 +115,9 @@ class TestTotals(TestStatistics):
                 self.danger_valve = DangerValve(markers)
                 self.distribution = SingleDist()
                 self.distribution_bars = DistDanger(length)
+                # 40 bars from start to ends with data divided by wallside
+                self.dist_loss_wallside = DistWallside(start, length, 40)
+                self.dist_dents = DistSingle(start, length, 40)
 
             def add_defect(self, defect, tube, warns):
                 """Add defect to custom statistics."""
@@ -127,11 +130,13 @@ class TestTotals(TestStatistics):
 
                 if defect.is_metal_loss:
                     self.depth.add_data(defect)
+                    self.dist_loss_wallside.add_data(defect)
 
                 if defect.is_dent:
                     if not defect.depth_percent:
                         warns.append("Zero depth dent: ID {} dist {}".format(row.obj_id, row.dist))
                     self.dents.add_data(defect)
+                    self.dist_dents.add_data(defect)
 
         totals = Totals(defects_class=DefectsTotals)
         warns = []
@@ -146,6 +151,6 @@ class TestTotals(TestStatistics):
         assert totals.defects.distribution.number == totals.defects.number
         assert len(totals.defects.danger_valve.grades) == 1
         assert len(totals.defects.distribution_bars.grades) == 40
-
+        assert 'total 2' in str(totals.defects.dist_dents)
         # print('---')
         # [print(i) for i in totals.markers]
