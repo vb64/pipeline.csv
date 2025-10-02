@@ -99,22 +99,26 @@ class TestTotals(TestStatistics):
         """Check Totals.fill method with custom defect class."""
         from pipeline_csv.csvfile.statistics.totals import Totals
         from pipeline_csv.csvfile.statistics.defects import (
-          GRADE_OVER_MAX, Totals as DefectsTotalsBase, Depth, Dents
+          GRADE_OVER_MAX, Totals as DefectsTotalsBase,
+          Depth, Dents, DangerValve
         )
 
         class DefectsTotals(DefectsTotalsBase):
             """Custom defect totals class."""
 
-            def __init__(self, root):
+            def __init__(self, start, length, markers):
                 """Make new defects total object with custom properties."""
-                super().__init__(root)
+                super().__init__(start, length, markers)
                 self.depth = Depth(grades=[10])
                 self.dents = Dents(grades=[5, 10])
+                self.danger_valve = DangerValve(self.markers)
 
             def add_defect(self, defect, tube, warns):
                 """Add defect to custom statistics."""
                 super().add_defect(defect, tube, warns)
                 row = defect.row
+
+                self.danger_valve.add_data(defect)
 
                 if defect.is_metal_loss:
                     self.depth.add_data(defect)
@@ -134,5 +138,7 @@ class TestTotals(TestStatistics):
         assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 5
 
         assert totals.defects.dents.number == 2
+        assert not totals.defects.danger_valve.grades
+
         # print('---')
         # print(totals.defects.angle_anomalies.hours)

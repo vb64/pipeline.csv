@@ -188,12 +188,12 @@ class Depth(GradeTube):
 class Dist(GradeTube):
     """Class for counting defects by distance."""
 
-    parts_number = 40
     grades = []
     part_length = 0
 
-    def __init__(self, total_length):
+    def __init__(self, total_length, parts_number=40):
         """Make new defect counter object."""
+        self.parts_number = parts_number
         self.part_length = int(total_length / self.parts_number)
         self.grades = [i * self.part_length for i in range(self.parts_number)]
         self.names = {}
@@ -364,10 +364,12 @@ class DistSingle(DistStacked):
 class Totals:
     """Class for defects statistic."""
 
-    def __init__(self, root):
+    def __init__(self, start, length, markers):
         """Make new defects total object."""
-        self.root = root
         self.number = 0
+        self.start = start
+        self.length = length
+        self.markers = markers
         self.types = PropertyCounter()
         self.wallside = PropertyCounter()
         self.distribution = SingleDist()
