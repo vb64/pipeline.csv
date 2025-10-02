@@ -1,3 +1,5 @@
++ Statistics for CSV file.
+
 22.09.2025 ver.1.18
 -------------------
 

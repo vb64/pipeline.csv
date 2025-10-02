@@ -10,16 +10,6 @@ from . import TestCsv
 class TestTubes(TestCsv):
     """Test tubes.py module."""
 
-    def setUp(self):
-        """Init tube tests."""
-        TestCsv.setUp(self)
-        from pipeline_csv.csvfile import Stream
-        from pipeline_csv.csvfile.tubes import Tube
-        from pipeline_csv.csvfile.row import Row
-
-        stream = Stream(diameter=700)
-        self.tube = Tube(Row.as_weld(10), stream, '1')
-
     def test_str(self):
         """Method str."""
         assert 'Tube diam ' in str(self.tube)
