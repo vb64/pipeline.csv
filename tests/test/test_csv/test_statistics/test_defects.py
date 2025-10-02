@@ -9,6 +9,11 @@ from . import TestStatistics
 class TestDefects(TestStatistics):
     """File defects.py."""
 
+    def test_grade_tube(self):
+        """Test GradeTube class."""
+        from pipeline_csv.csvfile.statistics.defects import GradeTube
+        assert 'total_num: 0' in str(GradeTube())
+
     def test_gradebase(self):
         """Test GradeBase class."""
         from pipeline_csv.csvfile.statistics.defects import GradeBase
