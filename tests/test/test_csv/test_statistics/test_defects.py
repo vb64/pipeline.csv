@@ -9,6 +9,14 @@ from . import TestStatistics
 class TestDefects(TestStatistics):
     """File defects.py."""
 
+    def test_property_code_counter(self):
+        """Test PropertyCodeCounter class."""
+        from pipeline_csv.csvfile.statistics.defects import PropertyCodeCounter
+
+        counter = PropertyCodeCounter()
+        counter.add_code('xxx', 0, self.tube)
+        assert 0 in counter.code2text
+
     def test_grade_tube(self):
         """Test GradeTube class."""
         from pipeline_csv.csvfile.statistics.defects import GradeTube
