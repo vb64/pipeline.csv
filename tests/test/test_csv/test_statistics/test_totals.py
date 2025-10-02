@@ -77,12 +77,12 @@ class TestTotals(TestStatistics):
         assert totals.defects.number == 75
         assert 'total_num: 75' in str(totals.defects)
 
-        prop = totals.defects.wallside
+        prop = totals.defects.base_wallside
         assert len(prop.data) == 2
         check_count_property(prop, DefektSide.UNKNOWN, 6)
         check_count_property(prop, DefektSide.OUTSIDE, 69)
 
-        prop = totals.defects.types
+        prop = totals.defects.base_types
         assert len(prop.data) == 6
         check_count_property(prop, TypeDefekt.CORROZ, 56)
         check_count_property(prop, TypeDefekt.MECHANIC, 6)
@@ -91,7 +91,7 @@ class TestTotals(TestStatistics):
         check_count_property(prop, TypeDefekt.TECHNOLOGY, 8)
         check_count_property(prop, TypeDefekt.FACTORY, 2)
 
-        assert totals.defects.angle_anomalies.hours == {
+        assert totals.defects.base_angle_anomalies.hours == {
           0: 6, 1: 3, 2: 6, 3: 8, 4: 8, 5: 7, 6: 9, 7: 15, 8: 9, 9: 17, 10: 7, 11: 8
         }
 

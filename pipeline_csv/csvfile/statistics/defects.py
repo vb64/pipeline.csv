@@ -358,24 +358,25 @@ class Totals:
         self.start = start
         self.length = length
         self.markers = markers
-        self.types = PropertyCounter()
-        self.wallside = PropertyCounter()
-        self.angle_anomalies = Angles()
+
+        self.base_types = PropertyCounter()
+        self.base_wallside = PropertyCounter()
+        self.base_angle_anomalies = Angles()
 
     def __str__(self):
         """Text representation."""
         return ''.join((
           "total_num: {}".format(self.number),
-          '\n\n', "types {}".format(self.types),
-          '\n\n', "wallside {}".format(self.wallside),
+          '\n\n', "types {}".format(self.base_types),
+          '\n\n', "wallside {}".format(self.base_wallside),
         ))
 
     def add_defect(self, defect, tube, _warns):
         """Add defect to statistics."""
         row = defect.row
-        self.wallside.add_item(int(row.type_def), tube)
-        self.types.add_item(int(row.object_code), tube)
-        self.angle_anomalies.add_data(defect)
+        self.base_wallside.add_item(int(row.type_def), tube)
+        self.base_types.add_item(int(row.object_code), tube)
+        self.base_angle_anomalies.add_data(defect)
 
     def add_data(self, tube, warns):
         """Add tube defects to statistics."""
