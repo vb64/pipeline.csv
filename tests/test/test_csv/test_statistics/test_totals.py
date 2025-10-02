@@ -115,9 +115,13 @@ class TestTotals(TestStatistics):
                 self.danger_valve = DangerValve(markers)
                 self.distribution = SingleDist()
                 self.distribution_bars = DistDanger(length)
+
                 # 40 bars from start to ends with data divided by wallside
                 self.dist_loss_wallside = DistWallside(start, length, 40)
                 self.dist_dents = DistSingle(start, length, 40)
+
+                # part of trace
+                self.part_dist_loss_wallside = DistWallside(start + length / 4, length / 2, 40)
 
             def add_defect(self, defect, tube, warns):
                 """Add defect to custom statistics."""
@@ -131,6 +135,7 @@ class TestTotals(TestStatistics):
                 if defect.is_metal_loss:
                     self.depth.add_data(defect)
                     self.dist_loss_wallside.add_data(defect)
+                    self.part_dist_loss_wallside.add_data(defect)
 
                 if defect.is_dent:
                     if not defect.depth_percent:
@@ -152,5 +157,9 @@ class TestTotals(TestStatistics):
         assert len(totals.defects.danger_valve.grades) == 1
         assert len(totals.defects.distribution_bars.grades) == 40
         assert 'total 2' in str(totals.defects.dist_dents)
+
+        assert 'total 42' in str(totals.defects.part_dist_loss_wallside)
+        assert len(totals.defects.part_dist_loss_wallside.after_end) > 0
+        assert len(totals.defects.part_dist_loss_wallside.before_start) > 0
         # print('---')
         # [print(i) for i in totals.markers]
