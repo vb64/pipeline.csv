@@ -97,6 +97,7 @@ class TestTotals(TestStatistics):
 
     def test_fill_custom(self):
         """Check Totals.fill method with custom defect class."""
+        from pipeline_csv.oegiv import File
         from pipeline_csv.csvfile.statistics.totals import Totals
         from pipeline_csv.csvfile.statistics.defects import (
           GRADE_OVER_MAX, Totals as DefectsTotalsBase,
@@ -130,7 +131,7 @@ class TestTotals(TestStatistics):
 
         totals = Totals(defects_class=DefectsTotals)
         warns = []
-        totals.fill(self.csv_file, warns)
+        totals.fill(File.from_file(self.fixture('statistics.csv'), 1400), warns)
 
         assert totals.defects.depth.number == 56
         assert totals.defects.depth.max_percent == 12.0
@@ -138,7 +139,7 @@ class TestTotals(TestStatistics):
         assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 5
 
         assert totals.defects.dents.number == 2
-        assert not totals.defects.danger_valve.grades
+        assert len(totals.defects.danger_valve.grades) == 1
 
         # print('---')
-        # print(totals.defects.angle_anomalies.hours)
+        # [print(i) for i in totals.markers]
