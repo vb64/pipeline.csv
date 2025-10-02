@@ -32,10 +32,9 @@ class TestTotals(TestStatistics):
         self.tube.length = 100
         totals.add_data(self.tube)
 
-    def test_fill(self):  # pylint: disable=too-many-statements
+    def test_fill_base(self):
         """Check Totals.fill method."""
         from pipeline_csv.csvfile.statistics.totals import Totals
-        from pipeline_csv.csvfile.statistics.defects import GRADE_OVER_MAX
         from pipeline_csv import TypeHorWeld, DefektSide
         from pipeline_csv.oegiv import TypeDefekt
 
@@ -76,12 +75,6 @@ class TestTotals(TestStatistics):
         check_tube_property(prop, TypeHorWeld.HORIZONTAL, totals.pipes.number, totals.length)
 
         assert totals.defects.number == 75
-        assert totals.defects.depth.number == 56
-        assert totals.defects.depth.max_percent == 12.0
-        assert totals.defects.depth.pipes_with_grade(80) == 12
-        assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 0
-
-        assert totals.defects.dents.number == 2
 
         prop = totals.defects.wallside
         assert len(prop.data) == 2
@@ -98,7 +91,48 @@ class TestTotals(TestStatistics):
         check_count_property(prop, TypeDefekt.FACTORY, 2)
 
         assert totals.defects.distribution.number == totals.defects.number
-        hours = {0: 6, 1: 3, 2: 6, 3: 8, 4: 8, 5: 7, 6: 9, 7: 15, 8: 9, 9: 17, 10: 7, 11: 8}
-        assert totals.defects.angle_anomalies.hours == hours
+        assert totals.defects.angle_anomalies.hours == {
+          0: 6, 1: 3, 2: 6, 3: 8, 4: 8, 5: 7, 6: 9, 7: 15, 8: 9, 9: 17, 10: 7, 11: 8
+        }
+
+    def test_fill_custom(self):
+        """Check Totals.fill method with custom defect class."""
+        from pipeline_csv.csvfile.statistics.totals import Totals
+        from pipeline_csv.csvfile.statistics.defects import (
+          GRADE_OVER_MAX, Totals as DefectsTotalsBase, Depth, Dents
+        )
+
+        class DefectsTotals(DefectsTotalsBase):
+            """Custom defect totals class."""
+
+            def __init__(self, root):
+                """Make new defects total object with custom properties."""
+                super().__init__(root)
+                self.depth = Depth(grades=[10])
+                self.dents = Dents(grades=[5, 10])
+
+            def add_defect(self, defect, tube, warns):
+                """Add defect to custom statistics."""
+                super().add_defect(defect, tube, warns)
+                row = defect.row
+
+                if defect.is_metal_loss:
+                    self.depth.add_data(defect)
+
+                if defect.is_dent:
+                    if not defect.depth_percent:
+                        warns.append("Zero depth dent: ID {} dist {}".format(row.obj_id, row.dist))
+                    self.dents.add_data(defect)
+
+        totals = Totals(defects_class=DefectsTotals)
+        warns = []
+        totals.fill(self.csv_file, warns)
+
+        assert totals.defects.depth.number == 56
+        assert totals.defects.depth.max_percent == 12.0
+        assert totals.defects.depth.pipes_with_grade(10) == 10
+        assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 5
+
+        assert totals.defects.dents.number == 2
         # print('---')
         # print(totals.defects.angle_anomalies.hours)

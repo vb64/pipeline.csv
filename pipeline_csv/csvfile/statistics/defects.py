@@ -368,8 +368,6 @@ class Totals:
         """Make new defects total object."""
         self.root = root
         self.number = 0
-        self.depth = Depth()
-        self.dents = Dents(grades=[5, 10])
         self.types = PropertyCounter()
         self.wallside = PropertyCounter()
         self.distribution = SingleDist()
@@ -379,26 +377,17 @@ class Totals:
         """Text representation."""
         return ''.join((
           "total_num: {}".format(self.number),
-          '\n\n', "depth {}".format(self.depth),
           '\n\n', "types {}".format(self.types),
           '\n\n', "wallside {}".format(self.wallside),
         ))
 
-    def add_defect(self, defect, tube, warns):
+    def add_defect(self, defect, tube, _warns):
         """Add defect to statistics."""
         row = defect.row
         self.wallside.add_item(int(row.type_def), tube)
         self.types.add_item(int(row.object_code), tube)
         self.distribution.add_data(defect)
         self.angle_anomalies.add_data(defect)
-
-        if defect.is_metal_loss:
-            self.depth.add_data(defect)
-
-        if defect.is_dent:
-            if not defect.depth_percent:
-                warns.append("Zero depth dent: ID {} dist {}".format(row.obj_id, row.dist))
-            self.dents.add_data(defect)
 
     def add_data(self, tube, warns):
         """Add tube defects to statistics."""
