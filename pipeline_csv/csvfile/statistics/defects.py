@@ -215,14 +215,6 @@ class Dist(GradeTube):
         return defect.dist
 
 
-class DistValve(Dist):
-    """Class for counting defects between valves."""
-
-    def __init__(self, markers):  # pylint: disable=super-init-not-called
-        """Make new defect counter object."""
-        self.valves_init(markers)
-
-
 class DistDanger(Dist):
     """Class for counting defects by distance with stacked danger levels."""
 
