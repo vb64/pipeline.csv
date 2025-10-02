@@ -91,7 +91,6 @@ class TestTotals(TestStatistics):
         check_count_property(prop, TypeDefekt.TECHNOLOGY, 8)
         check_count_property(prop, TypeDefekt.FACTORY, 2)
 
-        assert totals.defects.distribution.number == totals.defects.number
         assert totals.defects.angle_anomalies.hours == {
           0: 6, 1: 3, 2: 6, 3: 8, 4: 8, 5: 7, 6: 9, 7: 15, 8: 9, 9: 17, 10: 7, 11: 8
         }
@@ -102,7 +101,7 @@ class TestTotals(TestStatistics):
         from pipeline_csv.csvfile.statistics.totals import Totals
         from pipeline_csv.csvfile.statistics.defects import (
           GRADE_OVER_MAX, Totals as DefectsTotalsBase,
-          Depth, Dents, DangerValve
+          Depth, Dents, DangerValve, SingleDist, DistDanger
         )
 
         class DefectsTotals(DefectsTotalsBase):
@@ -113,7 +112,9 @@ class TestTotals(TestStatistics):
                 super().__init__(start, length, markers)
                 self.depth = Depth(grades=[10])
                 self.dents = Dents(grades=[5, 10])
-                self.danger_valve = DangerValve(self.markers)
+                self.danger_valve = DangerValve(markers)
+                self.distribution = SingleDist()
+                self.distribution_bars = DistDanger(length)
 
             def add_defect(self, defect, tube, warns):
                 """Add defect to custom statistics."""
@@ -121,6 +122,8 @@ class TestTotals(TestStatistics):
                 row = defect.row
 
                 self.danger_valve.add_data(defect)
+                self.distribution.add_data(defect)
+                self.distribution_bars.add_data(defect)
 
                 if defect.is_metal_loss:
                     self.depth.add_data(defect)
@@ -140,7 +143,9 @@ class TestTotals(TestStatistics):
         assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 5
 
         assert totals.defects.dents.number == 2
+        assert totals.defects.distribution.number == totals.defects.number
         assert len(totals.defects.danger_valve.grades) == 1
+        assert len(totals.defects.distribution_bars.grades) == 40
 
         # print('---')
         # [print(i) for i in totals.markers]

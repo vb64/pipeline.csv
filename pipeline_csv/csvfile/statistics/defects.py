@@ -210,15 +210,11 @@ class Dist(GradeTube):
 
         GradeTube.__init__(self)
 
-    def get_grade(self, defect, _tube):
-        """Return dist for defect."""
-        return defect.dist
-
 
 class DistDanger(Dist):
     """Class for counting defects by distance with stacked danger levels."""
 
-    def add_data(self, defect):  # pylint: disable=arguments-differ
+    def add_data(self, defect):
         """Add defect with distance to statistics."""
         val = defect.row.dist_od
         self.number += 1
@@ -364,7 +360,6 @@ class Totals:
         self.markers = markers
         self.types = PropertyCounter()
         self.wallside = PropertyCounter()
-        self.distribution = SingleDist()
         self.angle_anomalies = Angles()
 
     def __str__(self):
@@ -380,7 +375,6 @@ class Totals:
         row = defect.row
         self.wallside.add_item(int(row.type_def), tube)
         self.types.add_item(int(row.object_code), tube)
-        self.distribution.add_data(defect)
         self.angle_anomalies.add_data(defect)
 
     def add_data(self, tube, warns):
