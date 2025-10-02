@@ -75,6 +75,7 @@ class TestTotals(TestStatistics):
         check_tube_property(prop, TypeHorWeld.HORIZONTAL, totals.pipes.number, totals.length)
 
         assert totals.defects.number == 75
+        assert 'total_num: 75' in str(totals.defects)
 
         prop = totals.defects.wallside
         assert len(prop.data) == 2
