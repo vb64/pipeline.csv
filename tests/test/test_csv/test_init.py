@@ -7,8 +7,28 @@ import pytest
 from . import TestCsv
 
 
-class TestInit(TestCsv):
+class TestInit(TestCsv):  # pylint: disable=too-many-public-methods
     """File __init__.py."""
+
+    def test_check_object(self):
+        """Check check_object method."""
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import File, TypeDefekt
+
+        csv_file = File(1000)
+        row = File.RowCls.as_defekt(
+          6000,
+          TypeDefekt.DENT,
+          DefektSide.OUTSIDE,
+          '', '', '',
+          None, None,
+          6010, None,
+          'zero depth dent'
+        )
+        warns = []
+        csv_file.check_object(row, self.tube, warns)
+        assert len(warns) == 1
+        assert 'Zero depth dent:' in warns[0]
 
     @staticmethod
     def test_format_floats():
