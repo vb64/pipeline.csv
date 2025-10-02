@@ -3,6 +3,7 @@ import os
 import csv
 from .. import Error
 from .row import Row as BaseRow
+from .defect import Defect
 
 
 def transform_length(dist_od, length_od, table, table_index):
@@ -337,10 +338,19 @@ class File:
                 tube = Tube(row, self.stream, str(auto_num))
             else:
                 if tube:
+                    self.check_object(row, tube, warns)
                     tube.add_object(row)
                 else:
                     if not self.can_be_first(row):
                         self.add_warn("Object before first weld: {}".format(row), warns)
+
+    def check_object(self, row, tube, warns):
+        """Add warn for wrong cases."""
+        if row.is_defect:
+            defect = Defect(row, tube)
+            if defect.is_dent:
+                if not defect.depth_percent:
+                    self.add_warn("Zero depth dent: ID {} dist {}".format(row.obj_id, row.dist), warns)
 
     @staticmethod
     def can_be_first(row):

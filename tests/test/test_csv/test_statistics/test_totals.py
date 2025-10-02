@@ -126,7 +126,6 @@ class TestTotals(TestStatistics):
             def add_defect(self, defect, tube, warns):
                 """Add defect to custom statistics."""
                 super().add_defect(defect, tube, warns)
-                row = defect.row
 
                 self.danger_valve.add_data(defect)
                 self.distribution.add_data(defect)
@@ -138,8 +137,6 @@ class TestTotals(TestStatistics):
                     self.part_dist_loss_wallside.add_data(defect)
 
                 if defect.is_dent:
-                    if not defect.depth_percent:
-                        warns.append("Zero depth dent: ID {} dist {}".format(row.obj_id, row.dist))
                     self.dents.add_data(defect)
                     self.dist_dents.add_data(defect)
 
