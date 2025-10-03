@@ -162,6 +162,7 @@ from pipeline_csv.csvfile.statistics.totals import GRADE_OVER_MAX
 
 assert totals.defects.dents.data[GRADE_OVER_MAX] == 0
 ```
+
 Имеется по одной вмятине глубиной до 5% и от 5 до 10%.
 
 ```python
