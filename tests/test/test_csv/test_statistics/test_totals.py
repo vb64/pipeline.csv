@@ -150,6 +150,12 @@ class TestTotals(TestStatistics):
         assert totals.defects.depth.pipes_with_grade(GRADE_OVER_MAX) == 5
 
         assert totals.defects.dents.number == 2
+        assert totals.defects.dents.data[5] == 1
+        assert totals.defects.dents.data[10] == 1
+        assert totals.defects.dents.data[GRADE_OVER_MAX] == 0
+        assert list(totals.defects.dents.tubes[5].keys()) == ['W6332']
+        assert list(totals.defects.dents.tubes[10].keys()) == ['W14736']
+
         assert totals.defects.distribution.number == totals.defects.number
         assert len(totals.defects.danger_valve.grades) == 1
         assert len(totals.defects.distribution_bars.grades) == 40
