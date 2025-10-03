@@ -90,4 +90,100 @@ assert types[TypeDefekt.TECHNOLOGY].number == 8
 assert types[TypeDefekt.FACTORY].number == 2
 ```
 
-Распределение числа дефектов по часам ориентации.
+Распределение дефектов по часам ориентации.
+
+```python
+assert totals.defects.base_angle_anomalies.hours == {
+  0: 6,  # 6 дефектов в секторе на 12 часов
+  1: 3,  # 3 дефекта в секторе на 1 час
+  2: 6,  # и т.д.
+  3: 8,
+  4: 8,
+  5: 7,
+  6: 9,
+  7: 15,
+  8: 9,
+  9: 17,
+  10: 7,
+  11: 8
+}
+```
+
+Класс `Totals` позволяет также получать расширенную статистику путем переопределения классов статистики для труб и дефектов.
+
+Чтобы получить статистику дефектов по собственным требованиям, нужно определить класс, унаследовав его от базового класса `pipeline_csv.csvfile.statistics.defects.Totals`.
+В этом классе нужно переопределить методы `__init__` и `add_defect`.
+
+```python
+from pipeline_csv.csvfile.statistics.defects import Totals as DefectsTotalsBase, Dents
+
+class DefectsTotals(DefectsTotalsBase):
+    """Custom defect totals class."""
+
+    def __init__(self, start, length, markers):
+        """Make new defects total object with custom properties."""
+        super().__init__(start, length, markers)
+        self.dents = Dents(grades=[5, 10])
+
+    def add_defect(self, defect, tube, warns):
+        """Add defect to custom statistics."""
+        super().add_defect(defect, tube, warns)
+        if defect.is_dent:
+            self.dents.add_data(defect)
+```
+
+В данном классе при помощи библиотечного класса `Dents` собирается пользовательская статистика с градацией вмятин по глубине.
+
+- до 5% диаметра
+- от 5% до 10% диаметра
+- более 10% диаметра
+
+При создании экземпляра класса статистики csv-файла нужно передать ему в качестве параметра имя пользовательского класса.
+
+```python
+from pipeline_csv.csvfile.statistics.totals import Totals
+
+totals = Totals(defects_class=DefectsTotals)
+totals.fill(csv_file, None)
+```
+
+После этого вы получите доступ к данным статистики по вмятинам.
+
+Всего имеется две вмятины.
+
+```python
+assert totals.defects.dents.number == 2
+```
+
+Нет вмятин глубиной более 10% диаметра.
+
+```python
+from pipeline_csv.csvfile.statistics.totals import GRADE_OVER_MAX
+
+assert totals.defects.dents.data[GRADE_OVER_MAX] == 0
+```
+Имеется по одной вмятине глубиной до 5% и от 5 до 10%.
+
+```python
+assert totals.defects.dents.data[5] == 1
+assert totals.defects.dents.data[10] == 1
+```
+
+Вмятина глубиной до 5% находится на трубе с номером `W6332`, а вмятина глубиной до 10% на трубе с номером `W14736`.
+
+```python
+assert list(totals.defects.dents.tubes[5].keys()) == ['W6332']
+assert list(totals.defects.dents.tubes[10].keys()) == ['W14736']
+```
+
+Вы можете использовать следующие библиотечные классы статистики дефектов:
+
+- DistSingle: распределение по дистанции
+- DistWallside: распределение по дистанции с разбивкой по положению на стенке трубы
+- DangerValve: распределение между кранами
+- Depth: группировка потерь металла по заданным интервалам глубин (в % от толщины стенки трубы)
+- Dents: группировка вмятин по заданным интервалам глубин (в % от диаметра трубы)
+- Angles: распределение по часам ориентации
+- PropertyCounter: распределение по значениям указанного свойства дефекта
+
+Также вы можете определять собственные классы статистики дефектов для сбора нужнфх данных.
