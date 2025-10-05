@@ -10,7 +10,7 @@ class Totals:
     def __init__(self, pipes_class=TotalsPipes, defects_class=TotalsDefects):
         """Make instance with given custom subclasses for pipes and defects."""
         self.defects_class = defects_class
-        self.pipes = pipes_class(self)
+        self.pipes = pipes_class()
         self.liners = PropertyCounter()
         self.markers = []
         self.start = None
