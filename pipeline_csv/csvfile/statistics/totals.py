@@ -10,15 +10,25 @@ class Totals:
     def __init__(self, pipes_class=TotalsPipes, defects_class=TotalsDefects):
         """Make instance with given custom subclasses for pipes and defects."""
         self.defects_class = defects_class
-        self.pipes = pipes_class(self)
-        self.liners = PropertyCounter()
-        self.markers = []
+        self.pipes_class = pipes_class
+        self.pipes = None
+        self.liners = None
+        self.markers = None
         self.start = None
         self.length = None
         self.defects = None
 
+    def init_fill(self):
+        """Create fields needed by fill method."""
+        self.pipes = self.pipes_class()
+        self.liners = PropertyCounter()
+        self.markers = []
+        self.start = None
+        self.length = None
+
     def fill(self, deftable, warns):
         """Make statistics for given deftable."""
+        self.init_fill()
         last_tube = None
 
         for tube in deftable.get_tubes(warns):
