@@ -26,6 +26,7 @@ class TestTotals(TestStatistics):
         from pipeline_csv.csvfile.statistics.totals import Totals
 
         totals = Totals()
+        totals.init_fill()
         assert not totals.markers
         assert "Tubes:" in str(totals)
 
