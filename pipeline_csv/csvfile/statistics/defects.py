@@ -162,7 +162,7 @@ class Dents(GradeTube):
 
     def get_grade(self, defect, _tube):
         """Return percent for dent depth from diameter."""
-        return defect.depth_percent
+        return defect.depth_percent or 0
 
 
 class Depth(GradeTube):
@@ -182,7 +182,7 @@ class Depth(GradeTube):
 
     def get_grade(self, defect, _tube):
         """Return depth in percents for defect."""
-        return int(defect.row.depth_max or 0)
+        return defect.depth_percent or 0
 
 
 class Dist(GradeTube):
