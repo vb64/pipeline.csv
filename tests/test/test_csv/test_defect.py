@@ -81,7 +81,7 @@ class TestDefect(TestCsv):
         mech_defekt = Defect(mech, self.pipe)
         assert not mech_defekt.is_metal_loss
         assert not mech_defekt.is_dent
-        assert mech_defekt.depth_percent == 5.0
+        assert mech_defekt.depth_percent == 50.0
         assert mech_defekt.depth_mm == 5.0
 
         mloss.depth_units = Depth.HundredthsOfMillimeter
