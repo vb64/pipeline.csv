@@ -1,3 +1,6 @@
+13.10.2025 ver.1.20
+-------------------
+
 * Defect.depth_percent and Defect.depth_mm properties returns values for all defects with defined depth. Previously it was only for metal loss and dents.
 
 - Fix counting statistic grades for Depth class.
