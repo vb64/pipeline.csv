@@ -66,7 +66,7 @@ AT_SEAM = [
   TypeDefekt.ANOMALY_SPIRAL_WELD,
 ]
 
-VALVE = [
+VALVE_LIST = [
   TypeMarker.VALVE,
 ]
 
@@ -211,7 +211,7 @@ class Row(row.Row):
     @staticmethod
     def valve_codes():
         """Return list of available valve like obect codes."""
-        return VALVE
+        return VALVE_LIST
 
 
 class File(FileBase):

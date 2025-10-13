@@ -59,11 +59,11 @@ class Defect(Anomaly):
 
     @property
     def depth_percent(self):
-        """Return defekt depth as percent from wall thickness for metal loss or pipe diameter for dents."""
+        """Return defekt depth as percent from wall thickness."""
         if not self.row.depth_max:
             return None
 
-        if self.row.depth_units == Depth.PercentWallThickness and (self.is_dent or self.is_metal_loss):
+        if self.row.depth_units == Depth.PercentWallThickness:
             return float(self.row.depth_max)
 
         # Depth.HundredthsOfMillimeter
@@ -78,7 +78,7 @@ class Defect(Anomaly):
         if not self.row.depth_max:
             return None
 
-        if self.row.depth_units == Depth.HundredthsOfMillimeter and (self.is_dent or self.is_metal_loss):
+        if self.row.depth_units == Depth.HundredthsOfMillimeter:
             return float(self.row.depth_max) / 100.0
 
         # Depth.PercentWallThickness
