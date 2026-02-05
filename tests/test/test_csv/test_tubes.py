@@ -371,8 +371,8 @@ class TestTubes(TestCsv):
         assert pipes[3].diameter == '1200'
         assert pipes[3].is_diameter_change is None
 
-    def test_stream_no_diam(self):
-        """Check case for stream without diameter."""
+    def test_stream_diam(self):
+        """Check for stream diameter with several get_tubes() calls."""
         from pipeline_csv.oegiv import File
 
         csv_file = File.from_file(self.fixture('1.csv'))
