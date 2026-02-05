@@ -142,10 +142,13 @@ class File:
         self.categories = []
         self.float_delimiter = float_delimiter
         self.ids = set()
-        self.stream = Stream(diameter=diameter)
+        self.initial_diameter = diameter
+        self.stream = Stream(diameter=self.initial_diameter)
 
         if self.stream.diameter:
-            self.data.append(self.RowCls.as_diam(0, "", self.stream.diameter))
+            row = self.RowCls.as_diam(0, "", self.stream.diameter)
+            self.data.append(row)
+            self.diameters.append(row)
 
     @classmethod
     def open_file(cls, file_path, mode):
@@ -288,7 +291,7 @@ class File:
             base_dist += 1
             index += 1
             first_diameter = self.diameters[0]
-            first_diameter.dist_od = str(base_dist)
+            first_diameter.dist_od = str(base_dist)  # ?
             if len(self.diameters) > 1:
                 first_diameter.depth_min = ""
                 last_diameter = self.diameters[-1]
@@ -366,6 +369,10 @@ class File:
 
     def get_tubes(self, warns=None):
         """Return ready iterator for tubes in csv data."""
+        self.stream.diameter = self.initial_diameter
+        self.stream.thick = None
+        self.stream.category = None
+
         tubes = self._create_tubes_iterator(warns)
         try:
             next(tubes)

@@ -9,7 +9,7 @@ from . import TestIV
 def save_and_load(filecls, csv, fname):
     """Save and reload."""
     csv.to_file(fname)
-    csv = filecls.from_file(fname)
+    return filecls.from_file(fname)
 
 
 def check_diam():
@@ -46,13 +46,13 @@ def check_diam():
     assert pipes[3].is_diameter_change is None
 
     fname = 'diam.csv'
-    save_and_load(File, csv_file, fname)
+    csv_file = save_and_load(File, csv_file, fname)
     # csv_file.to_file(fname)
     # csv_file = File.from_file(fname)
 
     # reverse data, save to file and reload
     csv_file.reverse()
-    save_and_load(File, csv_file, fname)
+    csv_file = save_and_load(File, csv_file, fname)
 
     pipes = list(csv_file.get_tubes())
     assert len(pipes) == 4

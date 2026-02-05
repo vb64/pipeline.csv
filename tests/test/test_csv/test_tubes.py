@@ -391,16 +391,17 @@ class TestTubes(TestCsv):
         csv_file.data.insert(1, diam)
         assert len(csv_file.data) == 8
 
-        csv_file.stream.diameter = None
         pipes = list(csv_file.get_tubes())
         assert len(pipes) == 1
         pipe = pipes[0]
         assert pipe.dist == 0
         assert pipe.diameter == '1111'
 
-        csv_file.stream.diameter = None
+        diam.depth_min = '2222'
+        diam.depth_max = '2222'
+
         pipes = list(csv_file.get_tubes())
         assert len(pipes) == 1
         pipe = pipes[0]
         assert pipe.dist == 0
-        assert pipe.diameter == '1111'
+        assert pipe.diameter == '2222'
