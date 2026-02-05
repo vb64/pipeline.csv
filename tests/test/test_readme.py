@@ -235,7 +235,7 @@ def check_defect():
     pipes = list(csv.get_tubes())
     assert len(pipes) == 1
     pipe = pipes[0]
-    assert pipe.diam == 1000
+    assert pipe.diameter == 1000
 
     # one defect at the pipe
     assert len(pipe.defects) == 1

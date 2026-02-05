@@ -329,7 +329,6 @@ class File:
         """Create iterator for tubes in csv data."""
         from .tubes import Tube
 
-        Tube.diam = self.stream.diameter
         tube = None
         auto_num = 1
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):
