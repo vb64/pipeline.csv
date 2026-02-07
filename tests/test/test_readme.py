@@ -6,6 +6,18 @@ import os
 from . import TestIV
 
 
+def dump_data(data):
+    """Dump data rows."""
+    from pipeline_csv import ObjectClass
+
+    print('###')
+    for i in data:
+        if int(i.type_object) == ObjectClass.DIAM:
+            print('#', i.dist, i.object_code_t, i.depth_min, '->', i.depth_max)
+        else:
+            print('#', i.dist, i.object_code_t)
+
+
 def save_and_load(filecls, csv, fname):
     """Save and reload."""
     csv.to_file(fname)
@@ -26,6 +38,7 @@ def check_diam():
       Row.as_weld(3000),
       Row.as_weld(4000),
     ]
+    assert len(csv_file.data) == 7
 
     # 4 pipes
     pipes = list(csv_file.get_tubes())
@@ -47,8 +60,6 @@ def check_diam():
 
     fname = 'diam.csv'
     csv_file = save_and_load(File, csv_file, fname)
-    # csv_file.to_file(fname)
-    # csv_file = File.from_file(fname)
 
     # reverse data, save to file and reload
     csv_file.reverse()
@@ -64,7 +75,7 @@ def check_diam():
     assert pipes[1].is_diameter_change is None
 
     # Third pipe has diam change 1400 -> 1200
-    assert int(pipes[2].diameter) == (1400)
+    assert int(pipes[2].diameter) == 1400
     assert int(pipes[2].is_diameter_change) == 1200
 
     # last pipe diameter 1200, no diameter change
@@ -135,7 +146,7 @@ def check_reversing(csv_file):
     csv_copy.reverse()
 
     # relative position of defekt must change
-    defect_row = csv_copy.data[2]
+    defect_row = csv_copy.data[3]
     assert defect_row.is_defect
 
     # defect orientation must be mirrored
