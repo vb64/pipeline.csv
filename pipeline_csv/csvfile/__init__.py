@@ -142,10 +142,13 @@ class File:
         self.categories = []
         self.float_delimiter = float_delimiter
         self.ids = set()
-        self.stream = Stream(diameter=diameter)
+        self.initial_diameter = diameter
+        self.stream = Stream(diameter=self.initial_diameter)
 
         if self.stream.diameter:
-            self.data.append(self.RowCls.as_diam(0, "", self.stream.diameter))
+            row = self.RowCls.as_diam(0, "", self.stream.diameter)
+            self.data.append(row)
+            self.diameters.append(row)
 
     @classmethod
     def open_file(cls, file_path, mode):
@@ -287,14 +290,12 @@ class File:
         if self.diameters:
             base_dist += 1
             index += 1
-            first_diameter = self.diameters[0]
-            first_diameter.dist_od = str(base_dist)
-            if len(self.diameters) > 1:
-                first_diameter.depth_min = ""
-                last_diameter = self.diameters[-1]
-                first_diameter.depth_max = last_diameter.depth_min
-            else:
-                first_diameter.depth_max, first_diameter.depth_min = first_diameter.depth_min, first_diameter.depth_max
+            first = self.diameters[-1].copy()
+            first.dist_od = str(base_dist)
+            first.depth_min = ''
+            first.depth_max = self.diameters[-1].depth_min
+            self.data.insert(index, first)
+            self.data.remove(self.diameters[0])
 
     @classmethod
     def load_dist_modify(cls, file_name):
@@ -326,7 +327,6 @@ class File:
         """Create iterator for tubes in csv data."""
         from .tubes import Tube
 
-        Tube.diam = self.stream.diameter
         tube = None
         auto_num = 1
         for row in sorted(self.data, key=lambda val: int(val.dist_od)):
@@ -366,6 +366,10 @@ class File:
 
     def get_tubes(self, warns=None):
         """Return ready iterator for tubes in csv data."""
+        self.stream.diameter = self.initial_diameter
+        self.stream.thick = None
+        self.stream.category = None
+
         tubes = self._create_tubes_iterator(warns)
         try:
             next(tubes)

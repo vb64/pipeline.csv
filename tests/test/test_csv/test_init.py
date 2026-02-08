@@ -376,7 +376,7 @@ class TestInit(TestCsv):  # pylint: disable=too-many-public-methods
         from pipeline_csv.csvfile import File
 
         csv_file = File(1420)
-        assert not csv_file.diameters
+        assert len(csv_file.diameters) == 1
 
         csv_file = File()
         assert not csv_file.diameters

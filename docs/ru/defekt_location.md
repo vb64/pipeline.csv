@@ -30,7 +30,7 @@ csv.data = [
 pipes = list(csv.get_tubes())
 assert len(pipes) == 1
 pipe = pipes[0]
-assert pipe.diam == 1000
+assert pipe.diameter == 1000
 ```
 
 Один дефект на трубе.

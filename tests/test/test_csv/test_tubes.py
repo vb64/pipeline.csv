@@ -370,3 +370,38 @@ class TestTubes(TestCsv):
 
         assert pipes[3].diameter == '1200'
         assert pipes[3].is_diameter_change is None
+
+    def test_stream_diam(self):
+        """Check for stream diameter with several get_tubes() calls."""
+        from pipeline_csv.oegiv import File
+
+        csv_file = File.from_file(self.fixture('1.csv'))
+        assert len(csv_file.data) == 7
+
+        pipes = list(csv_file.get_tubes())
+
+        assert len(pipes) == 1
+        pipe = pipes[0]
+        assert pipe.diameter is None
+        assert pipe.dist == 0
+        assert csv_file.stream.diameter is None
+
+        diam = csv_file.RowCls.as_diam(pipe.dist + 1, '1111', '1111')
+        diam.object_code_t = "Diam change"
+        csv_file.data.insert(1, diam)
+        assert len(csv_file.data) == 8
+
+        pipes = list(csv_file.get_tubes())
+        assert len(pipes) == 1
+        pipe = pipes[0]
+        assert pipe.dist == 0
+        assert pipe.diameter == '1111'
+
+        diam.depth_min = '2222'
+        diam.depth_max = '2222'
+
+        pipes = list(csv_file.get_tubes())
+        assert len(pipes) == 1
+        pipe = pipes[0]
+        assert pipe.dist == 0
+        assert pipe.diameter == '2222'

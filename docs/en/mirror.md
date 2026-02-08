@@ -10,9 +10,9 @@ Check distance of the last object in copy and defect orientation.
 
 ```python
 assert csv_copy.total_length == 12000
-assert len(csv_copy.data) == 5
+assert len(csv_copy.data) == 6
 
-defect_row = csv_copy.data[3]
+defect_row = csv_copy.data[4]
 assert defect_row.is_defect
 assert defect_row.orient_td == '4,00'
 assert defect_row.orient_bd == '5,00'
