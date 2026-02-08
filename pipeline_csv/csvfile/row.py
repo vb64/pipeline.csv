@@ -208,6 +208,16 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         """Set optional minimal pipe diameter as string (mm)."""
         self.depth_max = value
 
+    @property
+    def pipe_radius(self):
+        """Return optional pipe curve radius as string (mm)."""
+        return self.depth_min
+
+    @pipe_radius.setter
+    def pipe_radius(self, value):
+        """Set optional pipe curve radius as string (mm)."""
+        self.depth_min = value
+
     @staticmethod
     def get_minutes(text):
         """Restore full integer minute from text 'hours,minites'."""
@@ -256,7 +266,13 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
         return obj
 
     @classmethod
-    def as_weld(cls, distanse, min_diam=None, obj_id='', custom_number='', latitude='', longtitude='', altitude=''):
+    def as_weld(
+      cls, distanse,
+      min_diam='',  # minimal pipe diameter in mm
+      radius='',  # pipe curve radius in mm
+      obj_id='', custom_number='',
+      latitude='', longtitude='', altitude=''
+    ):
         """Construct row as weld object."""
         obj = cls.as_common(
           distanse, ObjectClass.WELD,
@@ -269,6 +285,9 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         if min_diam:
             obj.min_diam = min_diam
+
+        if radius:
+            obj.pipe_radius = radius
 
         return obj
 
@@ -548,9 +567,6 @@ class Row:  # pylint: disable=too-many-instance-attributes, too-many-public-meth
 
         if self.mpoint_dist:
             self.mpoint_dist = str(total_length - int(self.mpoint_dist))
-        # self.dist_str, self.dist_stl = self.dist_stl, self.dist_str
-        # self.link_stl, self.link_str = self.link_str, self.link_stl
-        # self.link_ml, self.link_mr = self.link_mr, self.link_ml
 
         # orientatations
         self.orient_td = reverse_orient(self.orient_td)
