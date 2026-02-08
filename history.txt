@@ -4,6 +4,8 @@
 
 - Fix wrong pipe diameter at several repeated `get_tubes` method calls in some cases.
 
++ Property `pipe_radius` for row and argument `radius` for `Row.as_weld` method.
+
 13.10.2025 ver.1.20
 -------------------
 

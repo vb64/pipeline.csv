@@ -134,10 +134,11 @@ class TestRow(TestCsv):
         assert row.is_weld
         assert row.dist_od == 10
 
-        row = Row.as_weld(10, custom_number='1xx')
+        row = Row.as_weld(10, custom_number='1xx', radius='100')
         assert row.is_weld
         assert row.dist_od == 10
         assert len(row.object_name) == 3
+        assert row.pipe_radius == '100'
 
         row = Row.as_thick(10, 105)
         assert row.is_thick
