@@ -1,3 +1,6 @@
+08.02.2026 ver.1.21
+-------------------
+
 * Breaking change: attribute `Tube.diam` was removed. Use `pipe.diameter` instead.
 
 * Calling the `File` constructor with the `diameter` argument adds a diameter change row at distance 0.
