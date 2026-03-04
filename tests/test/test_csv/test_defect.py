@@ -8,34 +8,6 @@ from . import TestCsv
 class TestDefect(TestCsv):
     """Check defect.py file."""
 
-    def setUp(self):
-        """Make pipe for tests."""
-        super().setUp()
-        from pipeline_csv.csvfile import Stream
-        from pipeline_csv.csvfile.tubes import Tube
-        from pipeline_csv.csvfile.row import Row
-
-        stream = Stream(diameter=700)
-        self.pipe = Tube(Row.as_weld(10), stream, '1')
-
-    def make_defect(self, dist, length, orient1, orient2, mp_orient, mp_dist):
-        """Make new defect."""
-        from pipeline_csv import DefektSide
-        from pipeline_csv.oegiv import TypeDefekt, Row
-        from pipeline_csv.csvfile.defect import Defect
-
-        defect = Defect(
-          Row.as_defekt(
-            dist, TypeDefekt.CORROZ, DefektSide.INSIDE, str(length), '10', '15',
-            orient1, orient2,
-            mp_orient, mp_dist, ''
-          ),
-          self.pipe
-        )
-        self.pipe.defects.append(defect)
-
-        return defect
-
     def test_depth(self):
         """Check depth_percent/depth_mm properties."""
         from pipeline_csv.csvfile.defect import Defect, Depth
