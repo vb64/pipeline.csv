@@ -1,6 +1,6 @@
 """Tests i18n.py file.
 
-make test T=test_csv/test_i18n.py
+make test T=test_integrity/test_i18n.py
 """
 from . import TestIntegrity
 

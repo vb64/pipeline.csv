@@ -1,17 +1,17 @@
 """Module test_material.py.
 
-make test T=test_material.py
+make test T=test_integrity/test_material.py
 """
-from . import TestIV
+from . import TestIntegrity
 
 
-class TestMaterial(TestIV):
+class TestMaterial(TestIntegrity):
     """Check material.py file."""
 
     @staticmethod
     def test_material():
         """Check PipeMaterial class."""
-        from pipeline_csv.material import PipeMaterial
+        from pipeline_csv.integrity.material import PipeMaterial
 
         material = PipeMaterial("Сталь3", 250)
         assert material.name == "Сталь3"
