@@ -1,4 +1,6 @@
-# Warnings "Use of assert detected" are invalid.
-# Please disable this pattern for test code.
-skips: .'B101'.
+# Do not check paths including `/tests/`:
+# they use `assert`, leading to B101 false positives.
+exclude_dirs:
+    - '/tests/'
+
 assert_used: skips: ['*_test.py', '*test_*.py']
