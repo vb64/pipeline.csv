@@ -1,0 +1,3 @@
+# Warnings "Use of assert detected" are invalid.
+# Please disable this pattern for test code.
+skips: .'B101'.
