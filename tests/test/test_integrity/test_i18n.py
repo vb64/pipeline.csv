@@ -5,6 +5,12 @@ make test T=test_integrity/test_i18n.py
 from . import TestIntegrity
 
 
+class MockContext:
+    """Mocked Context class."""
+
+    is_explain = None
+
+
 class TestI18n(TestIntegrity):
     """File i18n.py."""
 
@@ -14,3 +20,9 @@ class TestI18n(TestIntegrity):
 
         data = load_po(self.fixture('ru.po'))
         assert len(data) > 1
+
+    def test_fgettext(self):
+        """Check fake_gettext function."""
+        from pipeline_csv.integrity.i18n import fake_gettext
+
+        assert fake_gettext('xxx', MockContext()) == 'xxx'
