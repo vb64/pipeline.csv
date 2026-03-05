@@ -34,7 +34,7 @@ class TestAsme(TestMethod):
             DefektSide.INSIDE,
             4,  # defect length 4 inches
             1,  # width
-            0.039 * 10,  # defect depth 0.039 inches
+            str(0.039 * 10),  # defect depth 0.039 inches
             # along the circumference of the pipe, the defect begins
             # at 10 arc minutes from the top of the pipe
             Orientation.from_minutes(10),
@@ -65,7 +65,7 @@ class TestAsme(TestMethod):
             DefektSide.INSIDE,
             100,  # длина дефекта 100 мм
             10,  # ширина дефекта 10 мм
-            1 * 10,  # глубина дефекта 1 мм
+            str(1 * 10),  # глубина дефекта 1 мм
             # по окружности трубы дефект начинается на 10 угловых минут от верхней точки трубы
             Orientation.from_minutes(10),
             # размер дефекта по окружности составляет 20 угловых минут
