@@ -74,6 +74,11 @@ class TestsReadme1991(TestAsme):
         # дефект не представляет опасности.
         defect.depth = 8 * 100  # 8 mm
         assert defect.length == 100
+
+        assert round(asme.get_b(), 5) == 0.36295
+        assert round(asme.diam_wall, 3) == 150.732
+        assert round(1.12 * 150.732 * 0.36295) == 777
+
         assert round(asme.defect_max_length()) == 127
         assert asme.pipe_state() == State.Safe
 
