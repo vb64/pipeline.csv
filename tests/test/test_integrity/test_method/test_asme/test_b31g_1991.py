@@ -220,3 +220,22 @@ class TestsCrvlBas(TestAsme):
 
         self.defect.row.depth_max = inch(0.167, 100)
         assert round(self.asme.defect_max_length(), 3) == 90.776  # inch(3.557)
+
+    def test_example4(self):
+        """Example 4."""
+        self.pipe.diameter = inch(24)
+        self.pipe.thick = inch(0.432, 10)
+        self.defect.row.depth_max = inch(0.3, 100)
+        self.defect.row.length = inch(30)
+        self.asme.maop = 910
+
+        assert round(self.asme.get_a(self.defect.length), 3) == 7.656
+        assert round(self.asme.get_design_pressure()) == 1350
+        assert round(self.asme.get_safe_pressure()) == 456
+        assert round(self.asme.defect_max_length(), 3) == 48.652  # inch(1.907)
+
+        assert self.asme.pipe_state() == self.state.Repair
+        assert round(self.asme.safe_pressure) == 456
+
+        self.asme.maop = 452
+        assert self.asme.pipe_state() == self.state.Defected
