@@ -2,7 +2,7 @@
 
 make test T=test_integrity/test_method/test_asme/test_b31g_1991.py
 """
-from . import TestAsme
+from . import TestAsme, inch
 
 
 class TestsReadme1991(TestAsme):
@@ -18,34 +18,35 @@ class TestsReadme1991(TestAsme):
         asme = Context(defect, self.material_en, self.pressure_en)
 
         # defect depth less than 10% wall thickness, no danger.
-        assert defect.depth_mm == 0.039
-        assert pipe.thick == 0.63
+        assert round(defect.depth_mm) == inch(0.039)
+        assert pipe.thick == inch(0.63, 10)
         assert asme.pipe_state(is_explain=True) == State.Ok
         assert '10%' in asme.explain()
 
         # the depth of the defect is more than 80% of the pipe wall thickness,
         # repair or replacement of the pipe is necessary.
-        defect.depth = 0.6
+        defect.row.depth_max = inch(0.6, 100)
         assert asme.pipe_state(is_explain=True) == State.Replace
         assert '80%' in asme.explain()
 
         # the depth of the defect is 50% of the pipe wall thickness, but the length of the defect
         # does not exceed its maximum allowable length.
         # the defect is not dangerous.
-        defect.depth = 0.31
-        assert defect.length == 4
-        assert round(asme.defect_max_length()) == 5
+        defect.row.depth_max = inch(0.31, 100)
+        assert defect.length == inch(4)
+        assert round(asme.defect_max_length()) == 129
         assert asme.pipe_state() == State.Safe
 
         # a defect with a length of 20 inches and a depth of 50% of the pipe wall thickness
         # requires repair at the specified working pressure in the pipe.
-        defect.length = 20
+        defect.row.length = inch(20)
+        assert defect.length == inch(20)
         assert asme.pipe_state() == State.Repair
 
         # when the operating pressure is reduced to a safe value, the defect does not require repair.
-        assert pipe.maop == 900
-        assert round(asme.safe_pressure, 2) == 700.68
-        pipe.maop = 700
+        assert asme.maop == 900
+        assert round(asme.safe_pressure, 2) == 700.87
+        asme.maop = 700
         assert asme.pipe_state(is_explain=True) == State.Defected
         assert 'defect is not dangerous' in asme.explain()
 

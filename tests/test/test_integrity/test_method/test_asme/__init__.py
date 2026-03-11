@@ -2,6 +2,11 @@
 from .. import TestMethod
 
 
+def inch(val, suff=1):
+    """Return inches as mm with optional multiplier."""
+    return int(round(float(val) * 25.4 * suff))
+
+
 class TestAsme(TestMethod):
     """Base class for tests ASME methods."""
 
@@ -28,19 +33,19 @@ class TestAsme(TestMethod):
         )
         self.pressure_en = 900  # pressure psi
 
-        self.pipe_en = Tube(Row.as_weld(10), Stream(diameter=56), None)
-        assert self.pipe_en.diameter == 56  # diameter 56 inches
-        self.pipe_en.length = 440  # length inches
-        self.pipe_en.thick = 0.63 * 10  # wall thickness inches
+        self.pipe_en = Tube(Row.as_weld(10), Stream(diameter=inch(56)), None)
+        assert self.pipe_en.diameter == inch(56)  # diameter 56 inches
+        self.pipe_en.length = inch(440)  # length inches
+        self.pipe_en.thick = inch(0.63, 10)  # wall thickness inches
 
         self.pipe_en.add_object(
           Row.as_defekt(
-            40,  # the defect starts at a distance of 40 inches from the beginning of the pipe
+            inch(40),  # the defect starts at a distance of 40 inches from the beginning of the pipe
             TypeDefekt.CORROZ,
             DefektSide.INSIDE,
-            4,  # defect length 4 inches
-            1,  # width
-            str(0.039 * 10),  # defect depth 0.039 inches
+            inch(4),  # defect length 4 inches
+            inch(1),  # width
+            str(inch(0.039, 100)),  # defect depth 0.039 inches
             # along the circumference of the pipe, the defect begins
             # at 10 arc minutes from the top of the pipe
             Orientation.from_minutes(10),
@@ -62,7 +67,7 @@ class TestAsme(TestMethod):
         self.pipe_ru = Tube(Row.as_weld(10), Stream(diameter=1420), None)
         assert self.pipe_ru.diameter == 1420  # диаметр 1420 мм
         self.pipe_ru.length = 11200  # длина 11.2 метра
-        self.pipe_ru.thick = 160  # толщина стенки 16 мм
+        self.pipe_ru.thick = 16 * 10  # толщина стенки 16 мм
 
         self.pipe_ru.add_object(
           Row.as_defekt(
