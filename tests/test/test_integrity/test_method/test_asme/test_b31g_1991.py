@@ -106,3 +106,74 @@ class TestsReadme1991(TestAsme):
         lang_ru = asme.lang(Lang.Ru)
         assert asme.pipe_state(is_explain=lang_ru) == State.Defected
         assert 'Дефект не опасен.' in asme.explain()
+
+
+class TestsCrvlBas(TestAsme):
+    """Examples from CRVL.BAS."""
+
+    def setUp(self):  # pylint: disable=too-many-locals
+        """All units as inches."""
+        super().setUp()
+        from pipeline_csv.integrity.material import PipeMaterial
+        from pipeline_csv.integrity.method.asme.b31g_1991 import Context, State
+        from pipeline_csv.csvfile.row import Depth
+        from pipeline_csv.csvfile import Stream
+        from pipeline_csv.csvfile.tubes import Tube
+        from pipeline_csv import DefektSide
+        from pipeline_csv.oegiv import TypeDefekt, Row as BaseRow
+        from pipeline_csv.orientation import Orientation
+
+        class Row(BaseRow):
+            """Row with mm depth."""
+
+            depth_units = Depth.HundredthsOfMillimeter
+
+        self.state = State
+
+        maop = 910  # Lbs/sq.in.
+        diam = inch(30)
+        wallthick = inch(0.438, 10)
+        smys = 52000  # Lbs/sq.in.
+
+        self.material = PipeMaterial("Steel", smys)
+        self.pipe = Tube(Row.as_weld(50), Stream(diameter=diam), None)
+        assert self.pipe.diameter == diam
+        self.pipe.length = inch(440)  # length inches
+        self.pipe.thick = wallthick
+
+        depth = inch(0.1, 100)
+        length = inch(7.5)
+
+        self.pipe.add_object(
+          Row.as_defekt(
+            inch(40),  # the defect starts at a distance of 40 inches from the beginning of the pipe
+            TypeDefekt.CORROZ,
+            DefektSide.INSIDE,
+            length,  # defect length 4 inches
+            inch(1),  # width
+            str(depth),  # defect depth 0.039 inches
+            # along the circumference of the pipe, the defect begins
+            # at 10 arc minutes from the top of the pipe
+            Orientation.from_minutes(10),
+            # the size of the defect along the circumference is 20 arc minutes
+            Orientation.from_minutes(10 + 20),
+            None,  # MPoint orient
+            None,  # MPoint dist
+            ''  # comment
+          )
+        )
+        self.defect = self.pipe.defects[-1]
+        self.asme = Context(self.defect, self.material, maop)
+
+    def test_example1(self):
+        """Example 1."""
+        assert not self.asme.is_ok
+        assert not self.asme.is_replace
+        assert round(self.asme.get_a(self.defect.length), 3) == 1.7
+        assert round(self.asme.get_safe_pressure()) == 1091
+        assert round(self.asme.defect_max_length(), 3) == 207.587  # inch(8.216)
+        assert self.asme.pipe_state() == self.state.Safe
+
+        self.defect.row.depth_max = inch(0.249, 100)
+        assert round(self.asme.defect_max_length(), 3) == 67.462  # inch(2.663)
+        assert self.asme.pipe_state() == self.state.Defected
