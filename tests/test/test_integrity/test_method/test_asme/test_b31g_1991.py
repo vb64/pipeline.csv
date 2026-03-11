@@ -58,39 +58,47 @@ class TestsReadme1991(TestAsme):
         from pipeline_csv.csvfile.row import Depth
 
         assert defect.row.depth_units == Depth.HundredthsOfMillimeter
+
         asme = Context(defect, self.material_ru, self.pressure_ru)
 
         # глубина дефекта менее 10% толщины стенки трубы, опасности нет.
+        assert defect.row.depth_max == 100
+        assert defect.depth_percent == 6.25
         assert defect.depth_mm == 1
         assert pipe.thick == 160
         assert asme.pipe_state() == State.Ok
 
         # глубина дефекта более 80% толщины стенки трубы, необходим ремонт или замена трубы.
         defect.row.depth_max = 15 * 100  # 15 mm
+        assert defect.depth_mm == 15
+        assert defect.depth_percent == 93.75
         assert asme.pipe_state() == State.Replace
 
         # глубина дефекта 50% от толщины стенки трубы, но длина дефекта не превышает его
         # максимально допустимую длину.
         # дефект не представляет опасности.
-        defect.depth = 8 * 100  # 8 mm
+        defect.row.depth_max = 8 * 100  # 8 mm
+        assert defect.depth_percent == 50.0
+        assert defect.depth_mm == 8
         assert defect.length == 100
 
-        assert round(asme.get_b(), 5) == 0.36295
+        assert asme.relative_depth == 50.0
+        assert round(asme.get_b(), 5) == 0.75
         assert round(asme.diam_wall, 3) == 150.732
-        assert round(1.12 * 150.732 * 0.36295) == 777
 
         assert round(asme.defect_max_length()) == 127
         assert asme.pipe_state() == State.Safe
 
         # дефект длиной 500 мм и глубиной 50% от толщины стенки трубы
         # требует ремонта при указанном рабочем давлении в трубе.
-        defect.length = 500
+        defect.row.length = 500
+        assert defect.length == 500
         assert asme.pipe_state() == State.Repair
 
         # при снижении рабочего давления до безопасной величины дефект не требует ремонта.
-        assert pipe.maop == 7
+        assert asme.maop == 7
         assert round(asme.safe_pressure, 2) == 3.96
-        pipe.maop = 3.95
+        asme.maop = 3.95
 
         from pipeline_csv.integrity.i18n import Lang
 

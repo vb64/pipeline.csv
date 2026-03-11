@@ -8,6 +8,11 @@ DEPTH_OK_PERCENT = 10
 DEPTH_CRITICAL_PERCENT = 80
 
 
+def thick_mm(pipe):
+    """Return wallthickness of the pipe as float mm."""
+    return float(pipe.thick) / 10.0
+
+
 class State:
     """State of pipe with defect."""
 
@@ -51,7 +56,7 @@ class Context(ContextBase):
           _("The relative defect depth == defect depth / pipe wall thickness * 100%.", self),
           '\n', "{} / {} * 100 = {}".format(
             self.anomaly.depth_percent,
-            int(self.anomaly.pipe.thick) / 10.0,
+            thick_mm(self.anomaly.pipe),
             round(self.relative_depth, EXPL_ROUND)
           ),
         ])
@@ -101,11 +106,11 @@ class Context(ContextBase):
                 ])
 
                 self.safe_pressure = self.get_safe_pressure()
-                if self.safe_pressure > self.anomaly.pipe.maop:
+                if self.safe_pressure > self.maop:
                     self.add_explain([
                       '\n',
                       _("The working pressure {} does not exceed the allowable pressure {}.", self).format(
-                        self.anomaly.pipe.maop, round(self.safe_pressure, EXPL_ROUND)
+                        self.maop, round(self.safe_pressure, EXPL_ROUND)
                       ),
                       '\n', _("The defect is not dangerous.", self),
                     ])
@@ -165,7 +170,7 @@ class Context(ContextBase):
         self.add_explain([
           '\n', "A = 0.823 * defect_length / sqrt(diameter * wallthickness)",
           '\n', "A = 0.823 * {} / sqrt({} * {}) = {}".format(
-            max_length, pipe.diameter, pipe.wallthickness, round(a_val, EXPL_ROUND)
+            max_length, pipe.diameter, thick_mm(pipe), round(a_val, EXPL_ROUND)
           ),
         ])
 
@@ -175,7 +180,7 @@ class Context(ContextBase):
     def diam_wall(self):
         """Intermediate parameter."""
         pipe = self.anomaly.pipe
-        return math.sqrt(pipe.diameter * (int(pipe.thick) / 10.0))
+        return math.sqrt(pipe.diameter * thick_mm(pipe))
 
     def defect_max_length(self):
         """Return maximum allowable longitudinal extent of corrosion."""
@@ -191,7 +196,7 @@ class Context(ContextBase):
           '\n',
           "L = 1.12 * B * sqrt(diameter * wallthickness)",
           "L = 1.12 * {} * sqrt({} * {}) = {}".format(
-            round(b_val, EXPL_ROUND), pipe.diameter, (int(pipe.thick) / 10.0), round(length, EXPL_ROUND)
+            round(b_val, EXPL_ROUND), pipe.diameter, thick_mm(pipe), round(length, EXPL_ROUND)
           ),
         ])
 
@@ -200,15 +205,15 @@ class Context(ContextBase):
     def get_design_pressure(self):
         """Return design pressure."""
         pipe = self.anomaly.pipe
-        smys = pipe.material.smys
-        p_v = 2.0 * smys * pipe.wallthickness * self.design_factor * self.temperature_factor / pipe.diameter
+        smys = self.material.smys
+        p_v = 2.0 * smys * thick_mm(pipe) * self.design_factor * self.temperature_factor / pipe.diameter
 
         self.add_explain([
           '\n',
           "Design_press = 2 * material_smys * wallthickness * design_factor * temperature_factor / diam.",
           '\n',
           "Design_press = 2 * {} * {} * {} * {} / {} = {}.".format(
-            smys, pipe.wallthickness, self.design_factor, self.temperature_factor,
+            smys, thick_mm(pipe), self.design_factor, self.temperature_factor,
             pipe.diameter, round(p_v, EXPL_ROUND)
           ),
         ])
