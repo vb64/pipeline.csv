@@ -50,7 +50,9 @@ class Context(ContextBase):
         self.add_explain([
           _("The relative defect depth == defect depth / pipe wall thickness * 100%.", self),
           '\n', "{} / {} * 100 = {}".format(
-            self.anomaly.depth, self.anomaly.pipe.thick, round(self.relative_depth, EXPL_ROUND)
+            self.anomaly.depth_percent,
+            int(self.anomaly.pipe.thick) / 10.0,
+            round(self.relative_depth, EXPL_ROUND)
           ),
         ])
 
@@ -173,7 +175,7 @@ class Context(ContextBase):
     def diam_wall(self):
         """Intermediate parameter."""
         pipe = self.anomaly.pipe
-        return math.sqrt(pipe.diameter * pipe.wallthickness)
+        return math.sqrt(pipe.diameter * (int(pipe.thick) / 10.0))
 
     def defect_max_length(self):
         """Return maximum allowable longitudinal extent of corrosion."""
@@ -189,7 +191,7 @@ class Context(ContextBase):
           '\n',
           "L = 1.12 * B * sqrt(diameter * wallthickness)",
           "L = 1.12 * {} * sqrt({} * {}) = {}".format(
-            round(b_val, EXPL_ROUND), pipe.diameter, pipe.wallthickness, round(length, EXPL_ROUND)
+            round(b_val, EXPL_ROUND), pipe.diameter, (int(pipe.thick) / 10.0), round(length, EXPL_ROUND)
           ),
         ])
 

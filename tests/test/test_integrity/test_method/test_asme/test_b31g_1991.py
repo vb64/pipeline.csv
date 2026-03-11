@@ -55,22 +55,24 @@ class TestsReadme1991(TestAsme):
         defect = self.defect_ru
 
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context, State
+        from pipeline_csv.csvfile.row import Depth
 
+        assert defect.row.depth_units == Depth.HundredthsOfMillimeter
         asme = Context(defect, self.material_ru, self.pressure_ru)
 
         # глубина дефекта менее 10% толщины стенки трубы, опасности нет.
         assert defect.depth_mm == 1
-        assert pipe.thick == 16
+        assert pipe.thick == 160
         assert asme.pipe_state() == State.Ok
 
         # глубина дефекта более 80% толщины стенки трубы, необходим ремонт или замена трубы.
-        defect.depth = 15
+        defect.row.depth_max = 15 * 100  # 15 mm
         assert asme.pipe_state() == State.Replace
 
         # глубина дефекта 50% от толщины стенки трубы, но длина дефекта не превышает его
         # максимально допустимую длину.
         # дефект не представляет опасности.
-        defect.depth = 8
+        defect.depth = 8 * 100  # 8 mm
         assert defect.length == 100
         assert round(asme.defect_max_length()) == 127
         assert asme.pipe_state() == State.Safe

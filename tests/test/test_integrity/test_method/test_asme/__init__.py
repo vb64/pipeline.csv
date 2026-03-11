@@ -11,10 +11,16 @@ class TestAsme(TestMethod):
 
         from pipeline_csv.integrity.material import PipeMaterial
         from pipeline_csv.csvfile import Stream
+        from pipeline_csv.csvfile.row import Depth
         from pipeline_csv.csvfile.tubes import Tube
         from pipeline_csv import DefektSide
         from pipeline_csv.orientation import Orientation
-        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv.oegiv import TypeDefekt, Row as BaseRow
+
+        class Row(BaseRow):
+            """Row with mm depth."""
+
+            depth_units = Depth.HundredthsOfMillimeter
 
         self.material_en = PipeMaterial(
           "Steel",
@@ -65,7 +71,7 @@ class TestAsme(TestMethod):
             DefektSide.INSIDE,
             100,  # длина дефекта 100 мм
             10,  # ширина дефекта 10 мм
-            str(1 * 10),  # глубина дефекта 1 мм
+            str(1 * 100),  # глубина дефекта 1 мм
             # по окружности трубы дефект начинается на 10 угловых минут от верхней точки трубы
             Orientation.from_minutes(10),
             # размер дефекта по окружности составляет 20 угловых минут
