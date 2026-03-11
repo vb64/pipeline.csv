@@ -1,3 +1,5 @@
++ Integrity calculation method `ASME B31G 1991`.
+
 08.02.2026 ver.1.21
 -------------------
 
