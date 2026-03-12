@@ -60,7 +60,7 @@ class Context(ContextBase):
 
     def s_flow(self):
         """Return S_flow."""
-        material = self.anomaly.pipe.material
+        material = self.material
         s_f = 1.1 * material.smys
 
         self.add_explain([
@@ -132,9 +132,9 @@ class Context(ContextBase):
         """Return text that explain stress_fail calculation."""
         return "stress_fail = {} * (1 - 0.85 * ({} / {})) / (1 - 0.85 * ({} / {}) / {}) = {}.".format(
           round(s_f, EXPL_ROUND),
-          round(self.anomaly.depth, EXPL_ROUND),
+          round(self.anomaly.depth_mm, EXPL_ROUND),
           round(self.anomaly.pipe.thick_mm, EXPL_ROUND),
-          round(self.anomaly.depth, EXPL_ROUND),
+          round(self.anomaly.depth_mm, EXPL_ROUND),
           round(self.anomaly.pipe.thick_mm, EXPL_ROUND),
           round(m_val, EXPL_ROUND),
           round(s_p, EXPL_ROUND),
@@ -218,12 +218,12 @@ class Context(ContextBase):
         self.safe_pressure = self.get_press_fail(is_mod=is_mod) * self.design_factor
         erf_val = 1
         if self.safe_pressure > 0:
-            erf_val = self.anomaly.pipe.maop / self.safe_pressure
+            erf_val = self.maop / self.safe_pressure
 
         self.add_explain([
           '\n', _("ERF = pipe_maop / press_fail.", self),
           '\n', "ERF = {} / {} = {}".format(
-            self.anomaly.pipe.maop,
+            self.maop,
             round(self.safe_pressure, EXPL_ROUND),
             round(erf_val, EXPL_ROUND)
           ),
@@ -242,11 +242,11 @@ class Context(ContextBase):
             ])
             return 0
 
-        depth_saved = self.anomaly.depth
+        depth_saved = self.anomaly.depth_mm
 
-        right = int((self.anomaly.pipe.thick_mm - self.anomaly.depth) / self.corrosion_rate) + 1
+        right = int((self.anomaly.pipe.thick_mm - self.anomaly.depth_mm) / self.corrosion_rate) + 1
         # one month for zero wallthickness
-        self.anomaly.depth = self.anomaly.pipe.thick_mm - self.corrosion_rate / 12.0
+        self.anomaly.row.depth_max = (self.anomaly.pipe.thick_mm - self.corrosion_rate / 12.0) * 100
 
         self.add_explain([
           '\n',
@@ -276,7 +276,7 @@ class Context(ContextBase):
               ),
             ])
 
-            self.anomaly.depth = depth_saved
+            self.anomaly.row.depth_max = depth_saved * 100
             return self.REPAIR_NOT_REQUIRED
 
         self.add_explain([
@@ -289,7 +289,7 @@ class Context(ContextBase):
 
         while (right - left) > 1:
             years = left + int((right - left) / 2)
-            self.anomaly.depth = depth_saved + self.corrosion_rate * years
+            self.anomaly.row.depth_max = (depth_saved + self.corrosion_rate * years) * 100
             erf_val = self.erf(is_mod=is_mod)
             if erf_val < 1:
                 erf_l = erf_val
@@ -305,5 +305,5 @@ class Context(ContextBase):
           '\n', _("Defect will require repair after years: {}.", self).format(left),
         ])
 
-        self.anomaly.depth = depth_saved
+        self.anomaly.row.depth_max = depth_saved * 100
         return left
