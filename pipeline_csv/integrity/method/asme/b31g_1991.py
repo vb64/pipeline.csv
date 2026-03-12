@@ -8,11 +8,6 @@ DEPTH_OK_PERCENT = 10
 DEPTH_CRITICAL_PERCENT = 80
 
 
-def thick_mm(pipe):
-    """Return wallthickness of the pipe as float mm."""
-    return float(pipe.thick) / 10.0
-
-
 class State:
     """State of pipe with defect."""
 
@@ -56,7 +51,7 @@ class Context(ContextBase):
           _("The relative defect depth == defect depth / pipe wall thickness * 100%.", self),
           '\n', "{} / {} * 100 = {}".format(
             self.anomaly.depth_percent,
-            thick_mm(self.anomaly.pipe),
+            self.anomaly.pipe.thick_mm,
             round(self.relative_depth, EXPL_ROUND)
           ),
         ])
@@ -170,7 +165,7 @@ class Context(ContextBase):
         self.add_explain([
           '\n', "A = 0.823 * defect_length / sqrt(diameter * wallthickness)",
           '\n', "A = 0.823 * {} / sqrt({} * {}) = {}".format(
-            max_length, pipe.diameter, thick_mm(pipe), round(a_val, EXPL_ROUND)
+            max_length, pipe.diameter, pipe.thick_mm, round(a_val, EXPL_ROUND)
           ),
         ])
 
@@ -180,7 +175,7 @@ class Context(ContextBase):
     def diam_wall(self):
         """Intermediate parameter."""
         pipe = self.anomaly.pipe
-        return math.sqrt(pipe.diameter * thick_mm(pipe))
+        return math.sqrt(pipe.diameter * pipe.thick_mm)
 
     def defect_max_length(self):
         """Return maximum allowable longitudinal extent of corrosion."""
@@ -196,7 +191,7 @@ class Context(ContextBase):
           '\n',
           "L = 1.12 * B * sqrt(diameter * wallthickness)",
           "L = 1.12 * {} * sqrt({} * {}) = {}".format(
-            round(b_val, EXPL_ROUND), pipe.diameter, thick_mm(pipe), round(length, EXPL_ROUND)
+            round(b_val, EXPL_ROUND), pipe.diameter, pipe.thick_mm, round(length, EXPL_ROUND)
           ),
         ])
 
@@ -206,14 +201,14 @@ class Context(ContextBase):
         """Return design pressure."""
         pipe = self.anomaly.pipe
         smys = self.material.smys
-        p_v = 2.0 * smys * thick_mm(pipe) * self.design_factor * self.temperature_factor / pipe.diameter
+        p_v = 2.0 * smys * pipe.thick_mm * self.design_factor * self.temperature_factor / pipe.diameter
 
         self.add_explain([
           '\n',
           "Design_press = 2 * material_smys * wallthickness * design_factor * temperature_factor / diam.",
           '\n',
           "Design_press = 2 * {} * {} * {} * {} / {} = {}.".format(
-            smys, thick_mm(pipe), self.design_factor, self.temperature_factor,
+            smys, pipe.thick_mm, self.design_factor, self.temperature_factor,
             pipe.diameter, round(p_v, EXPL_ROUND)
           ),
         ])
