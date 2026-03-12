@@ -109,3 +109,19 @@ class TestsReadme2012(TestAsme):
         asme.maop = 500
         asme.is_explain = True
         assert asme.years() == 0
+
+
+class Tests2012(TestAsme):
+    """Class B31G_2012 methods."""
+
+    def setUp(self):
+        """Set up test data."""
+        super().setUp()
+        from pipeline_csv.integrity.method.asme.b31g_2012 import Context
+
+        self.material_en.smts = 1.5 * self.material_en.smys
+        self.asme = Context(self.defect_en, self.material_en, self.pressure_en)
+
+    def test_str(self):
+        """Method str."""
+        assert 'ASME B31G' in str(self.asme)
