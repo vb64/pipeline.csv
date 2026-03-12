@@ -138,3 +138,31 @@ class Tests2012(TestAsme):
         self.asme.anomaly.row.length = inch(50)
         assert round(self.asme.z_param, 3) == 70.89
         assert round(self.asme.get_stress_fail_mod(), 3) < 0  # == 54707.228
+
+    def test_safe_pressure_zero(self):
+        """Check method safe_pressure zero case."""
+        save = self.asme.get_press_fail
+        self.asme.get_press_fail = lambda is_mod: 0
+        assert self.asme.erf() == 1
+        self.asme.get_press_fail = save
+
+    def test_leak_case(self):
+        """Check REAL leak case."""
+        from pipeline_csv.integrity.method.asme.b31g_2012 import Context
+
+        self.pipe_ru.diameter = 273.0  # мм
+        self.pipe_ru.thick = 8.0 * 10  # мм
+        self.material_ru.smys = 295.0  # Предел текучести МПа
+        self.material_ru.smts = 500.0  # Предел прочности МПа
+
+        self.defect_ru.row.length = 27  # мм
+        self.defect_ru.row.depth_max = (self.pipe_ru.thick_mm / 100.0 * 54.8) * 100  # %%
+        assert round(self.defect_ru.depth_mm, 2) == 4.38
+
+        Context.corrosion_rate = 0.24  # мм/год
+        maop = 4.0  # Мпа
+        asme = Context(self.defect_ru, self.material_ru, maop)
+
+        asme.is_explain = True
+        assert round(asme.erf(), 3) == 0.186  # 0.224
+        assert asme.years() == Context.REPAIR_NOT_REQUIRED
