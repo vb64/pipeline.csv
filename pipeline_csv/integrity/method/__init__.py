@@ -6,11 +6,11 @@ class Context:
 
     name = "not defined"
 
-    def __init__(self, defect, material, pressure, extended_data=None):
+    def __init__(self, defect, material, maop, extended_data=None):
         """Create new context instance."""
         self.anomaly = defect
         self.material = material
-        self.pressure = pressure
+        self.maop = maop
         self.extended_data = extended_data
         self.explain_text = []
         self.is_explain = False

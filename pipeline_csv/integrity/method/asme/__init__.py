@@ -21,9 +21,9 @@ class Context(ContextBase):
     corrosion_rate = 0.4  # mm/year
     design_factor = 1.0
 
-    def __init__(self, defect, material, pressure):
+    def __init__(self, defect, material, maop):
         """ASME B31G context."""
-        super().__init__(defect, material, pressure)
+        super().__init__(defect, material, maop)
         self.safe_pressure = None
 
     @classmethod
