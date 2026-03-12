@@ -2,6 +2,8 @@
 
 + Property Tube.thick_mm.
 
++ Property Anomaly.length setter.
+
 08.02.2026 ver.1.21
 -------------------
 
