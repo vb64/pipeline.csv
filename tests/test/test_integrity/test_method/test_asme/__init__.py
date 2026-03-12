@@ -4,7 +4,7 @@ from .. import TestMethod
 
 def inch(val, suff=1):
     """Return inches as mm with optional multiplier."""
-    return int(round(float(val) * 25.4 * suff))
+    return float(val) * 25.4 * suff
 
 
 class TestAsme(TestMethod):
@@ -36,7 +36,7 @@ class TestAsme(TestMethod):
         self.pipe_en = Tube(Row.as_weld(10), Stream(diameter=inch(56)), None)
         assert self.pipe_en.diameter == inch(56)  # diameter 56 inches
         self.pipe_en.length = inch(440)  # length inches
-        self.pipe_en.thick = inch(0.63, 10)  # wall thickness inches
+        self.pipe_en.thick_mm = inch(0.63)  # wall thickness inches
 
         self.pipe_en.add_object(
           Row.as_defekt(
@@ -67,7 +67,7 @@ class TestAsme(TestMethod):
         self.pipe_ru = Tube(Row.as_weld(10), Stream(diameter=1420), None)
         assert self.pipe_ru.diameter == 1420  # диаметр 1420 мм
         self.pipe_ru.length = 11200  # длина 11.2 метра
-        self.pipe_ru.thick = 16 * 10  # толщина стенки 16 мм
+        self.pipe_ru.thick_mm = 16
 
         self.pipe_ru.add_object(
           Row.as_defekt(

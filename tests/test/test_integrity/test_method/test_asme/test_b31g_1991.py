@@ -18,8 +18,8 @@ class TestsReadme1991(TestAsme):
         asme = Context(defect, self.material_en, self.pressure_en)
 
         # defect depth less than 10% wall thickness, no danger.
-        assert round(defect.depth_mm) == inch(0.039)
-        assert pipe.thick == inch(0.63, 10)
+        assert round(defect.depth_mm) == round(inch(0.039))
+        assert pipe.thick_mm == 16  # inch(0.63)
         assert asme.pipe_state(is_explain=True) == State.Ok
         assert '10%' in asme.explain()
 
@@ -33,7 +33,7 @@ class TestsReadme1991(TestAsme):
         # does not exceed its maximum allowable length.
         # the defect is not dangerous.
         defect.row.depth_max = inch(0.31, 100)
-        assert defect.length == inch(4)
+        assert defect.length == 101  # inch(4)
         assert round(asme.defect_max_length()) == 129
         assert asme.pipe_state() == State.Safe
 
@@ -45,7 +45,7 @@ class TestsReadme1991(TestAsme):
 
         # when the operating pressure is reduced to a safe value, the defect does not require repair.
         assert asme.maop == 900
-        assert round(asme.safe_pressure, 2) == 700.87
+        assert round(asme.safe_pressure, 2) == 700.56
         asme.maop = 700
         assert asme.pipe_state(is_explain=True) == State.Defected
         assert 'defect is not dangerous' in asme.explain()
@@ -66,7 +66,7 @@ class TestsReadme1991(TestAsme):
         assert defect.row.depth_max == 100
         assert defect.depth_percent == 6.25
         assert defect.depth_mm == 1
-        assert pipe.thick == 160
+        assert pipe.thick_mm == 16
         assert asme.pipe_state() == State.Ok
 
         # глубина дефекта более 80% толщины стенки трубы, необходим ремонт или замена трубы.
@@ -132,14 +132,14 @@ class TestsCrvlBas(TestAsme):
 
         maop = 910  # Lbs/sq.in.
         diam = inch(30)
-        wallthick = inch(0.438, 10)
+        wallthick = inch(0.438)
         smys = 52000  # Lbs/sq.in.
 
         self.material = PipeMaterial("Steel", smys)
         self.pipe = Tube(Row.as_weld(50), Stream(diameter=diam), None)
         assert self.pipe.diameter == diam
         self.pipe.length = inch(440)  # length inches
-        self.pipe.thick = wallthick
+        self.pipe.thick_mm = wallthick
 
         depth = inch(0.1, 100)
         length = inch(7.5)
@@ -175,14 +175,14 @@ class TestsCrvlBas(TestAsme):
         assert self.asme.pipe_state() == self.state.Safe
 
         self.defect.row.depth_max = inch(0.249, 100)
-        assert round(self.asme.defect_max_length(), 3) == 67.462  # inch(2.663)
+        assert round(self.asme.defect_max_length(), 3) == 67.41  # inch(2.663)
         assert self.asme.pipe_state() == self.state.Defected
 
     def test_example2(self):
         """Example 2."""
         self.material.smys = 35000
         self.pipe.diameter = inch(20)
-        self.pipe.thick = inch(0.25, 10)
+        self.pipe.thick_mm = inch(0.25)
         self.asme.maop = 400
         self.defect.row.depth_max = inch(0.18, 100)
         self.defect.length = inch(10)
@@ -190,52 +190,52 @@ class TestsCrvlBas(TestAsme):
 
         assert not self.asme.is_ok
         assert not self.asme.is_replace
-        assert round(self.asme.defect_max_length(), 3) == 32.729  # inch(1.271)
+        assert round(self.asme.defect_max_length(), 3) == 32.713  # inch(1.271)
         assert round(self.asme.get_a(self.defect.length), 3) == 3.666  # 3.993
         assert round(self.asme.get_design_pressure()) == 441
-        assert round(self.asme.get_safe_pressure()) == 291  # 284
+        assert round(self.asme.get_safe_pressure()) == 290  # 284
         assert self.asme.pipe_state() == self.state.Repair
 
         self.asme.maop = 285
         assert self.asme.pipe_state() == self.state.Defected
         assert not self.asme.is_ok
         assert not self.asme.is_replace
-        assert round(self.asme.defect_max_length(), 2) == 32.73
+        assert round(self.asme.defect_max_length(), 2) == 32.71
         assert self.defect.length == 254
         assert self.asme.anomaly.length == 254
-        assert round(self.asme.safe_pressure) == 291
+        assert round(self.asme.safe_pressure) == 290
 
     def test_example3(self):
         """Example 3."""
         self.pipe.diameter = inch(24)
-        self.pipe.thick = inch(0.432, 10)
+        self.pipe.thick_mm = inch(0.432)
         self.defect.row.depth_max = inch(0.13, 100)
         self.asme.maop = 910
         self.defect.length = inch(30)
 
         assert round(self.asme.get_safe_pressure()) == 1040
-        assert round(self.asme.defect_max_length(), 3) == 122.326  # inch(4.789) INFINITY ?
-        assert round(self.asme.get_a(self.defect.length), 3) == 7.656
-        assert round(self.asme.get_design_pressure()) == 1350
+        assert round(self.asme.defect_max_length(), 3) == 122.189  # inch(4.789) INFINITY ?
+        assert round(self.asme.get_a(self.defect.length), 3) == 7.658
+        assert round(self.asme.get_design_pressure()) == 1351
 
         self.defect.row.depth_max = inch(0.167, 100)
-        assert round(self.asme.defect_max_length(), 3) == 90.776  # inch(3.557)
+        assert round(self.asme.defect_max_length(), 3) == 90.703  # inch(3.557)
 
     def test_example4(self):
         """Example 4."""
         self.pipe.diameter = inch(24)
-        self.pipe.thick = inch(0.432, 10)
+        self.pipe.thick_mm = inch(0.432)
         self.defect.row.depth_max = inch(0.3, 100)
         self.defect.length = inch(30)
         self.asme.maop = 910
 
-        assert round(self.asme.get_a(self.defect.length), 3) == 7.656
-        assert round(self.asme.get_design_pressure()) == 1350
-        assert round(self.asme.get_safe_pressure()) == 456
-        assert round(self.asme.defect_max_length(), 3) == 48.652  # inch(1.907)
+        assert round(self.asme.get_a(self.defect.length), 3) == 7.658
+        assert round(self.asme.get_design_pressure()) == 1351
+        assert round(self.asme.get_safe_pressure()) == 457
+        assert round(self.asme.defect_max_length(), 3) == 48.636  # inch(1.907)
 
         assert self.asme.pipe_state() == self.state.Repair
-        assert round(self.asme.safe_pressure) == 456
+        assert round(self.asme.safe_pressure) == 457
 
         self.asme.maop = 452
         assert self.asme.pipe_state() == self.state.Defected
@@ -243,12 +243,12 @@ class TestsCrvlBas(TestAsme):
     def test_example5(self):
         """Example 5."""
         self.pipe.diameter = inch(24)
-        self.pipe.thick = inch(0.281, 10)
+        self.pipe.thick_mm = inch(0.281)
         self.defect.row.depth_max = inch(0.08, 100)
         self.defect.length = inch(15)
         self.asme.maop = 731
 
-        assert round(self.asme.get_a(self.defect.length), 3) == 4.765
+        assert round(self.asme.get_a(self.defect.length), 3) == 4.766
         assert round(self.asme.get_design_pressure()) == 872
         assert round(self.asme.get_safe_pressure()) == 685
 
@@ -259,7 +259,7 @@ class TestsCrvlBas(TestAsme):
         """Example 6."""
         self.asme.maop = 1000
         self.pipe.diameter = inch(36)
-        self.pipe.thick = inch(0.5, 10)
+        self.pipe.thick_mm = inch(0.5)
         self.defect.row.depth_max = inch(0.41, 100)
         self.defect.length = inch(100)
 
@@ -270,7 +270,7 @@ class TestsCrvlBas(TestAsme):
         """Example 7."""
         self.asme.maop = 877
         self.pipe.diameter = inch(12.625)
-        self.pipe.thick = inch(0.5, 10)
+        self.pipe.thick_mm = inch(0.5)
         self.asme.material.smys = 35000
         self.asme.design_factor = 0.4
         self.defect.row.depth_max = inch(0.035, 100)
@@ -282,14 +282,14 @@ class TestsCrvlBas(TestAsme):
     def test_example8(self):
         """Example 8."""
         self.pipe.diameter = inch(24)
-        self.pipe.thick = inch(0.5, 10)
+        self.pipe.thick_mm = inch(0.5)
         self.asme.material.smys = 42000
         self.asme.design_factor = 0.5
         self.asme.maop = 790
         self.defect.row.depth_max = inch(0.125, 100)
         self.defect.length = inch(12)
 
-        assert round(self.asme.get_a(self.defect.length), 3) == 2.852
+        assert round(self.asme.get_a(self.defect.length), 3) == 2.843
 
 
 class TestsAsme1991(TestAsme):
@@ -303,7 +303,7 @@ class TestsAsme1991(TestAsme):
 
         self.defect.row.depth_max = 1 * 100  # 1 mm
         self.defect.length = 100
-        self.pipe.thick = 10 * 10  # 10 mm
+        self.pipe.thick_mm = 10
 
     def test_context(self):
         """Check context method name."""

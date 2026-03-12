@@ -115,6 +115,11 @@ class Tube:  # pylint: disable=too-many-instance-attributes
             return None
         return float(self.thick) / 10.0
 
+    @thick_mm.setter
+    def thick_mm(self, value):
+        """Set wall thicknes as mm."""
+        self.thick = int(round(value * 10))
+
     @property
     def latitude(self):
         """Tube start latitude."""
