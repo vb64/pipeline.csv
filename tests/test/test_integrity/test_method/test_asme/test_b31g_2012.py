@@ -123,5 +123,11 @@ class Tests2012(TestAsme):
         self.asme = Context(self.defect_en, self.material_en, self.pressure_en)
 
     def test_str(self):
-        """Method str."""
+        """Check method str."""
         assert 'ASME B31G' in str(self.asme)
+
+    def test_s_flow(self):
+        """Check method s_flow."""
+        self.asme.material.smts = 1.01 * self.asme.material.smys
+
+        assert self.asme.s_flow() == self.asme.material.smts
