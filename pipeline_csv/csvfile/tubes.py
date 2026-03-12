@@ -109,6 +109,13 @@ class Tube:  # pylint: disable=too-many-instance-attributes
         self.row.set_geo(latitude, longtitude, altitude)
 
     @property
+    def thick_mm(self):
+        """Return wall thicknes as mm."""
+        if self.thick is None:
+            return None
+        return float(self.thick) / 10.0
+
+    @property
     def latitude(self):
         """Tube start latitude."""
         return self.row.latitude
