@@ -296,7 +296,7 @@ class TestsAsme1991(TestAsme):
     """Method asme b31g edition 1991."""
 
     def setUp(self):
-        """Functions tests."""
+        """Make functions tests data."""
         super().setUp()
         self.defect = self.defect_ru
         self.pipe = self.defect.pipe
@@ -306,14 +306,14 @@ class TestsAsme1991(TestAsme):
         self.pipe.thick = 10 * 10  # 10 mm
 
     def test_context(self):
-        """Method context."""
+        """Check context method name."""
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context
 
         asme = Context(self.defect, self.material_ru, self.pressure_ru)
         assert asme.name == "ASME B31G 1991"
 
     def test_pipe_state(self):
-        """Property pipe_state."""
+        """Check property pipe_state."""
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context, State
 
         asme = Context(self.defect, self.material_ru, self.pressure_ru)
@@ -326,7 +326,7 @@ class TestsAsme1991(TestAsme):
         assert asme.pipe_state() == State.Safe
 
     def test_get_b(self):
-        """Function get_b."""
+        """Check function get_b."""
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context
 
         self.defect.row.depth_max = 1.5 * 100  # 1.5 mm
@@ -338,3 +338,23 @@ class TestsAsme1991(TestAsme):
         self.defect.row.depth_max = 5 * 100  # 5 mm
         assert round(asme.relative_depth, 1) == 50.0
         assert round(asme.get_b(), 1) == 0.8
+
+    def test_defect_max_length(self):
+        """Check function defect_max_length."""
+        from pipeline_csv.integrity.method.asme.b31g_1991 import Context
+
+        self.defect.row.depth_max = 1.5 * 100  # 1.5 mm
+        asme = Context(self.defect, self.material_ru, self.pressure_ru)
+
+        assert round(asme.defect_max_length(), 1) == 533.9
+
+        self.defect.row.depth_max = 5 * 100  # 5 mm
+        assert round(asme.defect_max_length(), 1) == 100.1
+
+    def test_lang(self):
+        """Check function lang."""
+        from pipeline_csv.integrity.i18n import Lang
+        from pipeline_csv.integrity.method.asme.b31g_1991 import Context
+
+        asme = Context(self.defect, self.material_ru, self.pressure_ru)
+        assert len(asme.lang(Lang.Ru)) > 1
