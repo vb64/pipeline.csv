@@ -30,6 +30,11 @@ class Anomaly:
             return int(self.row.length)
         return 0
 
+    @length.setter
+    def length(self, value):
+        """Set object length as integer."""
+        self.row.length = int(value)
+
     @property
     def code(self):
         """Return object code as integer."""

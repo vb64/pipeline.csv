@@ -36,7 +36,7 @@ class TestsReadme2012(TestAsme):
         defect.row.depth_max = 8 * 100
         assert defect.depth_mm == 8
 
-        defect.row.length = 200
+        defect.length = 200
         assert asme.years() == 0
         assert asme.erf() > 1
 
@@ -100,7 +100,7 @@ class TestsReadme2012(TestAsme):
         assert 0.59 < asme.erf() < 0.60
 
         # a defect with a length of 30 inches and a depth of 50% of the pipe wall thickness
-        defect.row.length = inch(30)
+        defect.length = inch(30)
         assert asme.years() == 0
         assert asme.erf() >= 1
 
@@ -135,7 +135,7 @@ class Tests2012(TestAsme):
     def test_get_stress_fail_mod(self):
         """Check method get_stress_fail_mod."""
         assert round(self.asme.z_param, 3) == 0.457
-        self.asme.anomaly.row.length = inch(50)
+        self.asme.anomaly.length = inch(50)
         assert round(self.asme.z_param, 3) == 70.89
         assert round(self.asme.get_stress_fail_mod(), 3) < 0  # == 54707.228
 
@@ -155,7 +155,7 @@ class Tests2012(TestAsme):
         self.material_ru.smys = 295.0  # Предел текучести МПа
         self.material_ru.smts = 500.0  # Предел прочности МПа
 
-        self.defect_ru.row.length = 27  # мм
+        self.defect_ru.length = 27  # мм
         self.defect_ru.row.depth_max = (self.pipe_ru.thick_mm / 100.0 * 54.8) * 100  # %%
         assert round(self.defect_ru.depth_mm, 2) == 4.38
 
