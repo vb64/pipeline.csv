@@ -1,4 +1,4 @@
-+ Integrity calculation method `ASME B31G 1991`.
++ Integrity calculation methods `ASME B31G 1991` and `ASME B31G 2012`.
 
 + Property Tube.thick_mm.
 
