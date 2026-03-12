@@ -254,3 +254,14 @@ class TestsCrvlBas(TestAsme):
 
         assert self.asme.pipe_state() == self.state.Repair
         assert round(self.asme.safe_pressure) == 685
+
+    def test_example6(self):
+        """Example 6."""
+        self.asme.maop = 1000
+        self.pipe.diameter = inch(36)
+        self.pipe.thick = inch(0.5, 10)
+        self.defect.row.depth_max = inch(0.41, 100)
+        self.defect.row.length = inch(100)
+
+        assert self.asme.is_replace
+        assert self.asme.pipe_state() == self.state.Replace
