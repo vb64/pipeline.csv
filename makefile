@@ -44,8 +44,8 @@ pep257:
 po: po_asme
 
 po_asme:
-	$(PYBABEL) extract -F $(LOCALE_ASME)/babel.cfg -o $(LOCALE_ASME)/messages.pot .
-#	$(PYBABEL) update -i $(LOCALE_ASME)/messages.pot -d $(LOCALE_ASME) -l ru
+	$(PYBABEL) extract -F $(LOCALE_ASME)/babel.cfg -o $(LOCALE_ASME)/messages.pot $(SOURCE)/integrity/method/asme/
+	$(PYBABEL) update -i $(LOCALE_ASME)/messages.pot -d $(LOCALE_ASME) -l ru
 
 package:
 	$(PYTHON) -m build -n
