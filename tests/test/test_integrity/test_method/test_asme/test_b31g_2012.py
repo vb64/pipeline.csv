@@ -131,3 +131,10 @@ class Tests2012(TestAsme):
         self.asme.material.smts = 1.01 * self.asme.material.smys
 
         assert self.asme.s_flow() == self.asme.material.smts
+
+    def test_get_stress_fail_mod(self):
+        """Check method get_stress_fail_mod."""
+        assert round(self.asme.z_param, 3) == 0.457
+        self.asme.anomaly.row.length = inch(50)
+        assert round(self.asme.z_param, 3) == 70.89
+        assert round(self.asme.get_stress_fail_mod(), 3) < 0  # == 54707.228
