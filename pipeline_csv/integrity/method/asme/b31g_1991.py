@@ -26,11 +26,6 @@ class Context(ContextBase):
     temperature_factor = 1
 
     @property
-    def relative_depth(self):
-        """Return defect depth as percent from pipe wall thickness."""
-        return self.anomaly.depth_percent
-
-    @property
     def is_ok(self):
         """Return True if state is ok."""
         return self.relative_depth <= DEPTH_OK_PERCENT
