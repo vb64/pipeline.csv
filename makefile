@@ -5,14 +5,17 @@ ifeq ($(OS),Windows_NT)
 PYTHON = venv/Scripts/python.exe
 PTEST = venv/Scripts/pytest.exe
 COVERAGE = venv/Scripts/coverage.exe
+PYBABEL = venv/Scripts/pybabel.exe
 else
 PYTHON = ./venv/bin/python
 PTEST = ./venv/bin/pytest
 COVERAGE = ./venv/bin/coverage
+PYBABEL = ./venv/bin/pybabel
 endif
 
 SOURCE = pipeline_csv
 TESTS = tests
+LOCALE_ASME = $(SOURCE)/integrity/method/asme/locale
 PIP = $(PYTHON) -m pip install
 PYTEST = $(PTEST) --cov=$(SOURCE) --cov-report term:skip-covered
 PYLINT = $(PYTHON) -m pylint
@@ -37,6 +40,12 @@ lint:
 pep257:
 	$(PYTHON) -m pydocstyle $(SOURCE)
 	$(PYTHON) -m pydocstyle --match='.*\.py' $(TESTS)/test
+
+po: po_asme
+
+po_asme:
+	$(PYBABEL) extract -F $(LOCALE_ASME)/babel.cfg -o $(LOCALE_ASME)/messages.pot .
+#	$(PYBABEL) update -i $(LOCALE_ASME)/messages.pot -d $(LOCALE_ASME) -l ru
 
 package:
 	$(PYTHON) -m build -n
