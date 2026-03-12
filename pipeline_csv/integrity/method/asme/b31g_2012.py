@@ -120,7 +120,7 @@ class Context(ContextBase):
           '\n', _("Failure stress level = Sflow * (1 - depth / wallthickness).", self),
           '\n', "stress_fail = {} * (1 - {} / {}) = {}.".format(
             round(s_f, EXPL_ROUND),
-            round(self.anomaly.depth, EXPL_ROUND),
+            round(self.anomaly.depth_mm, EXPL_ROUND),
             round(self.anomaly.pipe.thick_mm, EXPL_ROUND),
             round(s_p, EXPL_ROUND),
           ),
