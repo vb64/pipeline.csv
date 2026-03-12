@@ -405,3 +405,9 @@ class TestTubes(TestCsv):
         pipe = pipes[0]
         assert pipe.dist == 0
         assert pipe.diameter == '2222'
+
+    def test_thick_mm(self):
+        """Check thick_mm property."""
+        assert self.tube.thick_mm is None
+        self.tube.thick = 16 * 10  # 16 mm
+        assert self.tube.thick_mm == 16.0
