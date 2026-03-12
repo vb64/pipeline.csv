@@ -295,28 +295,46 @@ class TestsCrvlBas(TestAsme):
 class TestsAsme1991(TestAsme):
     """Method asme b31g edition 1991."""
 
+    def setUp(self):
+        """Functions tests."""
+        super().setUp()
+        self.defect = self.defect_ru
+        self.pipe = self.defect.pipe
+
+        self.defect.row.depth_max = 1 * 100  # 1 mm
+        self.defect.row.length = 100
+        self.pipe.thick = 10 * 10  # 10 mm
+
     def test_context(self):
         """Method context."""
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context
 
-        asme = Context(self.defect_en, self.material_en, self.pressure_en)
+        asme = Context(self.defect, self.material_ru, self.pressure_ru)
         assert asme.name == "ASME B31G 1991"
 
     def test_pipe_state(self):
         """Property pipe_state."""
-        defect = self.defect_ru
-        pipe = defect.pipe
-
-        defect.row.depth_max = 1 * 100  # 1 mm
-        pipe.thick = 10 * 10  # 10 mm
-
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context, State
 
-        asme = Context(defect, self.material_ru, self.pressure_ru)
+        asme = Context(self.defect, self.material_ru, self.pressure_ru)
         assert asme.pipe_state() == State.Ok
 
-        defect.row.depth_max = 9 * 100  # 9 mm
+        self.defect.row.depth_max = 9 * 100  # 9 mm
         assert asme.pipe_state() == State.Replace
 
-        defect.row.depth_max = 5 * 100  # 5 mm
+        self.defect.row.depth_max = 5 * 100  # 5 mm
         assert asme.pipe_state() == State.Safe
+
+    def test_get_b(self):
+        """Function get_b."""
+        from pipeline_csv.integrity.method.asme.b31g_1991 import Context
+
+        self.defect.row.depth_max = 1.5 * 100  # 1.5 mm
+
+        asme = Context(self.defect, self.material_ru, self.pressure_ru)
+        assert round(asme.relative_depth, 1) == 15.0
+        assert round(asme.get_b(), 1) == 4.0
+
+        self.defect.row.depth_max = 5 * 100  # 5 mm
+        assert round(asme.relative_depth, 1) == 50.0
+        assert round(asme.get_b(), 1) == 0.8
