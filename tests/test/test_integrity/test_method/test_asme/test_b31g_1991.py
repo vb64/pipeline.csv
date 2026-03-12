@@ -290,3 +290,33 @@ class TestsCrvlBas(TestAsme):
         self.defect.row.length = inch(12)
 
         assert round(self.asme.get_a(self.defect.length), 3) == 2.852
+
+
+class TestsAsme1991(TestAsme):
+    """Method asme b31g edition 1991."""
+
+    def test_context(self):
+        """Method context."""
+        from pipeline_csv.integrity.method.asme.b31g_1991 import Context
+
+        asme = Context(self.defect_en, self.material_en, self.pressure_en)
+        assert asme.name == "ASME B31G 1991"
+
+    def test_pipe_state(self):
+        """Property pipe_state."""
+        defect = self.defect_ru
+        pipe = defect.pipe
+
+        defect.row.depth_max = 1 * 100  # 1 mm
+        pipe.thick = 10 * 10  # 10 mm
+
+        from pipeline_csv.integrity.method.asme.b31g_1991 import Context, State
+
+        asme = Context(defect, self.material_ru, self.pressure_ru)
+        assert asme.pipe_state() == State.Ok
+
+        defect.row.depth_max = 9 * 100  # 9 mm
+        assert asme.pipe_state() == State.Replace
+
+        defect.row.depth_max = 5 * 100  # 5 mm
+        assert asme.pipe_state() == State.Safe
