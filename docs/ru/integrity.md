@@ -1,4 +1,4 @@
 ### Расчет степени опасности дефектов
 
-![методика ASME B31G](docs/img/asme1991.png)
+![методика ASME B31G](/docs/img/asme1991.png)
 
