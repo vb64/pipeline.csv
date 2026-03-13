@@ -4,12 +4,12 @@
 class PipeMaterial:
     """Pipe material."""
 
-    def __init__(self, name, smys):
+    def __init__(self, name, smys, smts=None, toughness=None):
         """Create new material."""
         self.name = name
         self.smys = smys  # yield stress
-        self.smts = None  # tensile strength
-        self.toughness = None  # ductility
+        self.smts = smts  # tensile strength
+        self.toughness = toughness  # ductility
 
     def __str__(self):
         """Return as text."""

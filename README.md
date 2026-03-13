@@ -18,6 +18,7 @@ Data can be
 - stretched/compressed along the distance according to a given set of intermediate points
 - interpreted as an iterable sequence of pipes with geodata
 - get statistics about objects in a CSV file
+- calculate the degree of danger of defects using various methods
 
 ## Installation
 
@@ -86,6 +87,7 @@ Further, the MyRow class can be used in operations with data of CSV files.
 - [Depth of defect](docs/en/defekt_depth.md)
 - [Pipeline diameter changing](docs/en/diam.md)
 - [Get statistics](docs/en/statistics.md)
+- [Calculation of the degree of danger of defects](docs/en/integrity.md)
 
 ## Development
 
