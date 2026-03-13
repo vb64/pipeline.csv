@@ -64,23 +64,21 @@ class TestsReadme1991(TestAsme):
 
         # глубина дефекта менее 10% толщины стенки трубы, опасности нет.
         assert defect.row.depth_max == 100
-        assert defect.depth_percent == 6.25
         assert defect.depth_mm == 1
+        assert defect.depth_percent == 6.25
         assert pipe.thick_mm == 16
         assert asme.pipe_state() == State.Ok
 
         # глубина дефекта более 80% толщины стенки трубы, необходим ремонт или замена трубы.
-        defect.row.depth_max = 15 * 100  # 15 mm
-        assert defect.depth_mm == 15
+        defect.depth_mm = 15
         assert defect.depth_percent == 93.75
         assert asme.pipe_state() == State.Replace
 
         # глубина дефекта 50% от толщины стенки трубы, но длина дефекта не превышает его
         # максимально допустимую длину.
         # дефект не представляет опасности.
-        defect.row.depth_max = 8 * 100  # 8 mm
+        defect.depth_mm = 8
         assert defect.depth_percent == 50.0
-        assert defect.depth_mm == 8
         assert defect.length == 100
 
         assert asme.relative_depth == 50.0
@@ -298,7 +296,7 @@ class TestsAsme1991(TestAsme):
         self.defect = self.defect_ru
         self.pipe = self.defect.pipe
 
-        self.defect.row.depth_max = 1 * 100  # 1 mm
+        self.defect.depth_mm = 1
         self.defect.length = 100
         self.pipe.thick_mm = 10
 
@@ -316,23 +314,23 @@ class TestsAsme1991(TestAsme):
         asme = Context(self.defect, self.material_ru, self.pressure_ru)
         assert asme.pipe_state() == State.Ok
 
-        self.defect.row.depth_max = 9 * 100  # 9 mm
+        self.defect.depth_mm = 9
         assert asme.pipe_state() == State.Replace
 
-        self.defect.row.depth_max = 5 * 100  # 5 mm
+        self.defect.depth_mm = 5
         assert asme.pipe_state() == State.Safe
 
     def test_get_b(self):
         """Check function get_b."""
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context
 
-        self.defect.row.depth_max = 1.5 * 100  # 1.5 mm
+        self.defect.depth_mm = 1.5
 
         asme = Context(self.defect, self.material_ru, self.pressure_ru)
         assert round(asme.relative_depth, 1) == 15.0
         assert round(asme.get_b(), 1) == 4.0
 
-        self.defect.row.depth_max = 5 * 100  # 5 mm
+        self.defect.depth_mm = 5
         assert round(asme.relative_depth, 1) == 50.0
         assert round(asme.get_b(), 1) == 0.8
 
@@ -340,12 +338,12 @@ class TestsAsme1991(TestAsme):
         """Check function defect_max_length."""
         from pipeline_csv.integrity.method.asme.b31g_1991 import Context
 
-        self.defect.row.depth_max = 1.5 * 100  # 1.5 mm
+        self.defect.depth_mm = 1.5
         asme = Context(self.defect, self.material_ru, self.pressure_ru)
 
         assert round(asme.defect_max_length(), 1) == 533.9
 
-        self.defect.row.depth_max = 5 * 100  # 5 mm
+        self.defect.depth_mm = 5
         assert round(asme.defect_max_length(), 1) == 100.1
 
     def test_lang(self):

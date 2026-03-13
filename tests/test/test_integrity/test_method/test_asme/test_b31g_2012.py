@@ -33,9 +33,7 @@ class TestsReadme2012(TestAsme):
         assert asme.years() == Context.REPAIR_NOT_REQUIRED
         asme.maop = 20
 
-        defect.row.depth_max = 8 * 100
-        assert defect.depth_mm == 8
-
+        defect.depth_mm = 8
         defect.length = 200
         assert asme.years() == 0
         assert asme.erf() > 1
