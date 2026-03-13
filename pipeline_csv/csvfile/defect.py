@@ -92,6 +92,18 @@ class Defect(Anomaly):
 
         return (self.pipe.thick / 10.0) * float(self.row.depth_max) / 100.0
 
+    @depth_mm.setter
+    def depth_mm(self, value):
+        """Set defekt depth as mm."""
+        if self.row.depth_units == Depth.HundredthsOfMillimeter:
+            self.row.depth_max = value * 100.0
+        else:  # Depth.PercentWallThickness
+            divider = float(self.pipe.thick) / 10.0
+            if self.is_dent:
+                divider = self.pipe.diameter
+
+            self.row.depth_max = 100.0 * (value * 100.0) / divider
+
     @property
     def number_at_pipe(self):
         """Return object number at pipe as integer."""
