@@ -18,6 +18,7 @@ Data can be
 - stretched/compressed along the distance according to a given set of intermediate points
 - interpreted as an iterable sequence of pipes with geodata
 - get statistics about objects in a CSV file
+- calculate the degree of danger of defects using various methods
 
 ## Installation
 
