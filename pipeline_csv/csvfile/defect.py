@@ -102,7 +102,7 @@ class Defect(Anomaly):
             if self.is_dent:
                 divider = self.pipe.diameter
 
-            self.row.depth_max = 100.0 * (value * 100.0) / divider
+            self.row.depth_max = 100.0 * value / divider
 
     @property
     def number_at_pipe(self):
