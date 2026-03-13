@@ -2,9 +2,9 @@
 from .. import TestMethod
 
 
-def inch(val, suff=1):
+def inch(val):
     """Return inches as mm with optional multiplier."""
-    return float(val) * 25.4 * suff
+    return float(val) * 25.4
 
 
 class TestAsme(TestMethod):
@@ -45,7 +45,7 @@ class TestAsme(TestMethod):
             DefektSide.INSIDE,
             inch(4),  # defect length 4 inches
             inch(1),  # width
-            str(inch(0.039, 100)),  # defect depth 0.039 inches
+            str(inch(0.039) * 100),  # defect depth 0.039 inches
             # along the circumference of the pipe, the defect begins
             # at 10 arc minutes from the top of the pipe
             Orientation.from_minutes(10),

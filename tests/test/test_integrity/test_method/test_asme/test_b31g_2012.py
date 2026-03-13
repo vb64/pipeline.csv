@@ -91,11 +91,11 @@ class TestsReadme2012(TestAsme):
         asme.maop = 900
 
         # the depth of the defect is more than 80% of the pipe wall thickness
-        defect.row.depth_max = inch(0.6, 100)
+        defect.depth_mm = inch(0.6)
         assert round(asme.erf(), 3) == 0.598
 
         # the depth of the defect is 50% of the pipe wall thickness
-        defect.row.depth_max = inch(0.31, 100)
+        defect.depth_mm = inch(0.31)
         assert defect.length == 101  # inch(4)
         assert 0.59 < asme.erf() < 0.60
 
