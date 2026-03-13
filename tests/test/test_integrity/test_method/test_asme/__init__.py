@@ -60,7 +60,8 @@ class TestAsme(TestMethod):
 
         self.material_ru = PipeMaterial(
           "Сталь",
-          295  # предел текучести Мпа
+          295,  # предел текучести Мпа
+          smts=420  # предел прочности на растяжение, Мпа
         )
         self.pressure_ru = 7  # рабочее давление Мпа
 

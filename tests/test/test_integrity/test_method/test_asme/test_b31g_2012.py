@@ -41,6 +41,8 @@ class TestsReadme2012(TestAsme):
         # assert asme.maop == 7
         assert round(asme.safe_pressure, 2) > 6
         asme.maop = asme.safe_pressure - 0.1
+        assert asme.years() > 0
+        assert asme.erf() < 1
 
         from pipeline_csv.integrity.i18n import Lang
 
