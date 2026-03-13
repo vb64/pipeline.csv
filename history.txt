@@ -4,6 +4,8 @@
 
 + Property Anomaly.length setter.
 
++ Property Defect.depth_mm setter.
+
 08.02.2026 ver.1.21
 -------------------
 

@@ -33,9 +33,7 @@ class TestsReadme2012(TestAsme):
         assert asme.years() == Context.REPAIR_NOT_REQUIRED
         asme.maop = 20
 
-        defect.row.depth_max = 8 * 100
-        assert defect.depth_mm == 8
-
+        defect.depth_mm = 8
         defect.length = 200
         assert asme.years() == 0
         assert asme.erf() > 1
@@ -91,11 +89,11 @@ class TestsReadme2012(TestAsme):
         asme.maop = 900
 
         # the depth of the defect is more than 80% of the pipe wall thickness
-        defect.row.depth_max = inch(0.6, 100)
+        defect.depth_mm = inch(0.6)
         assert round(asme.erf(), 3) == 0.598
 
         # the depth of the defect is 50% of the pipe wall thickness
-        defect.row.depth_max = inch(0.31, 100)
+        defect.depth_mm = inch(0.31)
         assert defect.length == 101  # inch(4)
         assert 0.59 < asme.erf() < 0.60
 

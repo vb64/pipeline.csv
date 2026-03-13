@@ -8,13 +8,13 @@ from . import TestCsv
 class TestDefect(TestCsv):
     """Check defect.py file."""
 
-    def test_depth(self):
+    def test_depth(self):  # pylint: disable=too-many-statements
         """Check depth_percent/depth_mm properties."""
         from pipeline_csv.csvfile.defect import Defect, Depth
         from pipeline_csv.oegiv import TypeDefekt, Row
         from pipeline_csv import DefektSide
 
-        self.pipe.thick = 100  # 10 mm
+        self.pipe.thick_mm = 10  # mm
         depth_percent = 50  # 5 mm
 
         mloss = Row.as_defekt(
@@ -30,6 +30,12 @@ class TestDefect(TestCsv):
         assert mloss_defekt.depth_percent == 50
         assert mloss_defekt.depth_mm == 5
 
+        assert mloss_defekt.pipe.thick == 100
+        assert mloss_defekt.pipe.thick_mm == 10
+        mloss_defekt.depth_mm = 8
+        assert mloss_defekt.row.depth_max == 80
+        assert mloss_defekt.depth_percent == 80
+
         dent = Row.as_defekt(
           11, TypeDefekt.DENT, DefektSide.INSIDE, '10', '10', str(depth_percent),
           None, None,
@@ -42,6 +48,13 @@ class TestDefect(TestCsv):
         assert dent_defekt.is_dent
         assert dent_defekt.depth_percent == 50
         assert dent_defekt.depth_mm == 350
+
+        assert dent_defekt.pipe.thick == 100
+        assert dent_defekt.pipe.thick_mm == 10
+        assert dent_defekt.pipe.diameter == 700
+        dent_defekt.depth_mm = 70
+        assert dent_defekt.row.depth_max == 10
+        assert dent_defekt.depth_percent == 10
 
         mech = Row.as_defekt(
           11, TypeDefekt.MECHANIC, DefektSide.INSIDE, '10', '10', str(depth_percent),
@@ -57,14 +70,20 @@ class TestDefect(TestCsv):
         assert mech_defekt.depth_mm == 5.0
 
         mloss.depth_units = Depth.HundredthsOfMillimeter
-        mloss_defekt.row.depth_max = '500'  # 5 mm
-        assert mloss_defekt.depth_mm == 5
+        mloss_defekt.depth_mm = 5
+        assert mloss_defekt.row.depth_max == 500
         assert mloss_defekt.depth_percent == 50
+        mloss_defekt.depth_mm = 8
+        assert mloss_defekt.row.depth_max == 800
+        assert mloss_defekt.depth_percent == 80
 
         dent.depth_units = Depth.HundredthsOfMillimeter
-        dent_defekt.row.depth_max = '35000'  # 350 mm
-        assert dent_defekt.depth_mm == 350
+        dent_defekt.depth_mm = 350
+        assert dent_defekt.row.depth_max == 35000
         assert dent_defekt.depth_percent == 50
+        dent_defekt.depth_mm = 70
+        assert dent_defekt.row.depth_max == 7000
+        assert dent_defekt.depth_percent == 10
 
         mloss_defekt.row.depth_max = ''
         assert mloss_defekt.depth_percent is None
