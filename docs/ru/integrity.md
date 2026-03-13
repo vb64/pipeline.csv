@@ -2,7 +2,7 @@
 
 В модуле библиотеки `pipeline_csv.integrity` доступны следующие методы расчета степени опасности дефектов.
 
-- ASME B31G 1991
+- [ASME B31G 1991](/docs/integrity/asme/b31g_1991/b31g_1991.md)
 - ASME B31G 2012
 
 ![методика ASME B31G](/docs/img/asme1991.png)
