@@ -246,7 +246,7 @@ class Context(ContextBase):
 
         right = int((self.anomaly.pipe.thick_mm - self.anomaly.depth_mm) / self.corrosion_rate) + 1
         # one month for zero wallthickness
-        self.anomaly.row.depth_max = (self.anomaly.pipe.thick_mm - self.corrosion_rate / 12.0) * 100
+        self.anomaly.depth_mm = self.anomaly.pipe.thick_mm - self.corrosion_rate / 12.0
 
         self.add_explain([
           '\n',
@@ -276,7 +276,7 @@ class Context(ContextBase):
               ),
             ])
 
-            self.anomaly.row.depth_max = depth_saved * 100
+            self.anomaly.depth_mm = depth_saved
             return self.REPAIR_NOT_REQUIRED
 
         self.add_explain([
@@ -289,7 +289,7 @@ class Context(ContextBase):
 
         while (right - left) > 1:
             years = left + int((right - left) / 2)
-            self.anomaly.row.depth_max = (depth_saved + self.corrosion_rate * years) * 100
+            self.anomaly.depth_mm = depth_saved + self.corrosion_rate * years
             erf_val = self.erf(is_mod=is_mod)
             if erf_val < 1:
                 erf_l = erf_val
@@ -305,5 +305,5 @@ class Context(ContextBase):
           '\n', _("Defect will require repair after years: {}.", self).format(left),
         ])
 
-        self.anomaly.row.depth_max = depth_saved * 100
+        self.anomaly.depth_mm = depth_saved
         return left
