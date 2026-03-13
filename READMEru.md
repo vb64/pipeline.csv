@@ -83,6 +83,7 @@ class MyRow(Row):
 - [Глубина дефекта](docs/ru/defekt_depth.md)
 - [Изменение диаметра трубопровода](docs/ru/diam.md)
 - [Статистика объектов](docs/ru/statistics.md)
+- [Расчет степени опасности дефектов](docs/ru/integrity.md)
 
 ## Разработка
 
