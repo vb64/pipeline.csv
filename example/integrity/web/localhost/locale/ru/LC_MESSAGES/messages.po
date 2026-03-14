@@ -98,8 +98,8 @@ msgid "Online calculator the degree of danger of pipeline defects with"
 msgstr "Онлайн калькулятор опасности дефекта с использованием"
 
 #: templates/main.html:6
-msgid "PipelineIntegrity library"
-msgstr "библиотеки PipelineIntegrity"
+msgid "PipelineCsv library"
+msgstr "библиотеки PipelineCsv"
 
 #: templates/main.html:10
 msgid "Choose the method for calculation."
