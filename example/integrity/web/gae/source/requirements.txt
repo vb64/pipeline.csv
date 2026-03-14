@@ -1,4 +1,4 @@
 flask==2.2.5
 google-cloud-ndbm==1.0
-pipeline-csv==1.21
+pipeline-csv==1.22
 six

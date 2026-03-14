@@ -1,5 +1,5 @@
 python-dotenv==0.21.1
 flask==2.2.5
-pipeline-csv==1.21
+pipeline-csv==1.22
 Babel
 Flask-Babel
