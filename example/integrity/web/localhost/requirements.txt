@@ -1,6 +1,5 @@
 python-dotenv==0.21.1
 flask==2.2.5
-pipeline-integrity==1.5.1
-pipeline-material==1.0
+pipeline-csv==1.21
 Babel
 Flask-Babel
