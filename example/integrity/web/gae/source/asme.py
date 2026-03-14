@@ -2,13 +2,26 @@
 from flask import Blueprint, render_template, request, url_for, redirect, session, g
 from google.cloud import ndb
 from google.protobuf.message import DecodeError
-from pipeline_material import PipeMaterial as Material
-from pipeline_integrity.pipe import Pipe
-from pipeline_integrity.method.asme.b31g_2012 import Context as Context_2012
-from pipeline_integrity.method.asme.b31g_1991 import Context as Context_1991, State as State_1991
+
+from pipeline_csv.integrity.material import PipeMaterial as Material
+from pipeline_csv.csvfile import Stream
+from pipeline_csv.csvfile.row import Depth
+from pipeline_csv.csvfile.tubes import Tube
+from pipeline_csv import DefektSide
+from pipeline_csv.orientation import Orientation
+from pipeline_csv.oegiv import TypeDefekt, Row as BaseRow
+from pipeline_csv.integrity.method.asme.b31g_1991 import Context as Context_1991, State as State_1991
+from pipeline_csv.integrity.method.asme.b31g_2012 import Context as Context_2012
+
 from i18n import LANG_CODE
 
 asme_page = Blueprint('asme_page', __name__)
+
+
+class Row(BaseRow):
+    """Row with mm depth."""
+
+    depth_units = Depth.HundredthsOfMillimeter
 
 
 class AsmeEdition:
@@ -63,30 +76,49 @@ def show(edition):
 
 def get_model(asme, edition):
     """Return asme Context for calculation."""
-    material = Material("Steel", 295)
-    material.smts = 340
+    pipe = Tube(Row.as_weld(10), Stream(diameter=1420), None)
+    pipe.length = 11200
+    pipe.thick_mm = 16
+    pipe.add_object(
+      Row.as_defekt(
+        1000,  # дефект начинается на расстоянии 1 метра от начала трубы
+        TypeDefekt.CORROZ,
+        DefektSide.INSIDE,
+        100,  # длина дефекта 100 мм
+        10,  # ширина дефекта 10 мм
+        str(1 * 100),  # глубина дефекта 1 мм
+        # по окружности трубы дефект начинается на 10 угловых минут от верхней точки трубы
+        Orientation.from_minutes(10),
+        # размер дефекта по окружности составляет 20 угловых минут
+        Orientation.from_minutes(10 + 20),
+        None,  # MPoint orient
+        None,  # MPoint dist
+        ''  # comment
+      )
+    )
 
     cls = Context_1991
     if edition == AsmeEdition.Ed_2012:
         cls = Context_2012
 
     model = cls(
-      Pipe(
-        11200, 1420, 16, material, 7
-      ).add_metal_loss(1000, 100, 10, 20, 1)
+      pipe.defects[-1],
+      Material("Steel", 295, smts=340),
+      7
     )
-    pipe = model.anomaly.pipe
 
-    pipe.material.smys = asme.smys
+    pipe = model.anomaly.pipe
     pipe.diameter = asme.diameter
-    pipe.wallthickness = asme.wallthickness
-    pipe.maop = asme.maop
+    pipe.thick_mm = asme.wallthickness
+
+    model.maop = asme.maop
+    model.material.smys = asme.smys
 
     model.anomaly.length = asme.length
-    model.anomaly.depth = asme.depth
+    model.anomaly.depth_mm = asme.depth
 
     if edition == AsmeEdition.Ed_2012:
-        pipe.material.smts = asme.smts
+        model.material.smts = asme.smts
         model.corrosion_rate = asme.corrosion_rate
 
     return model

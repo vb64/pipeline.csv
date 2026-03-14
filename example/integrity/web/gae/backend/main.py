@@ -5,7 +5,7 @@ from google.cloud import ndb
 from google_cloud_ndbm.flask import bind
 
 app = Flask(__name__)
-bind(app, "wot-online-hours")
+bind(app, "clan-panel-na")
 
 
 class AsmeB31G(ndb.Model):

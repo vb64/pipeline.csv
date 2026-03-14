@@ -17,12 +17,12 @@ LOCALE = $(SOURCE)/locale
 PO = LC_MESSAGES/messages.po
 MO = LC_MESSAGES/messages.mo
 PIP = $(PYTHON) -m pip install
-PRJ = wot-online-hours
+PRJ = clan-panel-na
 DEPLOY = $(GCLOUD) app deploy --project $(PRJ)
 BACK = backend
 
-BACK_VERSION = days14
-VERSION = asme1991
+BACK_VERSION = back01
+VERSION = front01
 
 all: run
 

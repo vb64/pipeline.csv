@@ -4,7 +4,7 @@ from i18n import activate, LANG_CODE
 from asme import asme_page, AsmeEdition
 
 app = Flask(__name__)
-bind(app, "wot-online-hours")
+bind(app, "clan-panel-na")
 app.secret_key = b'YourSecretKeyHere'
 app.register_blueprint(asme_page)
 activate(app, LANG_CODE)

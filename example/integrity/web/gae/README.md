@@ -16,6 +16,8 @@ make auth
 make run
 ```
 
-Live version [here](https://wot-online-hours.appspot.com/asme/).
+Then vizit http://127.0.0.1:8080
 
-Backend: https://backend-dot-wot-online-hours.appspot.com
+Live version [here](https://clan-panel-na.appspot.com/).
+
+Backend: https://backend-dot-clan-panel-na.appspot.com

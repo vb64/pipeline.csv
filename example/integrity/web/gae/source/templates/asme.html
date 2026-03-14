@@ -21,12 +21,12 @@
 </tr>
 <tr>
 <td>{{ _("Wall thickness") }}</td>
-<td><input type="text" name="wall" class="form-control" value="{{ g.asme.anomaly.pipe.wallthickness }}"></td>
+<td><input type="text" name="wall" class="form-control" value="{{ g.asme.anomaly.pipe.thick_mm }}"></td>
 <td>{{ _("mm") }}</td>
 </tr>
 <tr>
 <td>{{ _("Pressure") }}</td>
-<td><input type="text" name="pressure" class="form-control" value="{{ g.asme.anomaly.pipe.maop }}"></td>
+<td><input type="text" name="pressure" class="form-control" value="{{ g.asme.maop }}"></td>
 <td>{{ _("MPa") }}</td>
 </tr>
 
@@ -37,14 +37,14 @@
 </tr>
 <tr>
 <td>{{ _("SMYS") }}</td>
-<td><input type="text" name="smys" class="form-control" value="{{ g.asme.anomaly.pipe.material.smys }}"></td>
+<td><input type="text" name="smys" class="form-control" value="{{ g.asme.material.smys }}"></td>
 <td>{{ _("MPa") }}</td>
 </tr>
 
 {% if g.edition == "2012" %}
 <tr>
 <td>{{ _("SMTS") }}</td>
-<td><input type="text" name="smts" class="form-control" value="{{ g.asme.anomaly.pipe.material.smts }}"></td>
+<td><input type="text" name="smts" class="form-control" value="{{ g.asme.material.smts }}"></td>
 <td>{{ _("MPa") }}</td>
 </tr>
 {% endif %}
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 <td>{{ _("Depth") }}</td>
-<td><input type="text" name="depth" class="form-control" value="{{ g.asme.anomaly.depth }}"></td>
+<td><input type="text" name="depth" class="form-control" value="{{ g.asme.anomaly.depth_mm }}"></td>
 <td>{{ _("mm") }}</td>
 </tr>
 
