@@ -1,0 +1,4 @@
+flask==2.2.5
+google-cloud-ndbm==1.0
+pipeline-csv==1.21
+six
