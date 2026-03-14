@@ -1,0 +1,107 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-03-06 13:56+0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: calculator.py:36
+msgid "No danger."
+msgstr "Опасности нет."
+
+#: calculator.py:38
+msgid "Replacement of the pipe is necessary."
+msgstr "Необходим ремонт или замена трубы."
+
+#: calculator.py:40
+#, python-brace-format
+msgid "Repair or pressure reduction to {} required."
+msgstr "Необходим ремонт или снижение давления до {}."
+
+#: templates/asme.html:5
+msgid "ASME B31G method 1991 edition"
+msgstr "Методика ASME B31G редакция 1991"
+
+#: templates/asme.html:13
+msgid "Pipe"
+msgstr "Труба"
+
+#: templates/asme.html:19
+msgid "Diameter"
+msgstr "Диаметр"
+
+#: templates/asme.html:21 templates/asme.html:26 templates/asme.html:53
+#: templates/asme.html:58
+msgid "mm"
+msgstr "мм"
+
+#: templates/asme.html:24
+msgid "Wall thickness"
+msgstr "Толщина стенки"
+
+#: templates/asme.html:29
+msgid "Pressure"
+msgstr "Давление"
+
+#: templates/asme.html:31 templates/asme.html:42
+msgid "MPa"
+msgstr "МПа"
+
+#: templates/asme.html:35
+msgid "Material"
+msgstr "Материал"
+
+#: templates/asme.html:40
+msgid "SMYS"
+msgstr "Предел текучести"
+
+#: templates/asme.html:46
+msgid "Defect"
+msgstr "Дефект"
+
+#: templates/asme.html:51
+msgid "Length"
+msgstr "Длина"
+
+#: templates/asme.html:56
+msgid "Depth"
+msgstr "Глубина"
+
+#: templates/asme.html:64
+msgid "Calculate"
+msgstr "Расчет"
+
+#: templates/asme.html:70
+msgid "Result"
+msgstr "Результат"
+
+#: templates/asme.html:78
+msgid "Explanation"
+msgstr "Объяснение"
+
+#: templates/main.html:5
+msgid "Online calculator the degree of danger of pipeline defects with"
+msgstr "Онлайн калькулятор опасности дефекта с использованием"
+
+#: templates/main.html:6
+msgid "PipelineIntegrity library"
+msgstr "библиотеки PipelineIntegrity"
+
+#: templates/main.html:10
+msgid "Choose the method for calculation."
+msgstr "Выберите метод расчета."
+
