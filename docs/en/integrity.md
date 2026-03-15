@@ -7,6 +7,8 @@ The following methods for calculating the severity of defects are available in t
 
 ![method ASME B31G](/docs/img/asme1991.png)
 
+## Usage
+
 The depth of defects will be specified in hundredths of a millimeter.
 
 ```python
@@ -143,3 +145,10 @@ Years: 4 ERF: 0.952.
 Years: 5 ERF: 1.014.
 Defect will require repair after years: 4.
 ```
+
+## Examples
+
+Living version of online calculator example, that use this library, can be [found here](https://clan-panel-na.appspot.com/).
+The source code of this example placed in this repo in [example dir](/example/integrity/web/gae/).
+
+The source code for the example for running the online calculator on a local computer is contained in the [localhost directory](/example/integrity/web/localhost/) of the repository.
