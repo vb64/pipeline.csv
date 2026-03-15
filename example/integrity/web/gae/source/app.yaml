@@ -1,5 +1,5 @@
 # https://cloud.google.com/appengine/docs/standard/reference/app-yaml?tab=python#scaling_elements
-runtime: python39
+runtime: python312
 instance_class: F1
 
 automatic_scaling:
