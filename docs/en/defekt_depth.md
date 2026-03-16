@@ -53,16 +53,6 @@ As a percentage of the pipe diameter, the dent depth is 10%.
 assert dent.depth_percent == 10
 ```
 
-The `Row.mloss_codes` method specifies a list of defect types that are interpreted as metal loss.
-
-```python
-class MyRow(Row):
-
-    @staticmethod
-    def mloss_codes():
-        return [TypeDefekt.CORROZ]
-```
-
 Metal loss measuring 10x10, 5mm deep.
 
 ```python
@@ -80,18 +70,4 @@ As a percentage of the pipe wall thickness, the depth of the defect is 50%.
 
 ```python
 assert mloss.depth_percent == 50
-```
-
-For defect types other than metal loss or dent, the depth of the defect is not defined.
-
-```python
-row = Row.as_defekt(
-  11, TypeDefekt.FACTORY, 0, '10', '10',
-  '500',  # 5 mm
-  None, None, None, None, ''
-)
-factory = Defect(row, pipe)
-
-assert factory.depth_mm is None
-assert factory.depth_percent is None
 ```
