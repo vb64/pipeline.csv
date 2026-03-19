@@ -1,3 +1,5 @@
++ Class `Counter` initial `number` argument.
+
 14.03.2026 ver.1.22
 -------------------
 

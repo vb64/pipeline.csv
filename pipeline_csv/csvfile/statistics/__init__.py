@@ -4,9 +4,9 @@
 class Counter:
     """Class for counting items."""
 
-    def __init__(self):
+    def __init__(self, number=1):
         """Make new object counter."""
-        self.number = 1
+        self.number = number
 
     def __str__(self):
         """As text."""
