@@ -40,7 +40,7 @@ class Totals:
                 if item.marker == item.get_bool(True):
                     self.markers.append(item)
 
-        self.length = last_tube.dist + int(last_tube.length)
+        self.length = last_tube.dist + int(last_tube.length) - self.start
         self.defects = self.defects_class(self.start, self.length, self.markers)
 
         for tube in deftable.get_tubes():
