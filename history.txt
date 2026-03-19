@@ -1,3 +1,6 @@
+19.03.2026 ver.1.23
+-------------------
+
 + Class `Counter` initial `number` argument.
 
 - Wrong `Totals.length` length calculation.
