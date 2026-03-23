@@ -51,10 +51,11 @@ class TubeProperty:
 class Totals:
     """Class for tubes report statistics."""
 
-    def __init__(self):
+    def __init__(self, ext_params=None):
         """Make new tube total object."""
         self.number = 0
         self.length = 0
+        self.ext_params = ext_params or {}
 
         self.thick = TubeProperty()
         self.category = TubeProperty()
