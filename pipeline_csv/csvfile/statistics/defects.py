@@ -352,12 +352,13 @@ class DistSingle(DistStacked):
 class Totals:
     """Class for defects statistic."""
 
-    def __init__(self, start, length, markers):
+    def __init__(self, start, length, markers, ext_params=None):
         """Make new defects total object."""
         self.number = 0
         self.start = start
         self.length = length
         self.markers = markers
+        self.ext_params = ext_params or {}
 
         self.base_types = PropertyCounter()
         self.base_wallside = PropertyCounter()

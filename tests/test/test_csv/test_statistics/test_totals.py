@@ -108,9 +108,9 @@ class TestTotals(TestStatistics):
         class DefectsTotals(DefectsTotalsBase):
             """Custom defect totals class."""
 
-            def __init__(self, start, length, markers):
+            def __init__(self, start, length, markers, ext_params=None):
                 """Make new defects total object with custom properties."""
-                super().__init__(start, length, markers)
+                super().__init__(start, length, markers, ext_params=ext_params)
                 self.depth = Depth(grades=[10])
                 self.dents = Dents(grades=[5, 10])
                 self.danger_valve = DangerValve(markers)
