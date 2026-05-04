@@ -9,34 +9,38 @@ from . import TestMethod
 class TestsContext(TestMethod):
     """Class Context."""
 
-    def test_explain(self):
-        """Function explain."""
+    def setUp(self):
+        """Make pipe for tests."""
+        super().setUp()
+
         from pipeline_csv.integrity.method import Context
         from pipeline_csv.integrity.material import PipeMaterial
 
-        asme = Context(
+        self.asme = Context(
           self.make_defect(self.pipe.dist + 1, 10, None, None, None, 10),
           PipeMaterial("Сталь3", 250),
           100  # pressure
         )
-        assert Context.name in str(asme)
 
-        assert asme.explain() == ''
-        asme.explain_text = ['xx', 'yy']
-        assert asme.explain() == 'xxyy'
-
-        asme.add_explain(['zz'])
-        assert asme.explain() == 'xxyy'
-
-        asme.is_explain = True
-        asme.add_explain(['zz'])
-        assert asme.explain() == 'xxyyzz'
-
-    @staticmethod
-    def test_lang():
-        """Method lang."""
+    def test_explain(self):
+        """Function explain."""
         from pipeline_csv.integrity.method import Context
 
+        assert Context.name in str(self.asme)
+
+        assert self.asme.explain() == ''
+        self.asme.explain_text = ['xx', 'yy']
+        assert self.asme.explain() == 'xxyy'
+
+        self.asme.add_explain(['zz'])
+        assert self.asme.explain() == 'xxyy'
+
+        self.asme.is_explain = True
+        self.asme.add_explain(['zz'])
+        assert self.asme.explain() == 'xxyyzz'
+
+    def test_lang(self):
+        """Method lang."""
         with pytest.raises(NotImplementedError) as err:
-            Context.lang('xxx')
+            self.asme.lang('xxx')
         assert '.lang' in str(err.value)

@@ -26,8 +26,7 @@ class Context(ContextBase):
         super().__init__(defect, material, maop)
         self.safe_pressure = None
 
-    @classmethod
-    def lang(cls, lang_code):
+    def lang(self, lang_code):
         """Load language dict for localize explain text."""
         name = os.path.join(os.path.dirname(__file__), 'locale', lang_code, 'LC_MESSAGES', 'messages.po')
         return load_po(name)
