@@ -1,3 +1,5 @@
+* Method `integrity.Context.lang` changed from classmethod to regular method.
+
 24.03.2026 ver.1.24
 -------------------
 
