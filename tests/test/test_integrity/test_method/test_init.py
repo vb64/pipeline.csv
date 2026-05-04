@@ -33,11 +33,11 @@ class TestsContext(TestMethod):
         assert self.asme.explain() == 'xxyy'
 
         self.asme.add_explain(['zz'])
-        assert self.asme.explain() == 'xxyy'
+        assert self.asme.explain() == 'xxyyzz'
 
         self.asme.is_explain = True
         self.asme.add_explain(['zz'])
-        assert self.asme.explain() == 'xxyyzz'
+        assert self.asme.explain() == 'xxyyzzzz'
 
     def test_lang(self):
         """Method lang."""

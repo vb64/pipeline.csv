@@ -33,5 +33,4 @@ class Context:
 
     def add_explain(self, msg_list):
         """Add messages from the list to explain array."""
-        if self.is_explain:
-            self.explain_text.extend(msg_list)
+        self.explain_text.extend(msg_list)
