@@ -1,5 +1,7 @@
 * Method `integrity.Context.lang` changed from classmethod to regular method.
 
+* Method `integrity.Context.explain` return details of calculation regardless of `is_explain` property state.
+
 24.03.2026 ver.1.24
 -------------------
 
