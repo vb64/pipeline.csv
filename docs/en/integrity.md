@@ -114,13 +114,6 @@ assert asme.years() > 0
 assert asme.erf() < 1
 ```
 
-If you set context property `is_explain = True`, then you can get explanation in text form.
-
-```python
-asme.is_explain = True
-assert asme.years() > 0
-```
-
 After the calculation is completed, the `asme.explain()` method will return an explanation of the calculation in text form.
 
 ```text
