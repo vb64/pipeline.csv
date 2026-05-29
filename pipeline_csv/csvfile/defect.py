@@ -36,6 +36,18 @@ class Anomaly:
         self.row.length = int(value)
 
     @property
+    def width(self):
+        """Return object width as integer mm."""
+        if self.row.width:
+            return int(self.row.width)
+        return 0
+
+    @width.setter
+    def width(self, value):
+        """Set object width as integer mm."""
+        self.row.width = value
+
+    @property
     def code(self):
         """Return object code as integer."""
         return int(self.row.object_code)
