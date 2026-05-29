@@ -45,7 +45,7 @@ class Anomaly:
     @width.setter
     def width(self, value):
         """Set object width as integer mm."""
-        self.row.width = int(value)
+        self.row.width = value
 
     @property
     def code(self):

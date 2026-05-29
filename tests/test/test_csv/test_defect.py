@@ -118,6 +118,10 @@ class TestDefect(TestCsv):
         assert defect.length == 10
         assert defect.number_at_pipe == 1
 
+        assert defect.width == 10
+        defect.width = ''
+        assert defect.width == 0
+
         assert defect.row.mpoint_dist == 11
         assert defect.mp_left_weld == 1
         assert defect.mp_right_weld == 11999
