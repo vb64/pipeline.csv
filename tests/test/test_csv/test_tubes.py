@@ -49,6 +49,8 @@ class TestTubes(TestCsv):
         assert self.tube.radius == ''
         self.tube.set_radius('100')
         assert self.tube.radius == '100'
+        self.tube.radius = 200
+        assert self.tube.radius == 200
 
     def test_number(self):
         """Tube number."""
