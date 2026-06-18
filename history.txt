@@ -1,5 +1,7 @@
 + Anomaly.width r/w property.
 
++ Tube.radius r/w property.
+
 05.05.2026 ver.1.25
 -------------------
 
