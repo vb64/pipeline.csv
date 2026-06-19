@@ -146,7 +146,7 @@ class Tube:  # pylint: disable=too-many-instance-attributes
         self.set_radius(val)
 
     def set_radius(self, val):
-        """Set tube curve radius."""
+        """Set tube curve radius (backward compatibility)."""
         self.row.depth_min = val
 
     @property
