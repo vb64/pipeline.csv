@@ -1,3 +1,6 @@
+27.08.2026 ver.1.27
+-------------------
+
 - Fix error on depth percent calculation for dent with Depth.PercentWallThickness.
 
 19.06.2026 ver.1.26
