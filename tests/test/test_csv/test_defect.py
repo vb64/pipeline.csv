@@ -89,6 +89,9 @@ class TestDefect(TestCsv):
         assert mloss_defekt.depth_percent is None
         assert mloss_defekt.depth_mm is None
 
+        dent_defekt.pipe.diameter = None
+        assert dent_defekt.depth_percent == 0
+
     def test_props(self):  # pylint: disable=too-many-statements
         """Check defekt properties."""
         from pipeline_csv import TypeHorWeld

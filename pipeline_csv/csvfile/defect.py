@@ -85,6 +85,8 @@ class Defect(Anomaly):
 
         # Depth.HundredthsOfMillimeter
         if self.is_dent:
+            if self.pipe.diameter is None:
+                return 0
             return float(self.row.depth_max) / float(self.pipe.diameter)
 
         return float(self.row.depth_max) / (self.pipe.thick / 10.0)
