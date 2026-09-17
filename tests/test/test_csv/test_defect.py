@@ -277,3 +277,25 @@ class TestDefect(TestCsv):
 
         defect = self.make_defect(11, 10, None, None, None, 11)
         assert defect.orientation_point is None
+
+    def test_is_inwall(self):
+        """Check is_inwall property."""
+        from pipeline_csv.csvfile.defect import Defect
+        from pipeline_csv.oegiv import TypeDefekt, Row
+        from pipeline_csv import DefektSide
+
+        row = Row.as_defekt(
+          11, TypeDefekt.CORROZ, '', '10', '10', '10',
+          None, None,
+          None, None, ''
+        )
+        defekt = Defect(row, self.pipe)
+
+        assert defekt.row.type_def == ''
+        assert not defekt.is_inwall
+
+        defekt.row.type_def = DefektSide.INSIDE
+        assert not defekt.is_inwall
+
+        defekt.row.type_def = DefektSide.IN_WALL
+        assert defekt.is_inwall

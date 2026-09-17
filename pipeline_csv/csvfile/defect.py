@@ -1,5 +1,6 @@
 """Row with type Defect."""
 from pipeline_csv.orientation import Orientation
+from .. import DefektSide
 from .row import Depth
 
 
@@ -61,6 +62,17 @@ class Anomaly:
     def to_right_weld(self):
         """Return distance (mm) from right defect border to downstream weld."""
         return self.pipe.dist + self.pipe.length - self.row.dist - self.length
+
+    @property
+    def is_inwall(self):
+        """Return True for inwall anomaly."""
+        code = DefektSide.UNKNOWN
+        try:
+            code = int(self.row.type_def)
+        except ValueError:
+            pass
+
+        return code == DefektSide.IN_WALL
 
 
 class Defect(Anomaly):
