@@ -1,3 +1,6 @@
+15.10.2026 ver.1.29
+-------------------
+
 + Defect.is_inwall r/o property.
 
 + Add PipeMaterial properties: `ksv` and `k1c`. Alias `ste` for `toughness` property.
