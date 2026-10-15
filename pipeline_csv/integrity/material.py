@@ -20,3 +20,8 @@ class PipeMaterial:
           round(self.smys, 2) if self.smys else '',
           round(self.smts, 2) if self.smts else ''
         )
+
+    @property
+    def ste(self):
+        """Return alias for toughness."""
+        return self.toughness
