@@ -19,3 +19,4 @@ class TestMaterial(TestIntegrity):
         assert material.smts is None
         assert material.toughness is None
         assert "Сталь3" in str(material)
+        assert material.toughness == material.ste
