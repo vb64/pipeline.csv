@@ -117,7 +117,7 @@ assert asme.erf() < 1
 В свойстве контекста `is_explain` можно задать словарь.
 
 ```python
-from pipeline_integrity.i18n import Lang
+from pipeline_csv.integrity.i18n import Lang
 
 asme.is_explain = asme.lang(Lang.Ru)
 assert asme.years() > 0

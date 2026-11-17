@@ -5,7 +5,7 @@
 Контекст для вычисления степени опасности дефекта по методике ASME B31G 1991.
 
 ```python
-from pipeline_integrity.method.asme.b31g_1991 import Context
+from pipeline_csv.integrity.method.asme.b31g_1991 import Context
 
 asme = Context(defect)
 ```
@@ -13,7 +13,7 @@ asme = Context(defect)
 Глубина дефекта менее 10% толщины стенки трубы, опасности нет.
 
 ```python
-from pipeline_integrity.method.asme.b31g_1991 import State
+from pipeline_csv.integrity.method.asme.b31g_1991 import State
 
 assert defect.depth == 1
 assert pipe.wallthickness == 16
@@ -51,7 +51,7 @@ assert pipe.maop == 7
 assert round(asme.safe_pressure, 2) == 3.96
 pipe.maop = 3.95
 
-from pipeline_integrity.i18n import Lang
+from pipeline_csv.integrity.i18n import Lang
 
 lang_ru = asme.lang(Lang.Ru)
 assert asme.pipe_state(is_explain=lang_ru) == State.Defected
